@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'failed' => 'These credentials do not match our records.',
+    'password' => 'The provided password is incorrect.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'login' => 'Log In',
+    'register' => 'Register',
+    'logout' => 'Log Out',
+    'email' => 'Email Address',
+    'password_label' => 'Password',
+    'confirm_password' => 'Confirm Password',
+    'name' => 'Full Name',
+    'remember_me' => 'Remember Me',
+    'forgot_password' => 'Forgot Password?',
+    'or_login_with' => 'OR LOG IN WITH EMAIL',
+    'or_register_with' => 'OR REGISTER WITH EMAIL',
+    'no_account' => "Don't have an account?",
+    'already_have_account' => 'Already have an account?',
+    'register_now' => 'Register now',
+    'login_now' => 'Log in now',
+    'welcome_back' => 'Welcome Back!',
+    'create_account' => 'Create a new CoLearn account',
+    'social_login_google' => 'Sign in with Google',
+    'social_login_facebook' => 'Sign in with Facebook',
+];
