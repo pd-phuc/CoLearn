@@ -111,3 +111,5 @@ resources/
 5. **Format your code**: Run `composer format` before committing
 6. **Small commits**: One logical change per commit, conventional format
 7. **No business logic in template**: Keep this repo framework-agnostic
+8. **NEVER commit to `main`**: Always create a feature branch (`feature/`, `fix/`, `refactor/`, etc.) and commit there. See `docs/convention-git.md`
+
