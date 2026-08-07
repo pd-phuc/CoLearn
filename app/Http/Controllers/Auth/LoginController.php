@@ -3,54 +3,45 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
-    /**
-     * Show the login form.
-     */
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
-        if (Auth::check()) {
-            return redirect()->route('dashboard');
-        }
-
         return view('auth.login');
     }
 
-    /**
-     * Handle login request.
-     */
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('home'))->with('success', __('auth.welcome_back'));
         }
 
         return back()->withErrors([
-            'email' => 'Email hoặc mật khẩu không đúng.',
+            'email' => __('auth.failed'),
         ])->onlyInput('email');
     }
 
-    /**
-     * Handle logout request.
-     */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }

@@ -1,40 +1,43 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Register your web routes here. These routes are loaded by
-| RouteServiceProvider and are assigned the "web" middleware group.
-|
 */
 
+// Home Page
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// --- Auth (Session-based) ---
+// Language Switcher
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['vi', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return back();
+})->name('lang.switch');
+
+// --- Auth Routes (Guest) ---
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
+
+    Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register']);
+
+    // OAuth Social Login
+    Route::get('/auth/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.redirect');
+    Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
 });
 
+// --- Auth Routes (Logged In) ---
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
-
-// --- Authenticated routes ---
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-// --- Admin routes (example) ---
-// Route::middleware(['auth', EnsureIsAdmin::class])->prefix('admin')->name('admin.')->group(function () {
-//     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-// });
