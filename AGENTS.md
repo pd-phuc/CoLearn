@@ -1,27 +1,62 @@
-# AGENTS.md — Laravel Template
+# AGENTS.md — CoLearn
 
 > Project-level rules for AI agents working in this repository.
-> Backend is ALWAYS Laravel. Frontend depends on Project Mode.
+> Backend is ALWAYS Laravel. Frontend is Blade + Tailwind + Alpine.js (blade-ssr mode).
+
+## Project: CoLearn
+
+Nền tảng bán khóa học trực tuyến — mô hình đơn vị đào tạo (kiểu TITV/28Tech).
+3 roles: Student (học), Teacher (tạo khóa học), Admin (quản lý).
+
+## Project Mode: blade-ssr
+
+| Component | Technology |
+|-----------|----------|
+| Backend | Laravel 13, PHP 8.3+, Eloquent ORM, PostgreSQL |
+| Frontend | Blade + Tailwind CSS 4 + Alpine.js |
+| Auth | Sanctum (SPA cookie + token), Socialite (Google/Facebook) |
+| RBAC | spatie/laravel-permission |
+| Cache/Queue | Redis (Docker) |
+| Infra | Docker (PostgreSQL, Redis, Nginx, Laravel) |
+| Payment | VNPay + Stripe |
+| Email | Mailgun |
+| Storage | AWS S3 |
 
 ## Stack
 
-- **Backend**: Laravel 13, PHP 8.3+, Eloquent ORM, MySQL
-- **Frontend**: Vite + Tailwind CSS 4, Blade templates (or React SPA)
-- **Auth**: Laravel Sanctum (API tokens) + Session (web)
+- **Backend**: Laravel 13, PHP 8.3+, Eloquent ORM, PostgreSQL
+- **Frontend**: Vite + Tailwind CSS 4, Blade templates, Alpine.js
+- **Auth**: Laravel Sanctum (SPA cookie for web, token for API) + Socialite (Google, Facebook)
+- **RBAC**: spatie/laravel-permission (roles + permissions)
 - **Testing**: PHPUnit / Pest
 - **Code Style**: Laravel Pint, Prettier (Blade), EditorConfig
+- **Infra**: Docker (PostgreSQL, Redis, Nginx)
 
-## Project Mode
+## Domain Models
 
-This template supports two frontend modes. Check `CLAUDE.md` for `## Project Mode:`.
+### Core Entities
+- **User** — Unified user with roles (student, teacher, admin)
+- **Course** — Khóa học, thuộc về 1 teacher
+- **Category** — Danh mục khóa học
+- **Section** — Chương/phần trong khóa học
+- **Lesson** — Bài giảng (video, text, tài liệu)
+- **Order** — Đơn hàng mua khóa học
+- **Enrollment** — Ghi danh vào khóa học
+- **Review** — Đánh giá khóa học
+- **Coupon** — Mã giảm giá
 
-| Mode | Frontend | Backend Response |
-|------|----------|-----------------|
-| `blade-ssr` | Blade + Tailwind + Alpine.js | `return view()` |
-| `react-spa` | React (Vite) + Tailwind | `return response()->json()` |
+### Future Entities (expandable)
+- Quiz, Assignment, Certificate, Notification, Wishlist, LearningPath
 
-If mode is not set, **run the onboarding skill** first:
-→ Read `.agent/skills/project-onboarding/SKILL.md`
+## Business Rules
+
+1. **Student** chỉ có thể tham gia khóa học đã mua (enrolled)
+2. **Teacher** tạo khóa học → trạng thái `draft` → admin duyệt → `published`
+3. **Admin** duyệt khóa học, quản lý users, quản lý thanh toán
+4. Mỗi khóa học thuộc **1 category**, có nhiều **sections**, mỗi section có nhiều **lessons**
+5. Thanh toán qua **VNPay** (VN) hoặc **Stripe** (quốc tế)
+6. Video/tài liệu lưu trên **AWS S3**
+7. Email thông báo xử lý qua **queue** (Redis)
 
 ## Commands
 
@@ -32,6 +67,8 @@ If mode is not set, **run the onboarding skill** first:
 | Test | `composer test` |
 | Lint (check) | `composer lint` |
 | Format (fix) | `composer format` |
+| Docker up | `docker compose up -d` |
+| Docker down | `docker compose down` |
 
 ## Code Consistency (CRITICAL)
 
@@ -60,30 +97,45 @@ If mode is not set, **run the onboarding skill** first:
 
 ### Controllers
 - Web controllers return Blade views (blade-ssr mode)
-- API controllers return JSON responses (react-spa mode or API routes)
-- Admin routes use `EnsureIsAdmin` middleware
+- API controllers return JSON responses (for future mobile app)
+- Admin routes use role-based middleware via spatie/laravel-permission
 
 ### File Structure
 ```
 app/
 ├── Http/
 │   ├── Controllers/
-│   │   ├── Auth/           # Session-based web auth
-│   │   ├── Api/            # Sanctum token-based API auth
-│   │   └── Admin/          # Admin panel controllers
+│   │   ├── Auth/           # Session-based web auth + Socialite
+│   │   ├── Api/            # Sanctum token-based API auth (future mobile)
+│   │   ├── Admin/          # Admin panel controllers
+│   │   ├── Teacher/        # Teacher dashboard controllers
+│   │   └── Student/        # Student-facing controllers
 │   └── Middleware/
 ├── Models/                  # Eloquent models
+├── Services/                # Business logic services
+├── Notifications/           # Email notifications
 └── Providers/
 
 routes/
-├── web.php                  # Web routes (session auth)
-├── api.php                  # API routes (Sanctum guard)
+├── web.php                  # Web routes (Sanctum SPA cookie auth)
+├── api.php                  # API routes (Sanctum token guard)
 └── console.php              # Artisan commands
 
 resources/
-├── views/                   # Blade templates
+├── views/
+│   ├── layouts/             # Base layouts
+│   ├── components/          # Blade components
+│   ├── courses/             # Course views
+│   ├── admin/               # Admin panel views
+│   ├── teacher/             # Teacher dashboard views
+│   └── auth/                # Auth views (login, register, OAuth)
 ├── css/app.css              # Tailwind entry
-└── js/app.js                # JS entry
+└── js/app.js                # Alpine.js entry
+
+docker/
+├── nginx/                   # Nginx config
+├── php/                     # PHP-FPM Dockerfile
+└── ...
 ```
 
 ## Agent Skills
@@ -110,6 +162,7 @@ resources/
 4. **Test your changes**: Run `composer test` after any logic change
 5. **Format your code**: Run `composer format` before committing
 6. **Small commits**: One logical change per commit, conventional format
-7. **No business logic in template**: Keep this repo framework-agnostic
+7. **i18n**: UI strings via `__('key')` / `@lang('key')` — support Tiếng Việt + English. Code in English. Minimal comments (only when non-obvious).
 8. **NEVER commit to `main`**: Always create a feature branch (`feature/`, `fix/`, `refactor/`, etc.) and commit there. See `docs/convention-git.md`
+
 
