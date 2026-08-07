@@ -1,0 +1,86 @@
+services:
+  # --- PHP-FPM (Laravel Application) ---
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: colearn-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+    networks:
+      - colearn
+
+  # --- Nginx (Web Server) ---
+  nginx:
+    image: nginx:alpine
+    container_name: colearn-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - colearn
+
+  # --- PostgreSQL 16 ---
+  postgres:
+    image: postgres:16-alpine
+    container_name: colearn-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: colearn
+      POSTGRES_USER: colearn
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U colearn"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - colearn
+
+  # --- Redis 7 ---
+  redis:
+    image: redis:7-alpine
+    container_name: colearn-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - colearn
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  colearn:
+    driver: bridge
