@@ -1,0 +1,11 @@
+{
+    "indentSize": 4,
+    "wrapLineLength": 120,
+    "wrapAttributes": "auto",
+    "useTabs": false,
+    "sortTailwindcssClasses": false,
+    "indentInnerHtml": false,
+    "endWithNewline": true,
+    "noMultipleEmptyLines": true,
+    "printWidth": 120
+}
