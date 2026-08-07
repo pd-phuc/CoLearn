@@ -1,126 +1,141 @@
-Chào Tuấn, đây là bản **Git Branching Strategy & Convention** hoàn chỉnh, được thiết kế chuẩn chuyên gia để Tuấn áp dụng ngay vào quy trình vận hành tại **MST Software** và đào tạo tại **F-Code**.
+# Git Convention
 
-Bản này bao quát từ cấu trúc, tiền tố đến quy trình xử lý thực tế. Tuấn có thể copy nội dung này vào file `CONTRIBUTING.md` hoặc **Notion** của công ty.
-
----
-
-# 🚀 Quy ước đặt tên nhánh (Git Branching Convention)
-
-## 1. Cấu trúc chung (Naming Pattern)
-
-Tên nhánh phải luôn sử dụng **chữ thường (lowercase)**, phân cách bằng **dấu gạch ngang (`-`)**.
-
-> **Công thức:** `<prefix>/[ticket-id]-[short-description]`
+> Quy ước Git cho dự án. AI agents và developers đều phải tuân thủ.
 
 ---
 
-## 2. Danh mục Tiền tố (Prefixes) chi tiết
+## 1. Branching Convention
 
-### A. Nhóm Phát triển (Development)
+### Công thức đặt tên
 
-* **`feature/`**: Phát triển tính năng mới.
-* *Ví dụ:* `feature/mst-101-auto-login-system`
+```
+<prefix>/<short-description>
+```
 
+- Chữ thường, phân cách bằng dấu gạch ngang (`-`)
+- Mô tả ngắn gọn, rõ ràng component bị ảnh hưởng
 
-* **`bugfix/`**: Sửa lỗi trong quá trình phát triển (trên nhánh `develop`).
-* *Ví dụ:* `bugfix/fix-hero-responsive`
+### Danh mục tiền tố
 
+#### Phát triển
+| Prefix | Mục đích | Ví dụ |
+|--------|----------|-------|
+| `feature/` | Tính năng mới | `feature/user-authentication` |
+| `bugfix/` | Sửa lỗi trên develop | `bugfix/fix-login-redirect` |
+| `hotfix/` | Sửa lỗi khẩn cấp trên main | `hotfix/critical-api-crash` |
+| `refactor/` | Tái cấu trúc (không đổi logic) | `refactor/clean-order-queries` |
 
-* **`hotfix/`**: Sửa lỗi khẩn cấp trực tiếp trên `main/production`.
-* *Ví dụ:* `hotfix/critical-api-auth-failure`
+#### Hạ tầng
+| Prefix | Mục đích | Ví dụ |
+|--------|----------|-------|
+| `deps/` | Cài/nâng cấp thư viện lớn | `deps/upgrade-laravel-13` |
+| `chore/` | Config, task vụn vặt | `chore/update-tailwind-config` |
+| `ci/` | CI/CD, Docker, deploy | `ci/setup-github-actions` |
 
+#### Tài liệu & Test
+| Prefix | Mục đích | Ví dụ |
+|--------|----------|-------|
+| `docs/` | Cập nhật tài liệu | `docs/update-api-docs` |
+| `test/` | Viết tests | `test/order-checkout-flow` |
 
-* **`refactor/`**: Tái cấu trúc mã nguồn (không đổi logic, không thêm tính năng).
-* *Ví dụ:* `refactor/clean-eloquent-query-member`
-
-
-
-### B. Nhóm Hạ tầng & Thư viện (Infra & Deps)
-
-* **`deps/`**: Cài đặt thư viện mới hoặc nâng cấp Version lớn.
-* *Ví dụ:* `deps/install-livewire-v3`, `deps/upgrade-laravel-12`
-
-
-* **`chore/`**: Các tác vụ vụn vặt (cập nhật config, nâng cấp patch version thư viện).
-* *Ví dụ:* `chore/update-tailwindcss-config`
-
-
-* **`ci/`**: Thay đổi cấu hình GitHub Actions, GitLab CI, Docker, Deployment.
-* *Ví dụ:* `ci/setup-auto-deploy-to-vps`
-
-
-* **`env/`**: Thay đổi liên quan đến biến môi trường (`.env.example`).
-* *Ví dụ:* `env/add-lark-webhook-keys`
-
-
-
-### C. Nhóm Nghiên cứu & Tài liệu (R&D & Docs)
-
-* **`poc/`**: (Proof of Concept) Viết code chạy thử để chứng minh giải pháp khả thi.
-* *Ví dụ:* `poc/bypass-anti-cheat-logic`
-
-
-* **`experimental/`**: Thử nghiệm các tính năng mới chưa chắc chắn sẽ giữ lại.
-* *Ví dụ:* `experimental/ai-suggestion-tool`
-
-
-* **`docs/`**: Cập nhật tài liệu, README, Wiki hoặc Comments trong code.
-* *Ví dụ:* `docs/update-api-documentation`
-
-
-* **`test/`**: Viết Unit Test, Feature Test hoặc Integration Test.
-* *Ví dụ:* `test/member-checkout-logic`
-
-
-
-### D. Nhóm Giao diện (UI/UX)
-
-* **`style/`**: Chỉ thay đổi CSS, SCSS, Tailwind (căn chỉnh margin, padding, màu sắc).
-* *Ví dụ:* `style/fix-footer-z-index`
-
-
-* **`ui/`**: Cập nhật các thành phần giao diện (thay logo, đổi bộ icon).
-* *Ví dụ:* `ui/refresh-brand-assets-2026`
-
-
+#### Giao diện
+| Prefix | Mục đích | Ví dụ |
+|--------|----------|-------|
+| `style/` | Chỉ CSS/Tailwind | `style/fix-footer-spacing` |
+| `ui/` | Component giao diện | `ui/redesign-dashboard` |
 
 ---
 
-## 3. Quy trình làm việc (Git Workflow)
+## 2. Commit Message Convention (Conventional Commits)
 
-1. **Main/Master:** Chứa code đã ổn định nhất, dùng để deploy lên Server Production.
-2. **Develop:** Nhánh chính để code. Mọi nhánh `feature/`, `bugfix/` đều phải checkout từ đây.
-3. **Tạo nhánh:** Luôn checkout từ nhánh mới nhất của `develop`.
-* `git checkout develop`
-* `git pull origin develop`
-* `git checkout -b feature/your-task-name`
+### Công thức
 
+```
+<type>(<scope>): <description>
+```
 
-4. **Hoàn tất:** Sau khi hoàn thành code, tạo **Pull Request (PR)** để Leader (Tuấn) review trước khi merge vào `develop`.
-5. **Dọn dẹp:** Xóa nhánh local và remote sau khi đã merge thành công để tránh làm rối hệ thống.
+- **type**: Loại thay đổi (bắt buộc)
+- **scope**: Phạm vi ảnh hưởng (tùy chọn)
+- **description**: Mô tả ngắn, viết thường, không dấu chấm cuối
 
----
+### Danh mục type
 
-## 4. Các quy tắc "Vàng" tại MST Software
+| Type | Mục đích | Ví dụ |
+|------|----------|-------|
+| `feat` | Tính năng mới | `feat(auth): add google oauth login` |
+| `fix` | Sửa lỗi | `fix(cart): correct price calculation` |
+| `refactor` | Tái cấu trúc code | `refactor(order): extract service layer` |
+| `docs` | Tài liệu | `docs: update api documentation` |
+| `style` | Format code (không đổi logic) | `style: fix blade indentation` |
+| `test` | Thêm/sửa tests | `test(auth): add login feature tests` |
+| `chore` | Config, deps, task vụn vặt | `chore: update composer dependencies` |
+| `ci` | CI/CD pipeline | `ci: add github actions workflow` |
+| `perf` | Tối ưu performance | `perf(query): add index to orders table` |
+| `revert` | Revert commit trước | `revert: revert "feat(auth): add oauth"` |
 
-* **KHÔNG** đặt tên nhánh theo cá nhân (ví dụ: `tuan/fix-code`). Git đã lưu tên tác giả trong commit.
-* **KHÔNG** gộp nhiều Task vào một nhánh. Mỗi Task/Ticket là một nhánh riêng biệt.
-* **KHÔNG** dùng tên chung chung như `fix-bug`, `update`. Phải chỉ rõ component bị ảnh hưởng (ví dụ: `bugfix/footer-login-link`).
+### Quy tắc
 
----
+1. **Một commit = một thay đổi logic** — không gộp nhiều thay đổi
+2. **Description viết tiếng Anh**, bắt đầu bằng động từ: `add`, `fix`, `update`, `remove`
+3. **Không dấu chấm** ở cuối description
+4. **Breaking changes**: Thêm `!` sau type — `feat!: change auth flow`
 
-## 5. Mẹo cấu hình nhanh cho Team
-
-Tuấn có thể bảo team chạy lệnh này để gõ nhanh hơn:
+### Ví dụ tốt vs xấu
 
 ```bash
-# Gõ: git feat add-hero -> Tự động tạo nhánh feature/add-hero
-git config --global alias.feat "checkout -b feature/"
-git config --global alias.bug "checkout -b bugfix/"
-git config --global alias.ref "checkout -b refactor/"
+# ✅ Tốt
+feat(product): add image upload endpoint
+fix(auth): handle expired token gracefully
+refactor(order): move validation to form request
+docs: add deployment guide
 
+# ❌ Xấu
+update code                    # Quá chung chung
+fix bug                        # Bug gì? Ở đâu?
+feat: add login, register, forgot password  # Gộp nhiều thay đổi
+FEAT: Add User Model           # Viết hoa
 ```
 
 ---
 
-Tuấn có muốn mình soạn luôn một bản **Commit Message Convention** (cách viết lời nhắn khi commit) theo chuẩn **Conventional Commits** (feat:, fix:, chore:...) để đồng bộ hóa toàn bộ lịch sử Git cho chuyên nghiệp không?
+## 3. Git Workflow
+
+### Quy trình
+
+```
+main ← (protected, chỉ merge qua PR)
+  └── develop ← (nhánh phát triển chính)
+        ├── feature/user-auth
+        ├── bugfix/fix-login
+        └── refactor/clean-queries
+```
+
+1. **Checkout từ develop** (hoặc main nếu không có develop):
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/your-task-name
+   ```
+
+2. **Code và commit** trên feature branch
+
+3. **Push và tạo Pull Request** để review trước khi merge
+
+4. **Xóa branch** sau khi merge thành công
+
+### Quy tắc vàng
+
+- **KHÔNG** commit trực tiếp vào `main` — luôn tạo branch mới
+- **KHÔNG** đặt tên nhánh theo cá nhân (`phuc/fix-code`)
+- **KHÔNG** gộp nhiều task vào một nhánh
+- **KHÔNG** dùng tên chung chung (`fix-bug`, `update`)
+
+---
+
+## 4. Enforced by Tools
+
+| Tool | Chức năng |
+|------|----------|
+| **Commitlint** | Kiểm tra commit message theo Conventional Commits |
+| **Husky** | Git hooks — chạy lint trước commit |
+| **Lint-staged** | Chỉ lint files đã thay đổi |

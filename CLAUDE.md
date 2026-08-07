@@ -69,6 +69,13 @@ Vite entry: `resources/css/app.css` (Tailwind) + `resources/js/app.js`. `@vite` 
 - **Git hooks**: Husky pre-commit (lint-staged) + commit-msg (commitlint)
 - **Commit format**: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, etc.)
 
+## Git Workflow (CRITICAL)
+
+- **NEVER commit directly to `main`** — always create a feature branch first
+- Branch naming: `<prefix>/<short-description>` (e.g. `feature/user-auth`, `fix/login-redirect`)
+- Commit on the feature branch only, then merge via PR
+- See `docs/convention-git.md` for full branching and commit conventions
+
 ## Key Files
 
 - `routes/web.php` — Web routes with session auth
