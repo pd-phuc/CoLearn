@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'failed' => 'Thông tin đăng nhập không chính xác.',
+    'password' => 'Mật khẩu cung cấp không đúng.',
+    'throttle' => 'Đã thử đăng nhập quá nhiều lần. Vui lòng thử lại sau :seconds giây.',
+    'login' => 'Đăng nhập',
+    'register' => 'Đăng ký',
+    'logout' => 'Đăng xuất',
+    'email' => 'Địa chỉ Email',
+    'password_label' => 'Mật khẩu',
+    'confirm_password' => 'Xác nhận mật khẩu',
+    'name' => 'Họ và tên',
+    'remember_me' => 'Ghi nhớ đăng nhập',
+    'forgot_password' => 'Quên mật khẩu?',
+    'or_login_with' => 'HOẶC ĐĂNG NHẬP VỚI EMAIL',
+    'or_register_with' => 'HOẶC ĐĂNG KÝ VỚI EMAIL',
+    'no_account' => 'Chưa có tài khoản?',
+    'already_have_account' => 'Đã có tài khoản?',
+    'register_now' => 'Đăng ký ngay',
+    'login_now' => 'Đăng nhập ngay',
+    'welcome_back' => 'Chào mừng bạn quay trở lại!',
+    'create_account' => 'Tạo tài khoản CoLearn mới',
+    'social_login_google' => 'Đăng nhập bằng Google',
+    'social_login_facebook' => 'Đăng nhập bằng Facebook',
+];
