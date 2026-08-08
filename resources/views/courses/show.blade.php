@@ -64,9 +64,9 @@
                     <span>{{ __('messages.instructor_title') }}</span>
                 </h2>
                 <div class="flex items-start gap-4 pt-2">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-black flex items-center justify-center text-xl shadow-md flex-shrink-0 overflow-hidden ring-2 ring-orange-500/20">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-black flex items-center justify-center text-xl shadow-md flex-shrink-0 overflow-hidden ring-2 ring-orange-500/20">
                         @if($course->teacher && $course->teacher->avatar)
-                            <img src="{{ $course->teacher->avatar }}" alt="{{ $course->teacher->name }}" class="w-full h-full object-cover">
+                            <img src="{{ $course->teacher->avatar }}" alt="{{ $course->teacher->name }}" class="w-full h-full object-cover rounded-full">
                         @else
                             {{ strtoupper(substr($course->teacher->name ?? 'G', 0, 1)) }}
                         @endif
