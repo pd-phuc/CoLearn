@@ -17,9 +17,9 @@
             </p>
         </div>
 
-        <!-- Social OAuth Login Pills (Icon Buttons matching image specification) -->
+        <!-- Social OAuth Login Pills -->
         <div class="space-y-3">
-            <p class="text-xs font-semibold text-slate-400 text-center uppercase tracking-wider">Đăng nhập nhanh qua mạng xã hội</p>
+            <p class="text-xs font-semibold text-slate-400 text-center uppercase tracking-wider">{{ __('auth.quick_social_login') }}</p>
             <div class="grid grid-cols-2 gap-3">
                 <!-- Google SVG Pill Button -->
                 <a href="{{ route('social.redirect', 'google') }}"
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Form Login Email / Password -->
-        <form action="{{ route('login') }}" method="POST" class="space-y-5">
+        <form action="{{ route('login') }}" method="POST" x-data="{ loginEmail: '{{ old('email') }}' }" class="space-y-5">
             @csrf
 
             <!-- Email -->
@@ -71,10 +71,10 @@
                     <input id="email"
                            name="email"
                            type="email"
-                           value="{{ old('email') }}"
+                           x-model="loginEmail"
                            required
                            autofocus
-                           placeholder="admin@colearn.test"
+                           placeholder="{{ __('auth.email_placeholder') }}"
                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('email') border-rose-500 @enderror">
                 </div>
                 @error('email')
@@ -88,7 +88,7 @@
                     <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                         {{ __('auth.password_label') }}
                     </label>
-                    <a href="#" class="text-xs font-semibold text-orange-600 hover:text-orange-700">
+                    <a :href="'{{ route('password.request') }}' + (loginEmail ? '?email=' + encodeURIComponent(loginEmail) : '')" class="text-xs font-semibold text-orange-600 hover:text-orange-700">
                         {{ __('auth.forgot_password') }}
                     </a>
                 </div>
@@ -102,7 +102,7 @@
                     <button type="button"
                             @click="show = !show"
                             class="absolute right-3 top-3.5 text-slate-400 hover:text-slate-600 text-xs font-semibold focus:outline-none">
-                        <span x-text="show ? 'Hide' : 'Show'"></span>
+                        <span x-text="show ? '{{ __('auth.hide') }}' : '{{ __('auth.show') }}'"></span>
                     </button>
                 </div>
                 @error('password')
