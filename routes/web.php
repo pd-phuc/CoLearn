@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\CourseCatalogController;
 use App\Http\Controllers\CourseDetailController;
+use App\Http\Controllers\Student\LearningController;
 use App\Http\Controllers\Student\MyCoursesController;
 use App\Http\Controllers\Student\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,10 @@ Route::get('/', function () {
 // Course Catalog & Details
 Route::get('/courses', [CourseCatalogController::class, 'index'])->name('courses.index');
 Route::get('/courses/{slug}', [CourseDetailController::class, 'show'])->name('courses.show');
+
+// Student Learning Player & Progress Tracking
+Route::get('/learn/{course:slug}/{lesson?}', [LearningController::class, 'show'])->name('learn.show');
+Route::post('/learn/lessons/{lesson}/toggle-complete', [LearningController::class, 'toggleComplete'])->name('learn.toggle-complete');
 
 // Language Switcher
 Route::get('/lang/{locale}', function (string $locale) {
