@@ -43,6 +43,10 @@ return new class extends Migration
         DB::statement('ALTER TABLE users ALTER COLUMN id TYPE uuid USING gen_random_uuid();');
         DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT gen_random_uuid();');
 
+        // Alter sessions table user_id column to use UUID
+        DB::statement('TRUNCATE TABLE sessions CASCADE;');
+        DB::statement('ALTER TABLE sessions ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
+
         // Alter categories table to use ULID (string 26)
         DB::statement('TRUNCATE TABLE categories CASCADE;');
         DB::statement('ALTER TABLE categories ALTER COLUMN id DROP DEFAULT;');
