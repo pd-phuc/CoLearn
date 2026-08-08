@@ -156,4 +156,23 @@ return [
     'support_notice' => '24/7 Support answering student programming questions.',
     'terms_of_service' => 'Terms of Service',
     'privacy_policy' => 'Privacy Policy',
+
+    // Learning Player
+    'no_lessons_in_course' => 'This course does not have any lessons published yet.',
+    'enrollment_required_to_access' => 'You must enroll in this course to access this lesson.',
+    'document_lesson_notice' => 'This lesson is formatted as a reading text document. Please review the content below.',
+    'completed_status' => 'Completed',
+    'mark_as_completed' => 'Mark as Completed',
+    'next_lesson' => 'Next Lesson',
+    'lesson_notes_title' => 'Lesson Documentation & Notes',
+    'download_document' => 'Download Attached Resource',
+    'course_curriculum_title' => 'Course Curriculum',
+    'lessons_completed_sub' => 'lessons completed',
+    'section_num' => 'Section :num',
+    'lessons_label' => 'lessons',
+    'progress_label' => 'Progress',
+    'free_preview_badge' => 'Free Preview',
+    'video_not_supported' => 'Your browser does not support HTML5 video player.',
+    'default_instructor_name' => 'CoLearn Instructor',
+    'minutes_short' => 'min',
 ];
