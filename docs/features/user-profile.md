@@ -1,10 +1,10 @@
 # Feature: User Profile & Settings
 
-## Status: In Progress
+## Status: Completed
 
 ## Description
 
-Hệ thống Quản lý Hồ sơ cá nhân, Cập nhật thông tin, Upload ảnh đại diện Avatar, Đổi mật khẩu bảo mật và Quản lý danh sách khóa học đã đăng ký ("My Courses") dành cho tất cả các role (Student, Teacher, Admin).
+Hệ thống Quản lý Hồ sơ cá nhân, Cập nhật thông tin, Upload ảnh đại diện Avatar tự động, Đổi mật khẩu qua Email xác thực an toàn (`[CoLearn] Password Reset Verification`), và Quản lý danh sách khóa học đã đăng ký ("My Courses") dành cho tất cả các role (Student, Teacher, Admin).
 
 ## Models Involved
 
@@ -16,10 +16,11 @@ Hệ thống Quản lý Hồ sơ cá nhân, Cập nhật thông tin, Upload ản
 ## Key Features
 
 - **Chỉnh sửa thông tin cá nhân**: Tên hiển thị, Số điện thoại, Tiêu đề/Headline (VD: "Senior Software Engineer"), Bio/Tiểu sử, Liên kết mạng xã hội (GitHub, LinkedIn, Facebook).
-- **Upload & Cập nhật Avatar**: Tải ảnh đại diện mới từ máy tính, tự động lưu theo cấu trúc tệp chuẩn `/images/avatars/{user_id}.png`.
-- **Đổi mật khẩu & Bảo mật**: Thay đổi mật khẩu hiện tại, mã hóa password an toàn với Laravel Hashing.
+- **Upload & Cập nhật Avatar Tự Động**: Tải ảnh đại diện mới qua nút bấm màu cam tối ưu UX (chọn ảnh tự động submit form), tự động lưu tệp chuẩn UUID `/images/avatars/{uuid}.jpg`.
+- **Đổi mật khẩu & Bảo mật qua Email**: Đổi mật khẩu an toàn thông qua liên kết xác thực gửi về Email (`[CoLearn] Password Reset Verification`), không nhập mật khẩu cũ/mới trực tiếp tại form. Tự động bảo lưu Email từ trang Đăng nhập sang trang Quên mật khẩu.
+- **Tiêu chuẩn UI Production**: 100% Biểu tượng dùng chuẩn Vector SVG (loại bỏ toàn bộ Unicode/Emoji text), Placeholder chuẩn hóa i18n (`name@example.com`), Thông báo lỗi xác thực tối giản (`Invalid email or password.`).
 - **Quản lý khóa học của tôi (`My Courses`)**: Trang danh sách các khóa học đã ghi danh kèm thanh tiến độ hoàn thành bài giảng (Progress Bar) và nút "Tiếp tục học".
-- **i18n Multi-language**: 100% nhãn UI, thông báo thành công/thất bại hỗ trợ Tiếng Việt & Tiếng Anh.
+- **i18n Multi-language**: 100% nhãn UI, thông báo hỗ trợ Tiếng Việt & Tiếng Anh (`__('key')`).
 
 ## Routes
 
