@@ -67,7 +67,7 @@
                                 <div class="px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">Danh Mục Đào Tạo</div>
                                 <div class="py-1">
                                     @forelse($categories as $category)
-                                        <a href="#courses" class="flex items-center justify-between px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-orange-50/80 hover:text-orange-600 transition-colors">
+                                        <a href="{{ route('courses.index', ['category' => $category->slug]) }}" class="flex items-center justify-between px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-orange-50/80 hover:text-orange-600 transition-colors">
                                             <span>{{ $category->name }}</span>
                                             <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 group-hover:bg-orange-100">{{ $category->courses()->count() }}</span>
                                         </a>
@@ -83,10 +83,10 @@
                             <a href="{{ route('home') }}" class="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-orange-600 hover:bg-orange-50/60 rounded-xl transition-colors">
                                 {{ __('messages.home') }}
                             </a>
-                            <a href="#learning-paths" class="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-orange-600 hover:bg-orange-50/60 rounded-xl transition-colors">
+                            <a href="{{ route('home') }}#learning-paths" class="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-orange-600 hover:bg-orange-50/60 rounded-xl transition-colors">
                                 Lộ Trình Học
                             </a>
-                            <a href="#courses" class="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-orange-600 hover:bg-orange-50/60 rounded-xl transition-colors">
+                            <a href="{{ route('courses.index') }}" class="px-3.5 py-2 text-sm font-bold text-slate-700 hover:text-orange-600 hover:bg-orange-50/60 rounded-xl transition-colors">
                                 Khóa Học
                             </a>
                         </nav>
@@ -94,7 +94,7 @@
 
                     <!-- Search Bar (Udemy style with Keyboard hint) -->
                     <div class="flex-1 max-w-sm hidden md:block">
-                        <form action="#courses" method="GET" class="relative">
+                        <form action="{{ route('courses.index') }}" method="GET" class="relative">
                             <input type="text"
                                    name="q"
                                    placeholder="{{ __('messages.search_placeholder') }}"
@@ -122,11 +122,11 @@
                         @auth
                             <!-- Logged In User Avatar Dropdown (fcode style) -->
                             <div x-data="{ open: false }" @click.outside="open = false" class="relative">
-                                <button @click="open = !open" class="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100 transition-colors focus:outline-none">
+                                <button @click="open = !open" class="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100 transition-colors focus:outline-none">
                                     @if(auth()->user()->avatar)
-                                        <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-9 h-9 rounded-xl object-cover ring-2 ring-orange-500/30">
+                                        <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-9 h-9 rounded-full object-cover ring-2 ring-orange-500/30">
                                     @else
-                                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold flex items-center justify-center text-sm shadow-sm">
+                                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold flex items-center justify-center text-sm shadow-sm">
                                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                         </div>
                                     @endif
