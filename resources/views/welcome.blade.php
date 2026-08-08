@@ -243,7 +243,9 @@
                 <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
                     <div>
                         <h3 class="font-extrabold text-slate-900 text-base group-hover:text-orange-600 transition-colors line-clamp-2 leading-snug">
-                            {{ $course->title }}
+                            <a href="{{ route('courses.show', $course->slug) }}">
+                                {{ $course->title }}
+                            </a>
                         </h3>
                         <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed font-medium">
                             {{ $course->description }}
@@ -296,7 +298,7 @@
                                 @endif
                             </div>
 
-                            <a href="#" class="btn-primary text-xs py-2 px-3.5 font-bold shadow-xs">
+                            <a href="{{ route('courses.show', $course->slug) }}" class="btn-primary text-xs py-2 px-3.5 font-bold shadow-xs">
                                 Xem Chi Tiết
                             </a>
                         </div>
