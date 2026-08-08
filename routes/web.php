@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\CourseCatalogController;
+use App\Http\Controllers\CourseDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+// Course Catalog & Details
+Route::get('/courses', [CourseCatalogController::class, 'index'])->name('courses.index');
+Route::get('/courses/{slug}', [CourseDetailController::class, 'show'])->name('courses.show');
 
 // Language Switcher
 Route::get('/lang/{locale}', function (string $locale) {
