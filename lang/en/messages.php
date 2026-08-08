@@ -60,6 +60,8 @@ return [
     'showing_courses_count' => 'Showing :total courses',
     'no_courses_found' => 'No matching courses found',
     'no_courses_sub' => 'Please try adjusting your filter options or search query',
+    'duration_format' => ':hours hrs :minutes mins',
+    'duration_minutes' => ':minutes mins',
 
     // Course Detail & Partials
     'instructor' => 'Instructor',

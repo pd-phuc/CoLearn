@@ -60,6 +60,8 @@ return [
     'showing_courses_count' => 'Hiển thị :total khóa học',
     'no_courses_found' => 'Không tìm thấy khóa học nào phù hợp',
     'no_courses_sub' => 'Vui lòng thử chọn lại bộ lọc hoặc từ khóa tìm kiếm khác',
+    'duration_format' => ':hours giờ :minutes phút',
+    'duration_minutes' => ':minutes phút',
 
     // Course Detail & Partials
     'instructor' => 'Giảng viên',
