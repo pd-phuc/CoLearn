@@ -67,21 +67,26 @@
                     @forelse($section->lessons as $lesson)
                         <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-orange-50/40 transition-colors">
                             <div class="flex items-center gap-3 flex-1 min-w-0">
-                                @if($lesson->is_free_preview || $isEnrolled)
-                                    <span class="text-orange-500 font-bold text-sm">▶</span>
-                                @else
-                                    <span class="text-slate-400 text-xs">🔒</span>
-                                @endif
+                                 @if($lesson->is_free_preview || $isEnrolled)
+                                     <svg class="w-4 h-4 text-orange-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                         <path d="M8 5v14l11-7z"/>
+                                     </svg>
+                                 @else
+                                     <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                     </svg>
+                                 @endif
 
                                 <span class="text-sm font-medium text-slate-800 truncate">
                                     {{ $lesson->title }}
                                 </span>
 
                                 @if($lesson->is_free_preview)
-                                    <button @click="$dispatch('open-preview-modal', { videoUrl: '{{ $lesson->video_url }}', title: '{{ $lesson->title }}' })"
-                                            class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold text-[10px] uppercase tracking-wider hover:bg-orange-500 hover:text-white transition-colors cursor-pointer">
-                                        <span>▶ {{ __('messages.free_preview_badge') }}</span>
-                                    </button>
+                                     <button @click="$dispatch('open-preview-modal', { videoUrl: '{{ $lesson->video_url }}', title: '{{ $lesson->title }}' })"
+                                             class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold text-[10px] uppercase tracking-wider hover:bg-orange-500 hover:text-white transition-colors cursor-pointer">
+                                         <svg class="w-3 h-3 fill-current shrink-0" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                         <span>{{ __('messages.free_preview_badge') }}</span>
+                                     </button>
                                 @endif
                             </div>
 
