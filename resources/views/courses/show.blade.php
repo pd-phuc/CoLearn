@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-4">
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="text-orange-500">🎯</span>
-                        <span>Bạn sẽ học được gì trong khóa học này?</span>
+                        <span>{{ __('messages.what_you_will_learn') }}</span>
                     </h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-semibold text-slate-700 pt-2">
                         @foreach($course->learning_outcomes as $outcome)
@@ -35,7 +35,7 @@
                 <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-3">
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="text-orange-500">📋</span>
-                        <span>Yêu cầu khóa học</span>
+                        <span>{{ __('messages.course_requirements') }}</span>
                     </h2>
                     <ul class="space-y-2 text-sm font-medium text-slate-700 pt-1">
                         @foreach($course->requirements as $req)
@@ -55,7 +55,7 @@
             <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-4">
                 <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                     <span class="text-orange-500">👨‍🏫</span>
-                    <span>Giảng Viên Đào Tạo</span>
+                    <span>{{ __('messages.instructor_title') }}</span>
                 </h2>
                 <div class="flex items-start gap-4 pt-2">
                     <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-black flex items-center justify-center text-xl shadow-md flex-shrink-0">
@@ -63,9 +63,9 @@
                     </div>
                     <div class="space-y-1">
                         <h3 class="text-base font-extrabold text-slate-900">{{ $course->teacher->name ?? 'Giảng Viên CoLearn' }}</h3>
-                        <p class="text-xs font-bold text-orange-600">Chuyên gia Lập trình Senior Software Engineer</p>
+                        <p class="text-xs font-bold text-orange-600">{{ __('messages.instructor_subtitle') }}</p>
                         <p class="text-xs text-slate-500 leading-relaxed pt-1">
-                            Hơn 8 năm kinh nghiệm giảng dạy và phát triển ứng dụng quy mô lớn cho hàng chục ngàn học viên.
+                            {{ __('messages.instructor_bio') }}
                         </p>
                     </div>
                 </div>
