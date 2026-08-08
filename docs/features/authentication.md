@@ -1,6 +1,6 @@
 # Feature: Authentication & Authorization
 
-## Status: Planning
+## Status: Completed
 
 ## Description
 
