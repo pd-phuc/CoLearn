@@ -39,15 +39,17 @@
             </div>
 
             <!-- Student Count -->
-            <div class="text-slate-300 font-semibold flex items-center gap-1">
-                <span>👥</span>
+            <div class="text-slate-300 font-semibold flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
                 <span>{{ __('messages.students_count', ['count' => number_format($course->enrollments()->count())]) }}</span>
             </div>
 
             <!-- Instructor Info -->
             <div class="flex items-center gap-2 border-l border-slate-800 pl-4">
-                <div class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center text-[10px] overflow-hidden">
-                    @if($course->teacher->avatar)
+                <div class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center text-[10px] overflow-hidden ring-1 ring-white/20">
+                    @if($course->teacher && $course->teacher->avatar)
                         <img src="{{ $course->teacher->avatar }}" alt="{{ $course->teacher->name }}" class="w-full h-full object-cover">
                     @else
                         {{ strtoupper(substr($course->teacher->name ?? 'G', 0, 1)) }}

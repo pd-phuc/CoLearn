@@ -56,7 +56,7 @@
     <div class="space-y-3 pt-2">
         @if($isEnrolled)
             <a href="#" class="w-full btn-primary py-3.5 text-base font-bold bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20">
-                ✅ {{ __('messages.go_to_learning') }}
+                ✓ {{ __('messages.go_to_learning') }}
             </a>
         @else
             @auth
@@ -77,24 +77,39 @@
     <!-- Guarantees & Features List -->
     <div class="border-t border-slate-100 pt-5 space-y-3 text-xs font-semibold text-slate-600">
         <p class="font-extrabold text-slate-900 uppercase tracking-wider">{{ __('messages.course_includes') }}</p>
+        
         <div class="flex items-center gap-2.5">
-            <span class="text-orange-500 font-bold">🎬</span>
+            <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
             <span>{{ __('messages.4k_videos', ['duration' => $formattedDuration]) }}</span>
         </div>
+
         <div class="flex items-center gap-2.5">
-            <span class="text-orange-500 font-bold">📖</span>
+            <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
             <span>{{ __('messages.total_lessons', ['count' => $totalLessonsCount]) }}</span>
         </div>
+
         <div class="flex items-center gap-2.5">
-            <span class="text-orange-500 font-bold">∞</span>
+            <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
             <span>{{ __('messages.lifetime_access') }}</span>
         </div>
+
         <div class="flex items-center gap-2.5">
-            <span class="text-orange-500 font-bold">📱</span>
+            <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
             <span>{{ __('messages.mobile_and_desktop') }}</span>
         </div>
+
         <div class="flex items-center gap-2.5">
-            <span class="text-orange-500 font-bold">📜</span>
+            <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
             <span>{{ __('messages.completion_certificate') }}</span>
         </div>
     </div>
