@@ -62,7 +62,9 @@
                 </template>
                 <template x-if="!videoUrl">
                     <div class="text-center p-8 space-y-3">
-                        <div class="w-16 h-16 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center text-3xl mx-auto">▶</div>
+                        <div class="w-16 h-16 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center mx-auto">
+                            <svg class="w-7 h-7 fill-current text-orange-500 ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
                         <p class="text-sm font-extrabold text-white">{{ __('messages.free_preview_modal_title') }}</p>
                         <p class="text-xs text-slate-400">{{ __('messages.free_preview_modal_sub') }}</p>
                     </div>
@@ -71,7 +73,12 @@
 
             <!-- Modal Footer -->
             <div class="p-4 bg-slate-950 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
-                <span>🔒 {{ __('messages.video_protected_notice') }}</span>
+                <div class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <span>{{ __('messages.video_protected_notice') }}</span>
+                </div>
                 <a href="{{ route('register') }}" class="btn-primary py-2 px-4 text-xs font-bold">
                     {{ __('messages.enroll_full_course') }}
                 </a>

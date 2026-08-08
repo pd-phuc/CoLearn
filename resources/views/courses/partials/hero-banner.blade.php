@@ -34,7 +34,11 @@
             <!-- Rating Stars (Udemy Style) -->
             <div class="flex items-center gap-1.5 font-bold">
                 <span class="text-amber-400">5.0</span>
-                <div class="flex text-amber-400">★★★★★</div>
+                <div class="flex text-amber-400 gap-0.5">
+                    @for($i = 0; $i < 5; $i++)
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    @endfor
+                </div>
                 <span class="text-slate-400">({{ __('messages.reviews_count', ['count' => 120]) }})</span>
             </div>
 
