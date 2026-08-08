@@ -13,30 +13,40 @@
         <main class="lg:col-span-8 space-y-10">
 
             <!-- What You'll Learn Box (card-fcode) -->
-            <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-4">
-                <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                    <span class="text-orange-500">🎯</span>
-                    <span>Bạn sẽ học được gì trong khóa học này?</span>
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-semibold text-slate-700 pt-2">
-                    <div class="flex items-start gap-2.5">
-                        <span class="text-emerald-500 font-bold mt-0.5">✓</span>
-                        <span>Nắm vững tư duy lập trình thực chiến chuẩn 28Tech</span>
-                    </div>
-                    <div class="flex items-start gap-2.5">
-                        <span class="text-emerald-500 font-bold mt-0.5">✓</span>
-                        <span>Xây dựng dự án thực tế từ đầu đến triển khai Production</span>
-                    </div>
-                    <div class="flex items-start gap-2.5">
-                        <span class="text-emerald-500 font-bold mt-0.5">✓</span>
-                        <span>Tối ưu hóa hiệu năng Database & Caching Redis</span>
-                    </div>
-                    <div class="flex items-start gap-2.5">
-                        <span class="text-emerald-500 font-bold mt-0.5">✓</span>
-                        <span>Nhận chứng chỉ hoàn thành xuất sắc từ CoLearn</span>
+            @if(is_array($course->learning_outcomes) && count($course->learning_outcomes) > 0)
+                <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-4">
+                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        <span class="text-orange-500">🎯</span>
+                        <span>Bạn sẽ học được gì trong khóa học này?</span>
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-semibold text-slate-700 pt-2">
+                        @foreach($course->learning_outcomes as $outcome)
+                            <div class="flex items-start gap-2.5">
+                                <span class="text-emerald-500 font-bold mt-0.5">✓</span>
+                                <span>{{ $outcome }}</span>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            @endif
+
+            <!-- Requirements Box -->
+            @if(is_array($course->requirements) && count($course->requirements) > 0)
+                <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-3">
+                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        <span class="text-orange-500">📋</span>
+                        <span>Yêu cầu khóa học</span>
+                    </h2>
+                    <ul class="space-y-2 text-sm font-medium text-slate-700 pt-1">
+                        @foreach($course->requirements as $req)
+                            <div class="flex items-center gap-2">
+                                <span class="text-orange-500 font-bold">&bull;</span>
+                                <span>{{ $req }}</span>
+                            </div>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <!-- Curriculum Accordion Component -->
             @include('courses.partials.curriculum-accordion')
