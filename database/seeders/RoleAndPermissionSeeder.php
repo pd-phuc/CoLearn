@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -51,7 +50,7 @@ class RoleAndPermissionSeeder extends Seeder
                 'name' => 'Admin User',
                 'password' => 'password',
                 'email_verified_at' => now(),
-            ]
+            ],
         );
         $adminUser->assignRole($adminRole);
 
@@ -61,7 +60,7 @@ class RoleAndPermissionSeeder extends Seeder
                 'name' => 'Teacher User',
                 'password' => 'password',
                 'email_verified_at' => now(),
-            ]
+            ],
         );
         $teacherUser->assignRole($teacherRole);
 
@@ -71,7 +70,7 @@ class RoleAndPermissionSeeder extends Seeder
                 'name' => 'Student User',
                 'password' => 'password',
                 'email_verified_at' => now(),
-            ]
+            ],
         );
         $studentUser->assignRole($studentRole);
     }
