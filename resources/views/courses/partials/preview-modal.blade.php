@@ -4,7 +4,7 @@
         videoTitle: '',
         videoUrl: '',
         openModal(detail) {
-            this.videoTitle = detail?.title || 'Bài Học Xem Thử Miễn Phí';
+            this.videoTitle = detail?.title || '{{ __('messages.free_preview_modal_title') }}';
             this.videoUrl = detail?.videoUrl || '';
             this.isOpen = true;
         },
@@ -45,7 +45,7 @@
             <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800">
                 <div class="flex items-center gap-2">
                     <span class="px-2.5 py-0.5 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-md font-bold text-[10px] uppercase tracking-wider">
-                        Xem Thử Miễn Phí
+                        {{ __('messages.free_preview_modal_title') }}
                     </span>
                     <h3 class="font-extrabold text-sm sm:text-base text-white truncate max-w-md" x-text="videoTitle"></h3>
                 </div>
@@ -63,17 +63,17 @@
                 <template x-if="!videoUrl">
                     <div class="text-center p-8 space-y-3">
                         <div class="w-16 h-16 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center text-3xl mx-auto">▶</div>
-                        <p class="text-sm font-extrabold text-white">Video xem thử miễn phí cho bài giảng này</p>
-                        <p class="text-xs text-slate-400">Vui lòng mua khóa học để mở khóa toàn bộ tất cả bài giảng và bài tập thực hành.</p>
+                        <p class="text-sm font-extrabold text-white">{{ __('messages.free_preview_modal_title') }}</p>
+                        <p class="text-xs text-slate-400">{{ __('messages.free_preview_modal_sub') }}</p>
                     </div>
                 </template>
             </div>
 
             <!-- Modal Footer -->
             <div class="p-4 bg-slate-950 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
-                <span>🔒 Video được bảo vệ bản quyền thuộc về CoLearn Platform</span>
+                <span>🔒 {{ __('messages.video_protected_notice') }}</span>
                 <a href="{{ route('register') }}" class="btn-primary py-2 px-4 text-xs font-bold">
-                    Đăng Ký Học Đầy Đủ
+                    {{ __('messages.enroll_full_course') }}
                 </a>
             </div>
 

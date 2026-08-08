@@ -19,19 +19,19 @@
     <!-- Header Stats & Expand All Buttons -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
         <div>
-            <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Nội Dung Khóa Học</h2>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{{ __('messages.course_content') }}</h2>
             <p class="text-xs font-semibold text-slate-500 mt-1">
-                {{ $course->sections->count() }} chương &bull; {{ $totalLessonsCount }} bài học &bull; {{ $formattedDuration }} tổng thời lượng
+                {{ __('messages.curriculum_summary', ['sections' => $course->sections->count(), 'lessons' => $totalLessonsCount, 'duration' => $formattedDuration]) }}
             </p>
         </div>
 
         <div class="flex items-center gap-2 text-xs font-bold">
             <button @click="expandAll()" class="text-orange-600 hover:text-orange-700 hover:underline cursor-pointer">
-                Mở tất cả chương
+                {{ __('messages.expand_all') }}
             </button>
             <span class="text-slate-300">|</span>
             <button @click="collapseAll()" class="text-slate-500 hover:text-slate-700 hover:underline cursor-pointer">
-                Đóng tất cả
+                {{ __('messages.collapse_all') }}
             </button>
         </div>
     </div>
@@ -54,9 +54,9 @@
                     </div>
 
                     <div class="text-xs font-semibold text-slate-500 flex items-center gap-3">
-                        <span>{{ $section->lessons->count() }} bài học</span>
+                        <span>{{ __('messages.lessons_count', ['count' => $section->lessons->count()]) }}</span>
                         <span class="hidden sm:inline">&bull;</span>
-                        <span class="hidden sm:inline">{{ floor($section->lessons->sum('duration') / 60) }} phút</span>
+                        <span class="hidden sm:inline">{{ floor($section->lessons->sum('duration') / 60) }} min</span>
                     </div>
                 </button>
 
@@ -80,7 +80,7 @@
                                 @if($lesson->is_free_preview)
                                     <button @click="$dispatch('open-preview-modal', { videoUrl: '{{ $lesson->video_url }}', title: '{{ $lesson->title }}' })"
                                             class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold text-[10px] uppercase tracking-wider hover:bg-orange-500 hover:text-white transition-colors cursor-pointer">
-                                        <span>▶ Xem thử miễn phí</span>
+                                        <span>▶ {{ __('messages.free_preview_badge') }}</span>
                                     </button>
                                 @endif
                             </div>
@@ -90,14 +90,14 @@
                             </div>
                         </div>
                     @empty
-                        <div class="px-6 py-3 text-xs text-slate-400 italic">Chưa có bài học trong chương này</div>
+                        <div class="px-6 py-3 text-xs text-slate-400 italic">No lessons available</div>
                     @endforelse
                 </div>
 
             </div>
         @empty
             <div class="p-8 text-center bg-white rounded-2xl border border-slate-200/80 text-slate-400 font-medium">
-                Nội dung giáo trình đang được cập nhật...
+                No sections available
             </div>
         @endforelse
     </div>

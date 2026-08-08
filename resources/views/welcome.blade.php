@@ -14,23 +14,23 @@
         <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 border border-orange-200 text-xs font-bold uppercase tracking-wider">
                 <span class="animate-pulse">🔥</span>
-                <span>Nền tảng đào tạo chuẩn TITV & 28Tech</span>
+                <span>{{ __('messages.hero_tagline') }}</span>
             </div>
 
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]">
-                Học Lập Trình Thực Chiến — <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500">Bứt Phá Sự Nghiệp IT</span>
+                {{ __('messages.hero_title') }}
             </h1>
 
             <p class="text-base text-slate-600 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Hệ thống bài giảng chất lượng cao, bài tập tự động chấm và lộ trình thiết kế bài bản cho sinh viên IT & Lập trình viên tương lai.
+                {{ __('messages.hero_subtitle') }}
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                <a href="#courses" class="btn-primary py-3.5 px-8 text-base font-bold w-full sm:w-auto shadow-lg shadow-orange-500/25">
-                    Khám Phá Khóa Học &rarr;
+                <a href="{{ route('courses.index') }}" class="btn-primary py-3.5 px-8 text-base font-bold w-full sm:w-auto shadow-lg shadow-orange-500/25">
+                    {{ __('messages.explore_courses') }} &rarr;
                 </a>
                 <a href="#learning-paths" class="btn-secondary py-3.5 px-6 text-base font-bold w-full sm:w-auto">
-                    Xem Lộ Trình Học
+                    {{ __('messages.view_learning_paths') }}
                 </a>
             </div>
 
@@ -38,15 +38,15 @@
             <div class="grid grid-cols-3 gap-4 pt-8 border-t border-slate-200/80 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
                 <div>
                     <p class="text-2xl font-black text-slate-900">10,000+</p>
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Học Viên</p>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('messages.students_stat') }}</p>
                 </div>
                 <div>
                     <p class="text-2xl font-black text-slate-900">50+</p>
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Khóa Học</p>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('messages.courses_stat') }}</p>
                 </div>
                 <div>
                     <p class="text-2xl font-black text-orange-600">98%</p>
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Hoàn Thành</p>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('messages.completion_stat') }}</p>
                 </div>
             </div>
         </div>
@@ -91,10 +91,10 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-orange-600 mb-1">
-                <span>📍 Lộ Trình Đào Tạo</span>
+                <span>📍 {{ __('messages.learning_paths') }}</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Lộ Trình Học Thực Chiến Bài Bản
+                {{ __('messages.learning_paths_title') }}
             </h2>
         </div>
     </div>
@@ -111,9 +111,9 @@
             <p class="text-xs text-slate-500 mt-2 font-medium leading-relaxed">
                 Từ HTML/CSS, Tailwind 4, Blade đến Backend Laravel 13 & PostgreSQL thực tế.
             </p>
-            <span class="inline-block mt-4 text-xs font-bold text-orange-600 group-hover:translate-x-1 transition-transform">
-                Xem lộ trình 4 khóa &rarr;
-            </span>
+            <a href="{{ route('courses.index') }}" class="inline-block mt-4 text-xs font-bold text-orange-600 group-hover:translate-x-1 transition-transform">
+                Xem lộ trình &rarr;
+            </a>
         </div>
 
         <!-- Path 2 -->
@@ -127,9 +127,9 @@
             <p class="text-xs text-slate-500 mt-2 font-medium leading-relaxed">
                 Cấu trúc dữ liệu, thuật toán nâng cao cho sinh viên IT & Kỳ thi tin học.
             </p>
-            <span class="inline-block mt-4 text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
-                Xem lộ trình 3 khóa &rarr;
-            </span>
+            <a href="{{ route('courses.index') }}" class="inline-block mt-4 text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
+                Xem lộ trình &rarr;
+            </a>
         </div>
 
         <!-- Path 3 -->
@@ -143,9 +143,9 @@
             <p class="text-xs text-slate-500 mt-2 font-medium leading-relaxed">
                 Thiết kế Database chuẩn hoá, Indexing, Tối ưu Query SQL & Caching Redis.
             </p>
-            <span class="inline-block mt-4 text-xs font-bold text-purple-600 group-hover:translate-x-1 transition-transform">
-                Xem lộ trình 2 khóa &rarr;
-            </span>
+            <a href="{{ route('courses.index') }}" class="inline-block mt-4 text-xs font-bold text-purple-600 group-hover:translate-x-1 transition-transform">
+                Xem lộ trình &rarr;
+            </a>
         </div>
 
         <!-- Path 4 -->
@@ -159,9 +159,9 @@
             <p class="text-xs text-slate-500 mt-2 font-medium leading-relaxed">
                 Containerize Docker, Nginx Reverse Proxy, CI/CD Deployment trên Cloud.
             </p>
-            <span class="inline-block mt-4 text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
-                Xem lộ trình 2 khóa &rarr;
-            </span>
+            <a href="{{ route('courses.index') }}" class="inline-block mt-4 text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                Xem lộ trình &rarr;
+            </a>
         </div>
     </div>
 </section>
@@ -177,13 +177,13 @@
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 {{ __('messages.featured_categories') }}
             </h2>
-            <p class="text-sm font-medium text-slate-500 mt-1">Khám phá theo từng chuyên mục đào tạo</p>
+            <p class="text-sm font-medium text-slate-500 mt-1">{{ __('messages.featured_categories_sub') }}</p>
         </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         @foreach($categories as $category)
-            <a href="#courses" class="group p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
+            <a href="{{ route('courses.index', ['category' => $category->slug]) }}" class="group p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
                 <div class="flex items-center gap-3.5">
                     <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
                         ⚡
@@ -193,7 +193,7 @@
                             {{ $category->name }}
                         </h4>
                         <p class="text-xs text-slate-400 font-medium mt-0.5">
-                            {{ $category->courses()->count() }} {{ __('messages.all_courses') }}
+                            {{ __('messages.lessons_count', ['count' => $category->courses()->count()]) }}
                         </p>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 {{ __('messages.featured_courses') }}
             </h2>
-            <p class="text-sm font-medium text-slate-500 mt-1">Danh sách các khóa học bán chạy nhất</p>
+            <p class="text-sm font-medium text-slate-500 mt-1">{{ __('messages.featured_courses_sub') }}</p>
         </div>
     </div>
 
@@ -235,7 +235,7 @@
 
                     <!-- Level Badge -->
                     <span class="absolute top-3 right-3 z-10 px-2.5 py-0.5 bg-slate-900/80 backdrop-blur-md text-white font-bold text-[10px] uppercase tracking-wider rounded-md">
-                        {{ $course->level }}
+                        {{ __('messages.level_' . $course->level) }}
                     </span>
                 </div>
 
@@ -260,10 +260,10 @@
                             <div class="flex items-center gap-1">
                                 <span class="font-bold text-amber-500">5.0</span>
                                 <div class="flex text-amber-400 text-xs">★★★★★</div>
-                                <span class="text-slate-400 text-[11px]">(120)</span>
+                                <span class="text-slate-400 text-[11px]">({{ __('messages.reviews_count', ['count' => 120]) }})</span>
                             </div>
                             <span class="font-bold text-slate-500">
-                                📖 {{ $course->sections->flatMap->lessons->count() }} bài học
+                                📖 {{ __('messages.lessons_count', ['count' => $course->sections->flatMap->lessons->count()]) }}
                             </span>
                         </div>
 
@@ -281,25 +281,25 @@
                                 @if($course->discount_price)
                                     <div class="flex items-baseline gap-1.5">
                                         <span class="text-lg font-black text-orange-600">
-                                            {{ number_format($course->discount_price) }}đ
+                                            {{ number_format($course->discount_price) }}{{ __('messages.price_currency') }}
                                         </span>
                                         <span class="text-xs text-slate-400 line-through font-medium">
-                                            {{ number_format($course->price) }}đ
+                                            {{ number_format($course->price) }}{{ __('messages.price_currency') }}
                                         </span>
                                     </div>
                                 @elseif($course->price > 0)
                                     <span class="text-lg font-black text-slate-900">
-                                        {{ number_format($course->price) }}đ
+                                        {{ number_format($course->price) }}{{ __('messages.price_currency') }}
                                     </span>
                                 @else
                                     <span class="text-lg font-black text-emerald-600">
-                                        Miễn Phí
+                                        {{ __('messages.free') }}
                                     </span>
                                 @endif
                             </div>
 
                             <a href="{{ route('courses.show', $course->slug) }}" class="btn-primary text-xs py-2 px-3.5 font-bold shadow-xs">
-                                Xem Chi Tiết
+                                {{ __('messages.view_details') }}
                             </a>
                         </div>
 
@@ -309,7 +309,7 @@
             </div>
         @empty
             <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200/80">
-                <p class="text-slate-500 font-medium">Đang cập nhật danh sách khóa học...</p>
+                <p class="text-slate-500 font-medium">{{ __('messages.no_courses_found') }}</p>
             </div>
         @endforelse
     </div>
