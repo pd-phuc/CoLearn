@@ -1,84 +1,88 @@
-# 🎨 CoLearn — UI/UX & Design System Specification
+# 🎨 CoLearn — Official Design System & Graphic Specification
 
-## 1. Design Tokens & Color Palette
-
-Inspired by **28Tech & TITV** (Clean, energetic, bright educational platform) with **Vibrant Orange** as the primary identity color.
-
-### Palette Tokens
-| Token Name | Hex Code | Tailwind v4 Equivalent | Purpose |
-|------------|----------|------------------------|---------|
-| `color-primary-50` | `#fff7ed` | `orange-50` | Light backgrounds, active item tints |
-| `color-primary-500` | `#f97316` | `orange-500` | Primary buttons, active tabs, highlights |
-| `color-primary-600` | `#ea580c` | `orange-600` | Primary hover states, prominent headings |
-| `color-primary-700` | `#c2410c` | `orange-700` | Active click states, contrast text |
-| `color-secondary-500` | `#10b981` | `emerald-500` | Badges, success alerts, price discounts |
-| `color-surface-bg` | `#f8fafc` | `slate-50` | App background |
-| `color-card-bg` | `#ffffff` | `white` | Card components, navbar, modals |
-| `color-text-main` | `#0f172a` | `slate-900` | Primary typography |
-| `color-text-sub` | `#475569` | `slate-600` | Subtitles, labels, secondary info |
+> **Design Directive**: Graphic aesthetics strictly follow `fcode-web-system-challenge-3` (floating glassmorphic headers, OKLCH primary colors, `rounded-2xl` cards, floating keyframe animations). Layout structure combines **Udemy** (categories mega-menu, course cards, ratings, search), **28Tech** (learning paths), and **TITV.vn** (clear Vietnamese learning progression).
 
 ---
 
-## 2. Component Micro-Interactions
+## 1. Graphic Aesthetic Principles (`fcode` Style)
 
-### Buttons
-- **Primary Action (`.btn-primary`)**: Orange background (`#f97316`), white text, `rounded-xl`, `font-semibold`.
-  - *Hover state*: `bg-orange-600 translate-y-[-1px] shadow-lg shadow-orange-500/25` (smooth 200ms transition).
-  - *Active state*: `translate-y-[0px] shadow-sm`.
-- **OAuth Icon Pill (`.btn-oauth-icon`)**: White background, `border border-slate-200`, `rounded-xl`, centered SVG icon.
-  - *Hover state*: `border-slate-300 bg-slate-50 shadow-md scale-[1.03]` (smooth 200ms transition).
-  - *Active state*: `scale-[0.98]`.
+### 1.1. Floating Glassmorphism (`.floating-header`)
+- **Header**: Floating rounded container offset from screen top:
+  `sticky top-3 z-50 mx-auto max-w-7xl rounded-2xl border border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-md transition-all`
+- **Glow Effects**: Hover glow blur behind logo and badge icons:
+  `absolute inset-0 rounded-xl bg-orange-500/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity`
 
-### Navbar & Dropdowns
-- **Category Dropdown**: Activated on click/hover with Alpine.js (`x-data`, `x-show`, `x-transition`).
-  - Dropdown enters with `fade & slide down (duration 150ms)`.
-- **Language Switcher**: Toggle pill (🇻🇳 VN | 🇬🇧 EN) updating locale session via `/lang/{locale}` route.
+### 1.2. Card Aesthetics (`.card-fcode`)
+- **Card Container**: `rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300`
+- **Soft Backgrounds**: App background soft gradient `bg-gradient-to-b from-slate-100/60 via-slate-50 to-white`.
 
----
-
-## 3. Screen Specifications & Wireframe Mappings
-
-### 3.1. Base Layout (`layouts/app.blade.php`)
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│ [CoLearn Logo]  [Categories ▾]  [Search Course...]    [VN|EN] [Login] [Register] │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│                             MAIN CONTENT BLOCK                          │
-│                                                                         │
-├─────────────────────────────────────────────────────────────────────────┤
-│ Footer: Platform Info | Top Categories | Contact | Copyright © 2026     │
-└─────────────────────────────────────────────────────────────────────────┘
+### 1.3. Keyframe Animations
+```css
+@keyframes floating {
+    0% { transform: translateY(0px) rotate(-6deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(-6deg); }
+}
+.animate-floating { animation: floating 4s ease-in-out infinite; }
 ```
 
-### 3.2. Homepage (`welcome.blade.php`)
-- **Hero Section**: Bright gradient card with Orange CTA button ("Khám phá khóa học ngay"), illustration, and key metrics (Học viên, Khóa học, Giảng viên).
-- **Featured Categories**: 4 Category cards with icons and course counts. Hovering scales card up slightly.
-- **Top Courses Grid**: Responsive grid (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`).
-  - Course Card: Thumbnail image with overlay badge, category name, title, teacher info, star rating, and price (with original price strike-through).
+---
 
-### 3.3. Login Screen (`auth/login.blade.php`)
-- Centered split layout or card container (`max-w-md mx-auto`).
-- **Header**: CoLearn logo, "Welcome back / Chào mừng bạn quay trở lại".
-- **Social Login Row**: Horizontal flex row with 2 white pill buttons:
-  - **Google button**: Centered Google G multi-color SVG icon (`w-6 h-6`).
-  - **Facebook button**: Centered Facebook blue f SVG icon (`w-6 h-6`).
-- **Divider**: "HOẶC ĐĂNG NHẬP BẰNG EMAIL" / "OR LOGIN WITH EMAIL".
-- **Form Fields**:
-  - Email input with icon.
-  - Password input with toggle show/hide eye icon (Alpine.js).
-  - Checkbox "Ghi nhớ đăng nhập" & Link "Quên mật khẩu?".
-  - Full-width Orange Submit Button ("Đăng nhập").
-- **Footer Link**: "Chưa có tài khoản? Đăng ký ngay".
+## 2. Palette Tokens & Color Hierarchy
 
-### 3.4. Register Screen (`auth/register.blade.php`)
-- Similar card layout with Name, Email, Password, Password Confirmation fields.
-- Social registration row (Google/Facebook icons).
-- Terms & Privacy policy checkbox.
+| Token Name | Hex / Class | Purpose |
+|------------|-------------|---------|
+| `color-primary` | `#f97316` (`orange-500`) | Primary brand identity, buttons, active highlights |
+| `color-primary-hover` | `#ea580c` (`orange-600`) | Hover state for primary actions |
+| `color-primary-tint` | `#fff7ed` (`orange-50`) | Card hover tints, category icon wrappers |
+| `color-secondary-accent` | `#10b981` (`emerald-500`) | Free price tags, success badges, completion checks |
+| `color-surface` | `slate-100/60` to `slate-50` | Background canvas |
+| `color-card` | `#ffffff` (`white`) | Glassmorphic cards, popovers, dropdowns |
+| `color-text-main` | `#0f172a` (`slate-900`) | Headings, primary text |
+| `color-text-sub` | `#64748b` (`slate-500`) | Subtitles, lesson count, metadata |
 
 ---
 
-## 4. Internationalization (i18n) Keys Structure
+## 3. Hybrid Layout Structure Guidelines
 
-- `lang/vi/auth.php` & `lang/en/auth.php`: Login, register, email, password, remember me, forgot password, social login strings.
-- `lang/vi/messages.php` & `lang/en/messages.php`: Navbar items, categories, search placeholder, course levels, price format.
+### 3.1. Navigation & Header (Udemy + TITV + fcode)
+- **Brand**: Logo with glowing blur circle backdrop.
+- **Categories Dropdown (Udemy)**: Mega-menu with course counts per category.
+- **Search Bar (Udemy)**: Input with keyboard shortcut hint (`Ctrl+K`).
+- **Learning Paths (28Tech/TITV)**: Links for "Trang chủ", "Lộ trình học", "Khóa học".
+- **Language Switcher**: Compact pill `🇻🇳 VI | 🇬🇧 EN`.
+- **User Avatar (fcode)**: Rounded avatar with role indicator badge (Admin/Teacher/Student).
+
+### 3.2. Course Cards (Udemy + 28Tech Hybrid)
+- **Thumbnail**: Aspect ratio `16:9` with category badge overlay.
+- **Level Tag**: `beginner`, `intermediate`, `advanced` pill badges.
+- **Rating Stars (Udemy)**: 5.0 ★ rating with review counts.
+- **Stats**: Total lessons count (`📖 X bài học`), duration in hours/mins.
+- **Price Tag (Udemy)**: Discount price in bold Orange + original price struck-through.
+- **Instructor Avatar**: Teacher name and avatar.
+
+### 3.3. Learning Paths Section (28Tech Style)
+- 4 Visual Path Cards:
+  1. *Web Fullstack Laravel 13*
+  2. *C++ & Thuật Toán*
+  3. *Cơ Sở Dữ Liệu PostgreSQL*
+  4. *DevOps & Cloud AWS*
+
+---
+
+## 4. UI Standards for Future Features
+
+### 4.1. Course Detail Page (`/courses/{slug}`)
+- **Hero Header**: Dark glassmorphic banner with course title, rating, instructor info, enrolled count, and video preview sticky card on the right.
+- **Curriculum Accordion (Udemy Style)**: Sections list with expandable lesson items, preview indicators, and duration badges.
+
+### 4.2. Video Player & Learning Interface (`/courses/{slug}/learn`)
+- **Left/Center**: Responsive video player with custom controls and lesson notes.
+- **Right Sidebar (Udemy/TITV Style)**: Interactive lesson list with completion checkboxes (`LessonCompletion`), section headers, and progress bar (`X% completed`).
+
+### 4.3. Teacher Dashboard (`/teacher/courses`)
+- **Stat Cards (`card-fcode`)**: Total courses, total students, total revenue.
+- **Course Table**: Published/Draft status badges, quick edit CTA, section/lesson builder.
+
+### 4.4. Admin Panel (`/admin/dashboard`)
+- **Glassmorphic Cards**: User management, course approval workflow (`pending_review` -> `published`), revenue reports.
