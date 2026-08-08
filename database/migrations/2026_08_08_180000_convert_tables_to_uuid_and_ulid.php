@@ -37,53 +37,55 @@ return new class extends Migration
         Schema::dropIfExists('model_has_roles');
         Schema::dropIfExists('model_has_permissions');
 
-        // Alter users table to use UUID
-        DB::statement('TRUNCATE TABLE users CASCADE;');
-        DB::statement('ALTER TABLE users ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE users ALTER COLUMN id TYPE uuid USING gen_random_uuid();');
-        DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT gen_random_uuid();');
+        if (DB::getDriverName() === 'pgsql') {
+            // Alter users table to use UUID
+            DB::statement('TRUNCATE TABLE users CASCADE;');
+            DB::statement('ALTER TABLE users ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE users ALTER COLUMN id TYPE uuid USING gen_random_uuid();');
+            DB::statement('ALTER TABLE users ALTER COLUMN id SET DEFAULT gen_random_uuid();');
 
-        // Alter sessions table user_id column to use UUID
-        DB::statement('TRUNCATE TABLE sessions CASCADE;');
-        DB::statement('ALTER TABLE sessions ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
+            // Alter sessions table user_id column to use UUID
+            DB::statement('TRUNCATE TABLE sessions CASCADE;');
+            DB::statement('ALTER TABLE sessions ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
 
-        // Alter categories table to use ULID (string 26)
-        DB::statement('TRUNCATE TABLE categories CASCADE;');
-        DB::statement('ALTER TABLE categories ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE categories ALTER COLUMN id TYPE varchar(26) USING id::text;');
+            // Alter categories table to use ULID (string 26)
+            DB::statement('TRUNCATE TABLE categories CASCADE;');
+            DB::statement('ALTER TABLE categories ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE categories ALTER COLUMN id TYPE varchar(26) USING id::text;');
 
-        // Alter courses table to use ULID for id, uuid for teacher_id, ulid for category_id
-        DB::statement('TRUNCATE TABLE courses CASCADE;');
-        DB::statement('ALTER TABLE courses ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE courses ALTER COLUMN id TYPE varchar(26) USING id::text;');
-        DB::statement('ALTER TABLE courses ALTER COLUMN teacher_id TYPE uuid USING teacher_id::text::uuid;');
-        DB::statement('ALTER TABLE courses ALTER COLUMN category_id TYPE varchar(26) USING category_id::text;');
+            // Alter courses table to use ULID for id, uuid for teacher_id, ulid for category_id
+            DB::statement('TRUNCATE TABLE courses CASCADE;');
+            DB::statement('ALTER TABLE courses ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE courses ALTER COLUMN id TYPE varchar(26) USING id::text;');
+            DB::statement('ALTER TABLE courses ALTER COLUMN teacher_id TYPE uuid USING teacher_id::text::uuid;');
+            DB::statement('ALTER TABLE courses ALTER COLUMN category_id TYPE varchar(26) USING category_id::text;');
 
-        // Alter sections table
-        DB::statement('TRUNCATE TABLE sections CASCADE;');
-        DB::statement('ALTER TABLE sections ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE sections ALTER COLUMN id TYPE varchar(26) USING id::text;');
-        DB::statement('ALTER TABLE sections ALTER COLUMN course_id TYPE varchar(26) USING course_id::text;');
+            // Alter sections table
+            DB::statement('TRUNCATE TABLE sections CASCADE;');
+            DB::statement('ALTER TABLE sections ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE sections ALTER COLUMN id TYPE varchar(26) USING id::text;');
+            DB::statement('ALTER TABLE sections ALTER COLUMN course_id TYPE varchar(26) USING course_id::text;');
 
-        // Alter lessons table
-        DB::statement('TRUNCATE TABLE lessons CASCADE;');
-        DB::statement('ALTER TABLE lessons ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE lessons ALTER COLUMN id TYPE varchar(26) USING id::text;');
-        DB::statement('ALTER TABLE lessons ALTER COLUMN section_id TYPE varchar(26) USING section_id::text;');
+            // Alter lessons table
+            DB::statement('TRUNCATE TABLE lessons CASCADE;');
+            DB::statement('ALTER TABLE lessons ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE lessons ALTER COLUMN id TYPE varchar(26) USING id::text;');
+            DB::statement('ALTER TABLE lessons ALTER COLUMN section_id TYPE varchar(26) USING section_id::text;');
 
-        // Alter enrollments table
-        DB::statement('TRUNCATE TABLE enrollments CASCADE;');
-        DB::statement('ALTER TABLE enrollments ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE enrollments ALTER COLUMN id TYPE varchar(26) USING id::text;');
-        DB::statement('ALTER TABLE enrollments ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
-        DB::statement('ALTER TABLE enrollments ALTER COLUMN course_id TYPE varchar(26) USING course_id::text;');
+            // Alter enrollments table
+            DB::statement('TRUNCATE TABLE enrollments CASCADE;');
+            DB::statement('ALTER TABLE enrollments ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE enrollments ALTER COLUMN id TYPE varchar(26) USING id::text;');
+            DB::statement('ALTER TABLE enrollments ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
+            DB::statement('ALTER TABLE enrollments ALTER COLUMN course_id TYPE varchar(26) USING course_id::text;');
 
-        // Alter lesson_completions table
-        DB::statement('TRUNCATE TABLE lesson_completions CASCADE;');
-        DB::statement('ALTER TABLE lesson_completions ALTER COLUMN id DROP DEFAULT;');
-        DB::statement('ALTER TABLE lesson_completions ALTER COLUMN id TYPE varchar(26) USING id::text;');
-        DB::statement('ALTER TABLE lesson_completions ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
-        DB::statement('ALTER TABLE lesson_completions ALTER COLUMN lesson_id TYPE varchar(26) USING lesson_id::text;');
+            // Alter lesson_completions table
+            DB::statement('TRUNCATE TABLE lesson_completions CASCADE;');
+            DB::statement('ALTER TABLE lesson_completions ALTER COLUMN id DROP DEFAULT;');
+            DB::statement('ALTER TABLE lesson_completions ALTER COLUMN id TYPE varchar(26) USING id::text;');
+            DB::statement('ALTER TABLE lesson_completions ALTER COLUMN user_id TYPE uuid USING user_id::text::uuid;');
+            DB::statement('ALTER TABLE lesson_completions ALTER COLUMN lesson_id TYPE varchar(26) USING lesson_id::text;');
+        }
 
         // Recreate Spatie Permission pivot tables with UUID model_id
         $tableNames = config('permission.table_names');
@@ -141,7 +143,5 @@ return new class extends Migration
         });
     }
 
-    public function down(): void
-    {
-    }
+    public function down(): void {}
 };
