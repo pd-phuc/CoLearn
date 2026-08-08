@@ -13,7 +13,10 @@
         <!-- Hero Left Text -->
         <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 border border-orange-200 text-xs font-bold uppercase tracking-wider">
-                <span class="animate-pulse">🔥</span>
+                <svg class="w-4 h-4 text-orange-500 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
                 <span>{{ __('messages.hero_tagline') }}</span>
             </div>
 
@@ -56,14 +59,19 @@
             <div class="relative mx-auto max-w-md bg-white/90 backdrop-blur-xl p-6 sm:p-7 rounded-3xl shadow-2xl border border-slate-200/80">
 
                 <!-- Floating Badge Pill -->
-                <div class="absolute -top-4 -right-4 z-20 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3.5 py-1.5 rounded-full text-xs font-extrabold shadow-lg animate-floating">
-                    ⭐ TOP 1 Best Seller
+                <div class="absolute -top-4 -right-4 z-20 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3.5 py-1.5 rounded-full text-xs font-extrabold shadow-lg animate-floating flex items-center gap-1.5">
+                    <svg class="w-4 h-4 fill-amber-300" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    <span>TOP 1 Best Seller</span>
                 </div>
 
                 <div class="aspect-video w-full rounded-2xl bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 p-6 flex flex-col justify-between text-white shadow-inner relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <span class="px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-lg text-[10px] font-bold uppercase tracking-wider">Laravel 13 Real Project</span>
-                        <span class="text-2xl">💻</span>
+                        <svg class="w-6 h-6 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
                     </div>
                     <div>
                         <h3 class="text-lg font-black leading-snug">Fullstack Web Titan Standard</h3>
@@ -91,7 +99,10 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-orange-600 mb-1">
-                <span>📍 {{ __('messages.learning_paths') }}</span>
+                <svg class="w-4 h-4 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                </svg>
+                <span>{{ __('messages.learning_paths') }}</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 {{ __('messages.learning_paths_title') }}
@@ -103,7 +114,9 @@
         <!-- Path 1 -->
         <div class="group p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-black text-2xl mb-4 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all">
-                🌐
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
             </div>
             <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-orange-600 transition-colors">
                 Lập Trình Web Fullstack
@@ -119,7 +132,10 @@
         <!-- Path 2 -->
         <div class="group p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-black text-2xl mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                ⚙️
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
             </div>
             <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-blue-600 transition-colors">
                 C++ & Giải Thuật
@@ -135,7 +151,9 @@
         <!-- Path 3 -->
         <div class="group p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-black text-2xl mb-4 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all">
-                🗄️
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                </svg>
             </div>
             <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-purple-600 transition-colors">
                 Cơ Sở Dữ Liệu Chuyên Sâu
@@ -151,7 +169,9 @@
         <!-- Path 4 -->
         <div class="group p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-black text-2xl mb-4 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                ☁️
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 001-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+                </svg>
             </div>
             <h3 class="font-extrabold text-slate-900 text-lg group-hover:text-emerald-600 transition-colors">
                 DevOps & Cloud AWS
@@ -186,18 +206,22 @@
             <a href="{{ route('courses.index', ['category' => $category->slug]) }}" class="group p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
                 <div class="flex items-center gap-3.5">
                     <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
-                        ⚡
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
                     </div>
                     <div>
                         <h4 class="font-bold text-slate-900 text-sm group-hover:text-orange-600 transition-colors">
                             {{ $category->name }}
                         </h4>
                         <p class="text-xs text-slate-400 font-medium mt-0.5">
-                            {{ __('messages.lessons_count', ['count' => $category->courses()->count()]) }}
+                            {{ __('messages.courses_count', ['count' => $category->courses->count()]) }}
                         </p>
                     </div>
                 </div>
-                <span class="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all">&rarr;</span>
+                <svg class="w-5 h-5 text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
             </a>
         @endforeach
     </div>
@@ -263,11 +287,18 @@
                         <div class="flex items-center justify-between text-xs">
                             <div class="flex items-center gap-1">
                                 <span class="font-bold text-amber-500">5.0</span>
-                                <div class="flex text-amber-400 text-xs">★★★★★</div>
+                                <div class="flex text-amber-400 gap-0.5">
+                                    @for($i = 0; $i < 5; $i++)
+                                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    @endfor
+                                </div>
                                 <span class="text-slate-400 text-[11px]">({{ __('messages.reviews_count', ['count' => 120]) }})</span>
                             </div>
-                            <span class="font-bold text-slate-500">
-                                📖 {{ __('messages.lessons_count', ['count' => $course->sections->flatMap->lessons->count()]) }}
+                            <span class="font-bold text-slate-500 flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span>{{ __('messages.lessons_count', ['count' => $course->sections->flatMap->lessons->count()]) }}</span>
                             </span>
                         </div>
 

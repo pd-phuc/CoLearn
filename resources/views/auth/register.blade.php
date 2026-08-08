@@ -13,13 +13,13 @@
                 {{ __('auth.create_account') }}
             </h2>
             <p class="text-xs font-medium text-slate-500">
-                Gia nhập CoLearn để nâng tầm kỹ năng lập trình thực chiến
+                {{ __('auth.join_colearn_sub') }}
             </p>
         </div>
 
         <!-- Social OAuth Registration Pills -->
         <div class="space-y-3">
-            <p class="text-xs font-semibold text-slate-400 text-center uppercase tracking-wider">Đăng ký nhanh qua mạng xã hội</p>
+            <p class="text-xs font-semibold text-slate-400 text-center uppercase tracking-wider">{{ __('auth.quick_social_register') }}</p>
             <div class="grid grid-cols-2 gap-3">
                 <a href="{{ route('social.redirect', 'google') }}"
                    class="btn-oauth-icon group"
@@ -71,7 +71,7 @@
                        value="{{ old('name') }}"
                        required
                        autofocus
-                       placeholder="Nguyễn Văn A"
+                       placeholder="{{ __('auth.name_placeholder') }}"
                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('name') border-rose-500 @enderror">
                 @error('name')
                     <p class="mt-1 text-xs text-rose-500 font-medium">{{ $message }}</p>
@@ -88,7 +88,7 @@
                        type="email"
                        value="{{ old('email') }}"
                        required
-                       placeholder="student@example.com"
+                       placeholder="{{ __('auth.email_placeholder') }}"
                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('email') border-rose-500 @enderror">
                 @error('email')
                     <p class="mt-1 text-xs text-rose-500 font-medium">{{ $message }}</p>
@@ -104,7 +104,7 @@
                        name="password"
                        type="password"
                        required
-                       placeholder="Tối thiểu 8 ký tự"
+                       placeholder="{{ __('auth.password_min_placeholder') }}"
                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('password') border-rose-500 @enderror">
                 @error('password')
                     <p class="mt-1 text-xs text-rose-500 font-medium">{{ $message }}</p>
@@ -120,7 +120,7 @@
                        name="password_confirmation"
                        type="password"
                        required
-                       placeholder="Nhập lại mật khẩu"
+                       placeholder="{{ __('auth.confirm_password_placeholder') }}"
                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all">
             </div>
 

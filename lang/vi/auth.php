@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'failed' => 'Thông tin đăng nhập không chính xác.',
-    'password' => 'Mật khẩu cung cấp không đúng.',
+    'failed' => 'Email hoặc mật khẩu không chính xác.',
+    'password' => 'Email hoặc mật khẩu không chính xác.',
     'throttle' => 'Đã thử đăng nhập quá nhiều lần. Vui lòng thử lại sau :seconds giây.',
     'login' => 'Đăng nhập',
     'register' => 'Đăng ký',
@@ -23,4 +23,19 @@ return [
     'create_account' => 'Tạo tài khoản CoLearn mới',
     'social_login_google' => 'Đăng nhập bằng Google',
     'social_login_facebook' => 'Đăng nhập bằng Facebook',
+    'quick_social_login' => 'ĐĂNG NHẬP NHANH QUA MẠNG XÃ HỘI',
+    'quick_social_register' => 'ĐĂNG KÝ NHANH QUA MẠNG XÃ HỘI',
+    'join_colearn_sub' => 'Gia nhập CoLearn để nâng tầm kỹ năng lập trình thực chiến',
+    'show' => 'Hiện',
+    'hide' => 'Ẩn',
+    'name_placeholder' => 'Họ và tên',
+    'email_placeholder' => 'name@example.com',
+    'password_min_placeholder' => 'Tối thiểu 8 ký tự',
+    'confirm_password_placeholder' => 'Nhập lại mật khẩu',
+    'reset_password_title' => 'Thiết Lập Mật Khẩu Mới',
+    'reset_password_sub' => 'Nhập mật khẩu mới để hoàn tất xác thực tài khoản CoLearn.',
+    'forgot_password_title' => 'Quên Mật Khẩu?',
+    'forgot_password_sub' => 'Không vấn đề gì. Chỉ cần nhập địa chỉ email đã đăng ký và chúng tôi sẽ gửi liên kết đặt lại mật khẩu cho bạn.',
+    'send_reset_link_btn' => 'Gửi email xác thực',
+    'back_to_login' => 'Quay lại Đăng nhập',
 ];

@@ -15,8 +15,8 @@
             <!-- Play Video Overlay Trigger -->
             <button @click="$dispatch('open-preview-modal')"
                     class="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 flex flex-col items-center justify-center text-white transition-all cursor-pointer">
-                <div class="w-14 h-14 rounded-full bg-orange-500 text-white flex items-center justify-center text-2xl shadow-xl group-hover:scale-110 transition-transform pl-1">
-                    ▶
+                <div class="w-14 h-14 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6 fill-current text-white ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 </div>
                 <span class="mt-2 text-xs font-extrabold uppercase tracking-wider bg-slate-900/80 px-3 py-1 rounded-full backdrop-blur-md">
                     {{ __('messages.preview_video_btn', ['count' => $freePreviewCount]) }}
@@ -55,8 +55,11 @@
     <!-- Dynamic Action Buttons according to Enrollment State -->
     <div class="space-y-3 pt-2">
         @if($isEnrolled)
-            <a href="#" class="w-full btn-primary py-3.5 text-base font-bold bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20">
-                ✓ {{ __('messages.go_to_learning') }}
+            <a href="#" class="w-full btn-primary py-3.5 text-base font-bold bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{{ __('messages.go_to_learning') }}</span>
             </a>
         @else
             @auth

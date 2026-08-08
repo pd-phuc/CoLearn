@@ -133,10 +133,13 @@
                                 <div class="flex items-center justify-between text-xs">
                                     <div class="flex items-center gap-1">
                                         <span class="font-bold text-amber-500">5.0</span>
-                                        <span class="text-amber-400">★</span>
+                                        <svg class="w-3.5 h-3.5 fill-current text-amber-400" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                                     </div>
-                                    <span class="font-bold text-slate-500">
-                                        📖 {{ __('messages.lessons_count', ['count' => $course->sections->flatMap->lessons->count()]) }}
+                                    <span class="font-bold text-slate-500 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                        </svg>
+                                        <span>{{ __('messages.lessons_count', ['count' => $course->sections->flatMap->lessons->count()]) }}</span>
                                     </span>
                                 </div>
 

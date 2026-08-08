@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
+    'failed' => 'Invalid email or password.',
+    'password' => 'Invalid email or password.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'login' => 'Log In',
     'register' => 'Register',
@@ -23,4 +23,19 @@ return [
     'create_account' => 'Create a new CoLearn account',
     'social_login_google' => 'Sign in with Google',
     'social_login_facebook' => 'Sign in with Facebook',
+    'quick_social_login' => 'QUICK SOCIAL LOGIN',
+    'quick_social_register' => 'QUICK SOCIAL REGISTRATION',
+    'join_colearn_sub' => 'Join CoLearn to master practical programming skills',
+    'show' => 'Show',
+    'hide' => 'Hide',
+    'name_placeholder' => 'Full Name',
+    'email_placeholder' => 'name@example.com',
+    'password_min_placeholder' => 'Minimum 8 characters',
+    'confirm_password_placeholder' => 'Re-enter password',
+    'reset_password_title' => 'Set New Password',
+    'reset_password_sub' => 'Enter your new password to complete account verification.',
+    'forgot_password_title' => 'Forgot Password?',
+    'forgot_password_sub' => 'No problem. Just enter your registered email address and we will send you a password reset link.',
+    'send_reset_link_btn' => 'Send verification email',
+    'back_to_login' => 'Back to Login',
 ];

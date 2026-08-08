@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -59,7 +58,7 @@ class CourseDetailController extends Controller
             'totalDurationSeconds',
             'formattedDuration',
             'freePreviewCount',
-            'discountPercent'
+            'discountPercent',
         ));
     }
 }
