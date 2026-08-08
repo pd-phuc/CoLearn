@@ -66,6 +66,16 @@ class CourseSeeder extends Seeder
                 'title' => 'Giải Ngố Git-GitHub',
                 'slug' => 'giai-ngo-git-github',
                 'description' => 'Khóa học Giải ngố Git-GitHub hướng dẫn chi tiết cách dùng Git, .gitignore, và đẩy code lên máy remote ngoctrinh cùng giảng viên giáo.làng.',
+                'learning_outcomes' => [
+                    'Hiểu rõ tư duy quản lý mã nguồn với Git và GitHub',
+                    'Thành thạo cấu hình file .gitignore cho dự án thực tế',
+                    'Bản lĩnh đẩy code lên máy remote ngoctrinh an toàn',
+                    'Xử lý xung đột code (Merge Conflict) tự tin và bài bản',
+                ],
+                'requirements' => [
+                    'Máy tính cài đặt sẵn Git CLI hoặc VS Code',
+                    'Kiến thức sử dụng máy tính cơ bản',
+                ],
                 'price' => 0,
                 'discount_price' => null,
                 'level' => 'beginner',
@@ -105,6 +115,16 @@ class CourseSeeder extends Seeder
                 'title' => 'Lập Trình Web Laravel 13 Từ Con Số 0 Đến Real Project',
                 'slug' => 'lap-trinh-web-laravel-13-tu-con-so-0-den-real-project',
                 'description' => 'Khóa học hướng dẫn chi tiết xây dựng ứng dụng Web thực tế với Laravel 13, Blade SSR, Tailwind CSS 4 và Alpine.js theo mô hình Titan/28Tech.',
+                'learning_outcomes' => [
+                    'Nắm vững tư duy lập trình thực chiến chuẩn 28Tech',
+                    'Xây dựng dự án thực tế từ đầu đến triển khai Production',
+                    'Tối ưu hóa hiệu năng Database & Caching Redis',
+                    'Nhận chứng chỉ hoàn thành xuất sắc từ CoLearn',
+                ],
+                'requirements' => [
+                    'Có máy tính kết nối Internet',
+                    'Hiểu biết cơ bản về PHP hoặc lập trình cơ bản',
+                ],
                 'price' => 799000,
                 'discount_price' => 499000,
                 'level' => 'beginner',
@@ -132,13 +152,15 @@ class CourseSeeder extends Seeder
         foreach ($coursesData as $cData) {
             $cat = $categories->firstWhere('slug', $cData['category_slug']);
 
-            $course = Course::firstOrCreate(
+            $course = Course::updateOrCreate(
                 ['slug' => $cData['slug']],
                 [
                     'teacher_id' => $teacher->id,
                     'category_id' => $cat->id,
                     'title' => $cData['title'],
                     'description' => $cData['description'],
+                    'learning_outcomes' => $cData['learning_outcomes'] ?? [],
+                    'requirements' => $cData['requirements'] ?? [],
                     'price' => $cData['price'],
                     'discount_price' => $cData['discount_price'],
                     'level' => $cData['level'],
