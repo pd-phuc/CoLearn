@@ -21,7 +21,7 @@ class CourseSeeder extends Seeder
                 'id' => '019fe28b-11bc-71a4-a30c-df885963ff82',
                 'name' => 'giáo.làng',
                 'avatar' => '/images/avatars/019fe28b-11bc-71a4-a30c-df885963ff82.png',
-            ]
+            ],
         );
 
         $student = User::where('email', 'student@colearn.test')->first() ?? User::factory()->create([
@@ -218,7 +218,7 @@ class CourseSeeder extends Seeder
                     'discount_price' => $cData['discount_price'],
                     'level' => $cData['level'],
                     'status' => $cData['status'],
-                ]
+                ],
             );
 
             foreach ($cData['sections'] as $sIndex => $sData) {
@@ -229,7 +229,7 @@ class CourseSeeder extends Seeder
                     ],
                     [
                         'sort_order' => $sIndex + 1,
-                    ]
+                    ],
                 );
 
                 foreach ($sData['lessons'] as $lIndex => $lData) {
@@ -245,8 +245,8 @@ class CourseSeeder extends Seeder
                             'is_free_preview' => $lData['is_free_preview'],
                             'sort_order' => $lIndex + 1,
                             'video_url' => $lData['video_url'],
-                            'content' => 'Nội dung bài học ' . $lData['title'],
-                        ]
+                            'content' => 'Nội dung bài học '.$lData['title'],
+                        ],
                     );
                 }
             }
