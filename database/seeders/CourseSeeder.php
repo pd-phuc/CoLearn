@@ -18,13 +18,13 @@ class CourseSeeder extends Seeder
         $teacher = User::where('email', 'giaolang@colearn.test')->first() ?? User::factory()->create([
             'name' => 'giáo.làng',
             'email' => 'giaolang@colearn.test',
-            'avatar' => '/images/avatars/giaolang.png',
+            'avatar' => '/images/avatars/4.png',
         ]);
 
         // Ensure teacher avatar is updated
         $teacher->update([
             'name' => 'giáo.làng',
-            'avatar' => '/images/avatars/giaolang.png',
+            'avatar' => '/images/avatars/4.png',
         ]);
 
         $student = User::where('email', 'student@colearn.test')->first() ?? User::factory()->create([
