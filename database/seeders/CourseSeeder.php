@@ -15,16 +15,14 @@ class CourseSeeder extends Seeder
 {
     public function run(): void
     {
-        $teacher = User::where('email', 'giaolang@colearn.test')->first() ?? User::factory()->create([
-            'name' => 'giáo.làng',
-            'email' => 'giaolang@colearn.test',
-        ]);
-
-        // Ensure teacher avatar is updated with UUID avatar filename
-        $teacher->update([
-            'name' => 'giáo.làng',
-            'avatar' => "/images/avatars/{$teacher->id}.png",
-        ]);
+        $teacher = User::updateOrCreate(
+            ['email' => 'giaolang@colearn.test'],
+            [
+                'id' => '019fe28b-11bc-71a4-a30c-df885963ff82',
+                'name' => 'giáo.làng',
+                'avatar' => '/images/avatars/019fe28b-11bc-71a4-a30c-df885963ff82.png',
+            ]
+        );
 
         $student = User::where('email', 'student@colearn.test')->first() ?? User::factory()->create([
             'name' => 'Học Viên Mẫu',
