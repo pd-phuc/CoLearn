@@ -3,9 +3,13 @@
 
     <!-- Video Preview Card Thumbnail -->
     <div class="relative aspect-video rounded-2xl bg-slate-900 overflow-hidden group shadow-md">
-        <div class="w-full h-full bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 flex items-center justify-center text-white text-4xl font-black group-hover:scale-105 transition-transform duration-300">
-            {{ strtoupper(substr($course->title, 0, 2)) }}
-        </div>
+        @if($course->thumbnail)
+            <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+        @else
+            <div class="w-full h-full bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 flex items-center justify-center text-white text-4xl font-black group-hover:scale-105 transition-transform duration-300">
+                {{ strtoupper(substr($course->title, 0, 2)) }}
+            </div>
+        @endif
 
         @if($freePreviewCount > 0)
             <!-- Play Video Overlay Trigger -->

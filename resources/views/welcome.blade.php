@@ -224,9 +224,13 @@
 
                 <!-- Course Card Image Header -->
                 <div class="relative aspect-video bg-slate-900 overflow-hidden">
-                    <div class="w-full h-full bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 flex items-center justify-center text-white text-3xl font-black group-hover:scale-105 transition-transform duration-300">
-                        {{ strtoupper(substr($course->title, 0, 2)) }}
-                    </div>
+                    @if($course->thumbnail)
+                        <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 flex items-center justify-center text-white text-3xl font-black group-hover:scale-105 transition-transform duration-300">
+                            {{ strtoupper(substr($course->title, 0, 2)) }}
+                        </div>
+                    @endif
 
                     <!-- Category Badge -->
                     <span class="absolute top-3 left-3 z-10 px-2.5 py-1 bg-white/90 backdrop-blur-md text-slate-900 font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-xs">
@@ -269,8 +273,12 @@
 
                         <!-- Teacher Info -->
                         <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-orange-100 text-orange-600 font-bold flex items-center justify-center text-[10px]">
-                                {{ strtoupper(substr($course->teacher->name ?? 'G', 0, 1)) }}
+                            <div class="w-6 h-6 rounded-full bg-orange-100 text-orange-600 font-bold flex items-center justify-center text-[10px] overflow-hidden">
+                                @if($course->teacher->avatar)
+                                    <img src="{{ $course->teacher->avatar }}" alt="{{ $course->teacher->name }}" class="w-full h-full object-cover">
+                                @else
+                                    {{ strtoupper(substr($course->teacher->name ?? 'G', 0, 1)) }}
+                                @endif
                             </div>
                             <span class="text-xs font-bold text-slate-700 truncate">{{ $course->teacher->name ?? 'Giảng Viên' }}</span>
                         </div>

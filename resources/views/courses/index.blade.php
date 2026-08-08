@@ -105,9 +105,13 @@
                 @forelse($courses as $course)
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group overflow-hidden hover:-translate-y-1">
                         <div class="relative aspect-video bg-slate-900 overflow-hidden">
-                            <div class="w-full h-full bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 flex items-center justify-center text-white text-3xl font-black group-hover:scale-105 transition-transform duration-300">
-                                {{ strtoupper(substr($course->title, 0, 2)) }}
-                            </div>
+                            @if($course->thumbnail)
+                                <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            @else
+                                <div class="w-full h-full bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 flex items-center justify-center text-white text-3xl font-black group-hover:scale-105 transition-transform duration-300">
+                                    {{ strtoupper(substr($course->title, 0, 2)) }}
+                                </div>
+                            @endif
                             <span class="absolute top-3 left-3 z-10 px-2.5 py-1 bg-white/90 backdrop-blur-md text-slate-900 font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-xs">
                                 {{ $course->category->name }}
                             </span>

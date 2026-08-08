@@ -37,10 +37,14 @@ class CourseDetailController extends Controller
         $totalDurationSeconds = $allLessons->sum('duration');
         $freePreviewCount = $allLessons->where('is_free_preview', true)->count();
 
-        // Format duration into hours and minutes
+        // Format duration into hours and minutes using i18n
         $hours = floor($totalDurationSeconds / 3600);
         $minutes = floor(($totalDurationSeconds % 3600) / 60);
-        $formattedDuration = $hours > 0 ? "{$hours} giờ {$minutes} phút" : "{$minutes} phút";
+        if ($hours > 0) {
+            $formattedDuration = __('messages.duration_format', ['hours' => $hours, 'minutes' => $minutes]);
+        } else {
+            $formattedDuration = __('messages.duration_minutes', ['minutes' => $minutes]);
+        }
 
         // Discount percent calculation
         $discountPercent = 0;

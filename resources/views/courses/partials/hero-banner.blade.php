@@ -46,8 +46,12 @@
 
             <!-- Instructor Info -->
             <div class="flex items-center gap-2 border-l border-slate-800 pl-4">
-                <div class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center text-[10px]">
-                    {{ strtoupper(substr($course->teacher->name ?? 'G', 0, 1)) }}
+                <div class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center text-[10px] overflow-hidden">
+                    @if($course->teacher->avatar)
+                        <img src="{{ $course->teacher->avatar }}" alt="{{ $course->teacher->name }}" class="w-full h-full object-cover">
+                    @else
+                        {{ strtoupper(substr($course->teacher->name ?? 'G', 0, 1)) }}
+                    @endif
                 </div>
                 <span class="font-semibold text-slate-200">{{ __('messages.instructor') }}: <span class="text-white font-bold">{{ $course->teacher->name ?? 'CoLearn Instructor' }}</span></span>
             </div>
