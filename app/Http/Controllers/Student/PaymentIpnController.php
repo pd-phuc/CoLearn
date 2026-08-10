@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\Enrollment;
 use App\Models\Order;
 use App\Services\CartService;
+use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 
 class PaymentIpnController extends Controller
 {
     public function __construct(
         protected CartService $cartService,
+        protected OrderService $orderService,
     ) {}
 
     public function status(Order $order): JsonResponse
@@ -23,28 +24,28 @@ class PaymentIpnController extends Controller
         ]);
     }
 
+    /**
+     * Simulated payment for sandbox/development mode only.
+     */
     public function simulatedPay(Order $order): JsonResponse
     {
+        // Security: only allow in local/testing environment
+        if (! app()->environment('local', 'testing')) {
+            return response()->json(['success' => false, 'message' => 'Forbidden'], 403);
+        }
+
+        // Security: verify order belongs to authenticated user
+        if ($order->user_id !== auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
         if ($order->status !== 'paid') {
-            $order->update([
-                'status' => 'paid',
-                'payment_id' => 'VIETQR_SIMULATED_'.rand(10000, 99999),
-                'paid_at' => now(),
-            ]);
+            $paymentId = 'SIMULATED_'.rand(10000, 99999);
 
             if ($order->order_type === 'topup') {
-                $order->user->deposit((float) $order->total_amount);
+                $this->orderService->fulfillTopupOrder($order, $paymentId);
             } else {
-                foreach ($order->items as $item) {
-                    Enrollment::firstOrCreate([
-                        'user_id' => $order->user_id,
-                        'course_id' => $item->course_id,
-                    ], [
-                        'status' => 'active',
-                        'enrolled_at' => now(),
-                    ]);
-                }
-                $this->cartService->clear();
+                $this->orderService->fulfillCourseOrder($order, $paymentId, $this->cartService);
             }
         }
 
