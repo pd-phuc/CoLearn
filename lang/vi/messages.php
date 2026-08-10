@@ -281,4 +281,33 @@ return [
     'tx_desc_buy_course' => 'Mua khóa học: :courses',
     'tx_desc_topup' => 'Nạp tiền qua đơn :order',
     'already_enrolled_in_cart_course' => 'Bạn đã đăng ký khóa học ":course" rồi',
+
+    // VietQR Modal Component
+    'auto_detect_active' => 'Tự động phát hiện giao dịch',
+    'auto_credit_notice' => 'Hệ thống sẽ tự động cộng tiền trong 5-10 giây sau khi chuyển khoản thành công. Nếu chờ lâu, vui lòng liên hệ hỗ trợ.',
+    'copy' => 'Sao chép',
+
+    // Wallet Page Improvements
+    'total_deposited' => 'Tổng Đã Nạp',
+    'wallet_quick_topup' => 'Nạp Nhanh',
+    'amount_min_hint' => 'Tối thiểu: :amount',
+    'topup_step_1_title' => 'Nhập Số Tiền',
+    'topup_step_1_desc' => 'Chọn mệnh giá hoặc nhập số tiền tùy ý.',
+    'topup_step_2_title' => 'Chuyển Khoản',
+    'topup_step_2_desc' => 'Quét mã QR hoặc chuyển khoản đúng thông tin.',
+    'topup_step_3_title' => 'Tự Động Cộng',
+    'topup_step_3_desc' => 'Hệ thống tự cộng tiền sau 5-10 giây.',
+    'topup_guide_title' => 'Hướng Dẫn Nạp Tiền',
+    'topup_guide_subtitle' => '3 Bước Đơn Giản',
+
+    // Checkout Improvements
+    'checkout_step_1_title' => 'Chọn Phương Thức',
+    'checkout_step_1_desc' => 'Chọn hình thức thanh toán bên dưới.',
+    'checkout_step_2_title' => 'Hoàn Tất Thanh Toán',
+    'checkout_step_2_desc' => 'Thực hiện theo hướng dẫn để hoàn tất giao dịch.',
+    'checkout_step_3_title' => 'Tự Động Kích Hoạt',
+    'checkout_step_3_desc' => 'Truy cập ngay tất cả khóa học đã mua.',
+    'payment_guide_title' => 'Hướng Dẫn Thanh Toán',
+    'payment_guide_subtitle' => '3 Bước Dễ Dàng',
+    'secure_payment_badge' => 'Thanh Toán An Toàn & Mã Hóa',
 ];
