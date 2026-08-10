@@ -63,7 +63,7 @@
             </a>
         @else
             @auth
-                <form action="#" method="POST">
+                <form action="{{ route('cart.add', $course) }}" method="POST">
                     @csrf
                     <button type="submit" class="w-full btn-primary py-3.5 text-base font-bold shadow-lg shadow-orange-500/25">
                         {{ $course->price > 0 ? __('messages.buy_course') : __('messages.enroll_free') }}
