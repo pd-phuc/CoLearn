@@ -281,4 +281,33 @@ return [
     'tx_desc_buy_course' => 'Purchased: :courses',
     'tx_desc_topup' => 'Top-up via order :order',
     'already_enrolled_in_cart_course' => 'You are already enrolled in ":course"',
+
+    // VietQR Modal Component
+    'auto_detect_active' => 'Auto-detect active',
+    'auto_credit_notice' => 'System will auto-credit within 5-10 seconds after successful transfer. If delayed, please contact support.',
+    'copy' => 'Copy',
+
+    // Wallet Page Improvements
+    'total_deposited' => 'Total Deposited',
+    'wallet_quick_topup' => 'Quick Top-Up',
+    'amount_min_hint' => 'Minimum: :amount',
+    'topup_step_1_title' => 'Enter Amount',
+    'topup_step_1_desc' => 'Choose a preset or enter a custom amount.',
+    'topup_step_2_title' => 'Bank Transfer',
+    'topup_step_2_desc' => 'Scan QR code or transfer to the displayed account.',
+    'topup_step_3_title' => 'Auto Credit',
+    'topup_step_3_desc' => 'System auto-credits after 5-10 seconds.',
+    'topup_guide_title' => 'How to Top-Up',
+    'topup_guide_subtitle' => '3 Simple Steps',
+
+    // Checkout Improvements
+    'checkout_step_1_title' => 'Select Method',
+    'checkout_step_1_desc' => 'Choose your preferred payment method below.',
+    'checkout_step_2_title' => 'Complete Payment',
+    'checkout_step_2_desc' => 'Follow the instructions to finish the transaction.',
+    'checkout_step_3_title' => 'Auto Enrollment',
+    'checkout_step_3_desc' => 'Get instant access to all purchased courses.',
+    'payment_guide_title' => 'Payment Guide',
+    'payment_guide_subtitle' => '3 Easy Steps',
+    'secure_payment_badge' => 'Secure & Encrypted Payment',
 ];
