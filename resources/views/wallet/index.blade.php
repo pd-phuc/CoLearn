@@ -178,6 +178,59 @@
         @endif
     </div>
 
+    <!-- Transaction History (Balance Ledger) -->
+    <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-xs space-y-4">
+        <div class="p-6 border-b border-slate-100">
+            <h3 class="text-base font-extrabold text-slate-900">{{ __('messages.balance_history_title') }}</h3>
+            <p class="text-xs text-slate-500 font-medium mt-1">{{ __('messages.balance_history_desc') }}</p>
+        </div>
+
+        @if($transactions->isEmpty())
+            <div class="p-8 text-center text-xs text-slate-400 font-medium">
+                {{ __('messages.no_balance_history') }}
+            </div>
+        @else
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-semibold text-slate-700">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-extrabold uppercase tracking-wider text-[10px]">
+                        <tr>
+                            <th class="px-6 py-4">{{ __('messages.tx_date') }}</th>
+                            <th class="px-6 py-4">{{ __('messages.tx_action') }}</th>
+                            <th class="px-6 py-4">{{ __('messages.tx_description') }}</th>
+                            <th class="px-6 py-4 text-right">{{ __('messages.tx_amount') }}</th>
+                            <th class="px-6 py-4 text-right">{{ __('messages.tx_balance_after') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @foreach($transactions as $tx)
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">{{ $tx->created_at->format('d/m/Y H:i') }}</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold
+                                        {{ $tx->type === 'in' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200' }}">
+                                        {{ $tx->action_label }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-slate-600 max-w-xs truncate">{{ $tx->description ?? '-' }}</td>
+                                <td class="px-6 py-4 text-right font-black whitespace-nowrap {{ $tx->type === 'in' ? 'text-emerald-600' : 'text-red-600' }}">
+                                    {{ $tx->type === 'in' ? '+' : '-' }}{{ number_format($tx->amount, 0, ',', '.') }} đ
+                                </td>
+                                <td class="px-6 py-4 text-right font-bold text-slate-900 whitespace-nowrap">
+                                    {{ number_format($tx->balance_after, 0, ',', '.') }} đ
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @if($transactions->hasPages())
+                <div class="p-4 border-t border-slate-100">
+                    {{ $transactions->links() }}
+                </div>
+            @endif
+        @endif
+    </div>
+
     <!-- Embedded VietQR Modal for TopUp -->
     @if(isset($vietQrModal) && $vietQrModal && isset($vietQrData))
         <div x-show="showQrModal"
