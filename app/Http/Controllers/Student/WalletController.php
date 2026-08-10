@@ -54,11 +54,16 @@ class WalletController extends Controller
         $topupOrders = $user->orders()
             ->where('order_type', 'topup')
             ->latest()
-            ->paginate(10);
+            ->paginate(10, ['*'], 'topup_page');
+
+        $transactions = $user->transactions()
+            ->latest()
+            ->paginate(10, ['*'], 'tx_page');
 
         return view('wallet.index', [
             'user' => $user,
             'topupOrders' => $topupOrders,
+            'transactions' => $transactions,
             'order' => $order,
             'vietQrModal' => true,
             'vietQrData' => $vietQrData,
@@ -80,11 +85,16 @@ class WalletController extends Controller
         $topupOrders = $user->orders()
             ->where('order_type', 'topup')
             ->latest()
-            ->paginate(10);
+            ->paginate(10, ['*'], 'topup_page');
+
+        $transactions = $user->transactions()
+            ->latest()
+            ->paginate(10, ['*'], 'tx_page');
 
         return view('wallet.index', [
             'user' => $user,
             'topupOrders' => $topupOrders,
+            'transactions' => $transactions,
             'order' => $order,
             'vietQrModal' => true,
             'vietQrData' => $vietQrData,
