@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password', 'avatar', 'phone', 'headline', 'bio', 'github_url', 'linkedin_url', 'facebook_url', 'provider', 'provider_id'])]
+#[Fillable(['name', 'email', 'password', 'avatar', 'phone', 'headline', 'bio', 'github_url', 'linkedin_url', 'facebook_url', 'provider', 'provider_id', 'balance', 'total_deposit'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -32,7 +32,65 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'balance' => 'decimal:2',
+            'total_deposit' => 'decimal:2',
         ];
+    }
+
+    public function hasEnoughBalance(float $amount): bool
+    {
+        return (float) $this->balance >= $amount;
+    }
+
+    /**
+     * Deposit money into wallet with Transaction log.
+     * MUST be called inside DB::transaction() with lockForUpdate().
+     */
+    public function deposit(float $amount, string $action = 'deposit_bank', ?string $description = null, ?string $orderId = null, ?string $referenceId = null): Transaction
+    {
+        $balanceBefore = (float) $this->balance;
+        $balanceAfter = $balanceBefore + $amount;
+
+        $this->balance = $balanceAfter;
+        $this->total_deposit = (float) $this->total_deposit + $amount;
+        $this->save();
+
+        return Transaction::create([
+            'user_id' => $this->id,
+            'order_id' => $orderId,
+            'amount' => $amount,
+            'type' => 'in',
+            'action' => $action,
+            'balance_before' => $balanceBefore,
+            'balance_after' => $balanceAfter,
+            'description' => $description,
+            'reference_id' => $referenceId,
+        ]);
+    }
+
+    /**
+     * Deduct money from wallet with Transaction log.
+     * MUST be called inside DB::transaction() with lockForUpdate().
+     */
+    public function deduct(float $amount, string $action = 'buy_course', ?string $description = null, ?string $orderId = null, ?string $referenceId = null): Transaction
+    {
+        $balanceBefore = (float) $this->balance;
+        $balanceAfter = $balanceBefore - $amount;
+
+        $this->balance = $balanceAfter;
+        $this->save();
+
+        return Transaction::create([
+            'user_id' => $this->id,
+            'order_id' => $orderId,
+            'amount' => $amount,
+            'type' => 'out',
+            'action' => $action,
+            'balance_before' => $balanceBefore,
+            'balance_after' => $balanceAfter,
+            'description' => $description,
+            'reference_id' => $referenceId,
+        ]);
     }
 
     /**
@@ -61,6 +119,16 @@ class User extends Authenticatable
     public function lessonCompletions(): HasMany
     {
         return $this->hasMany(LessonCompletion::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     /**
