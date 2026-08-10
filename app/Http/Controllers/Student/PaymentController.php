@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\Enrollment;
 use App\Models\Order;
 use App\Services\CartService;
+use App\Services\OrderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -13,6 +13,7 @@ class PaymentController extends Controller
 {
     public function __construct(
         protected CartService $cartService,
+        protected OrderService $orderService,
     ) {}
 
     public function vnpayReturn(Request $request): RedirectResponse
@@ -31,30 +32,15 @@ class PaymentController extends Controller
             return redirect()->route('cart.index')->with('error', __('messages.order_not_found'));
         }
 
-        // Check response code: '00' is success in VNPay, or stripe_success == 1
-        $isSuccess = ($responseCode === '00') || $request->has('stripe_success') || $request->has('mock_stripe');
+        // Determine success: VNPay '00' code, or mock/sandbox (local env only)
+        $isVnpaySuccess = $responseCode === '00';
+        $isSandboxSuccess = app()->environment('local')
+            && ($request->has('stripe_success') || $request->has('mock_stripe'));
+        $isSuccess = $isVnpaySuccess || $isSandboxSuccess;
 
         if ($isSuccess) {
             if ($order->status !== 'paid') {
-                $order->update([
-                    'status' => 'paid',
-                    'payment_id' => $transactionNo,
-                    'paid_at' => now(),
-                ]);
-
-                // Create Auto-Enrollment for all ordered courses
-                foreach ($order->items as $item) {
-                    Enrollment::firstOrCreate([
-                        'user_id' => $order->user_id,
-                        'course_id' => $item->course_id,
-                    ], [
-                        'status' => 'active',
-                        'enrolled_at' => now(),
-                    ]);
-                }
-
-                // Clear cart after successful purchase
-                $this->cartService->clear();
+                $this->orderService->fulfillCourseOrder($order, $transactionNo, $this->cartService);
             }
 
             return redirect()->route('orders.show', $order->id)
