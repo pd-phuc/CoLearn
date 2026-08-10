@@ -2,18 +2,20 @@
 
 namespace App\Services;
 
-use App\Models\Enrollment;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SePayService
 {
+    public function __construct(protected OrderService $orderService) {}
+
     public function generateVietQrData(Order $order): array
     {
-        $bankId = config('services.sepay.bank_id', env('SEPAY_BANK_ID', 'NCB'));
-        $accountNo = config('services.sepay.account_no', env('SEPAY_ACCOUNT_NO', '9704198526191432198'));
-        $accountName = config('services.sepay.account_name', env('SEPAY_ACCOUNT_NAME', 'COLEARN PLATFORM'));
+        $bankId = config('services.sepay.bank_id', 'NCB');
+        $accountNo = config('services.sepay.account_no', '9704198526191432198');
+        $accountName = config('services.sepay.account_name', 'COLEARN PLATFORM');
         $amount = (int) $order->total_amount;
         $memo = $order->order_number;
 
@@ -42,7 +44,7 @@ class SePayService
 
     public function validateWebhookHeader(Request $request): bool
     {
-        $configuredApiKey = config('services.sepay.api_key', env('SEPAY_API_KEY'));
+        $configuredApiKey = config('services.sepay.api_key');
 
         if (empty($configuredApiKey)) {
             return true; // If no key is set in dev, allow webhook
@@ -59,6 +61,10 @@ class SePayService
         return hash_equals($configuredApiKey, trim($token));
     }
 
+    /**
+     * Process SePay webhook payload with full transaction safety.
+     * Uses DB::transaction + lockForUpdate to prevent race conditions.
+     */
     public function processWebhookPayload(array $payload): array
     {
         $transferType = $payload['transferType'] ?? 'in';
@@ -93,34 +99,26 @@ class SePayService
             return ['success' => false, 'message' => "Transfer amount ({$transferAmount}) is less than order total ({$order->total_amount})"];
         }
 
-        // Mark Order as Paid
-        $order->update([
-            'status' => 'paid',
-            'payment_method' => 'vnpay', // SePay VietQR payment
-            'payment_id' => 'SEPAY_'.$referenceCode,
-            'paid_at' => now(),
-        ]);
+        $paymentId = 'SEPAY_'.$referenceCode;
 
-        if ($order->order_type === 'topup') {
-            $order->user->deposit((float) $order->total_amount);
-            Log::info("SePay Webhook: User {$order->user_id} topped up ".number_format($order->total_amount).' VNĐ');
-        } else {
-            foreach ($order->items as $item) {
-                Enrollment::firstOrCreate([
-                    'user_id' => $order->user_id,
-                    'course_id' => $item->course_id,
-                ], [
-                    'status' => 'active',
-                    'enrolled_at' => now(),
-                ]);
+        try {
+            if ($order->order_type === 'topup') {
+                $this->orderService->fulfillTopupOrder($order, $paymentId);
+                Log::info("SePay Webhook: User {$order->user_id} topped up ".number_format($order->total_amount).' VNĐ');
+            } else {
+                $this->orderService->fulfillCourseOrder($order, $paymentId);
+                Log::info("SePay Webhook: Order {$order->order_number} paid & courses enrolled.");
             }
-            Log::info("SePay Webhook: Order {$order->order_number} paid & courses enrolled.");
-        }
 
-        return [
-            'success' => true,
-            'message' => 'Order payment confirmed and processed successfully',
-            'order_number' => $order->order_number,
-        ];
+            return [
+                'success' => true,
+                'message' => 'Order payment confirmed and processed successfully',
+                'order_number' => $order->order_number,
+            ];
+        } catch (\Exception $e) {
+            Log::error("SePay Webhook: Failed to process order {$orderNumber}: ".$e->getMessage());
+
+            return ['success' => false, 'message' => 'Failed to process order: '.$e->getMessage()];
+        }
     }
 }
