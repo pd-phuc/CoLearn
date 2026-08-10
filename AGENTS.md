@@ -18,7 +18,7 @@ Nền tảng bán khóa học trực tuyến — mô hình đơn vị đào tạ
 | RBAC | spatie/laravel-permission |
 | Cache/Queue | Redis (Docker) |
 | Infra | Docker (PostgreSQL, Redis, Nginx, Laravel) |
-| Payment | VNPay + Stripe |
+| Payment | SePay (VietQR Auto-Bank Webhook) + Stripe |
 | Email | Mailgun |
 | Storage | AWS S3 |
 
@@ -54,7 +54,7 @@ Nền tảng bán khóa học trực tuyến — mô hình đơn vị đào tạ
 2. **Teacher** tạo khóa học → trạng thái `draft` → admin duyệt → `published`
 3. **Admin** duyệt khóa học, quản lý users, quản lý thanh toán
 4. Mỗi khóa học thuộc **1 category**, có nhiều **sections**, mỗi section có nhiều **lessons**
-5. Thanh toán qua **VNPay** (VN) hoặc **Stripe** (quốc tế)
+5. Thanh toán qua **SePay VietQR / Ví CoLearn** (VN) hoặc **Stripe** (quốc tế)
 6. Video/tài liệu lưu trên **AWS S3**
 7. Email thông báo xử lý qua **queue** (Redis)
 
