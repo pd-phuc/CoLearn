@@ -17,7 +17,7 @@ return [
     'learning_paths_title' => 'Practical & Structured Learning Paths',
     'practical_learning_paths' => 'Practical Learning Paths',
     'courses' => 'Courses',
-    'hero_tagline' => 'TITV & 28Tech Standardized IT Platform',
+    'hero_tagline' => 'Standardized IT Platform',
     'hero_title' => 'Master Practical Coding — Elevate Your IT Career',
     'hero_subtitle' => 'High-quality video lectures, automated code evaluator, and structured roadmaps designed for IT students and future engineers.',
     'explore_courses' => 'Explore Courses',
