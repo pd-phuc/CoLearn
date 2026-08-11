@@ -17,7 +17,7 @@ return [
     'learning_paths_title' => 'Lộ Trình Học Thực Chiến Bài Bản',
     'practical_learning_paths' => 'Lộ Trình Học Thực Chiến',
     'courses' => 'Khóa Học',
-    'hero_tagline' => 'Nền tảng đào tạo chuẩn TITV & 28Tech',
+    'hero_tagline' => 'Nền tảng đào tạo chuẩn',
     'hero_title' => 'Học Lập Trình Thực Chiến — Bứt Phá Sự Nghiệp IT',
     'hero_subtitle' => 'Hệ thống bài giảng chất lượng cao, bài tập tự động chấm và lộ trình thiết kế bài bản cho sinh viên IT & Lập trình viên tương lai.',
     'explore_courses' => 'Khám Phá Khóa Học',

@@ -96,8 +96,8 @@ Two controller groups:
 
 | Service | Provider | Package/SDK |
 |---------|----------|-------------|
-| Payment (VN) | VNPay | `vnpay` SDK |
-| Payment (International) | Stripe | `laravel/cashier` |
+| Payment (VN) | SePay (VietQR Auto-Bank Webhook) | Custom `SePayService` |
+| Payment (International) | Stripe | `stripe/stripe-php` |
 | Email | Mailgun | Laravel Mail (built-in driver) |
 | Cloud Storage | AWS S3 | Laravel Flysystem (built-in driver) |
 | OAuth | Google, Facebook | `laravel/socialite` |

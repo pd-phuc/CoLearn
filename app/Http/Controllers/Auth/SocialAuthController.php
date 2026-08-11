@@ -58,6 +58,10 @@ class SocialAuthController extends Controller
 
         Auth::login($user, true);
 
-        return redirect()->intended(route('home'))->with('success', __('auth.welcome_back'));
+        $intended = $user->isAdmin()
+            ? route('admin.dashboard')
+            : route('home');
+
+        return redirect()->intended($intended)->with('success', __('auth.welcome_back'));
     }
 }

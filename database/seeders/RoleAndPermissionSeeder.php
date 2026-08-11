@@ -28,6 +28,8 @@ class RoleAndPermissionSeeder extends Seeder
             'manage-orders',
             'manage-categories',
             'manage-coupons',
+            'manage-settings',
+            'manage-transactions',
         ];
 
         foreach ($permissions as $permission) {

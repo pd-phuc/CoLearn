@@ -1,88 +1,92 @@
-# 🎨 CoLearn — Official Design System & Graphic Specification
+# CoLearn — Design System & UI Standards
 
-> **Design Directive**: Graphic aesthetics strictly follow `fcode-web-system-challenge-3` (floating glassmorphic headers, OKLCH primary colors, `rounded-2xl` cards, floating keyframe animations). Layout structure combines **Udemy** (categories mega-menu, course cards, ratings, search), **28Tech** (learning paths), and **TITV.vn** (clear Vietnamese learning progression).
+> **Source of truth**: The codebase itself. This document describes the design patterns **actually in use**, not aspirational specs.
 
 ---
 
-## 1. Graphic Aesthetic Principles (`fcode` Style)
+## 1. Design Principles
 
-### 1.1. Floating Glassmorphism (`.floating-header`)
-- **Header**: Floating rounded container offset from screen top:
-  `sticky top-3 z-50 mx-auto max-w-7xl rounded-2xl border border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-md transition-all`
-- **Glow Effects**: Hover glow blur behind logo and badge icons:
-  `absolute inset-0 rounded-xl bg-orange-500/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity`
+### 1.1. Clean, Functional Aesthetic
+- **Light theme**: `bg-slate-50`, white cards, `text-slate-900` primary text
+- **Cards**: `rounded-2xl border border-slate-200/80 bg-white shadow-xs` — hover: `hover:shadow-2xl hover:-translate-y-1`
+- **Spacing**: Generous padding (`p-5`, `p-6`), consistent gap (`gap-4`, `gap-6`)
+- **Typography**: Plus Jakarta Sans (Google Fonts), font weights: 400/500/600/700/800/900
 
-### 1.2. Card Aesthetics (`.card-fcode`)
-- **Card Container**: `rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs hover:shadow-2xl hover:-translate-y-1 transition-all duration-300`
-- **Soft Backgrounds**: App background soft gradient `bg-gradient-to-b from-slate-100/60 via-slate-50 to-white`.
+### 1.2. Color Palette
 
-### 1.3. Keyframe Animations
-```css
-@keyframes floating {
-    0% { transform: translateY(0px) rotate(-6deg); }
-    50% { transform: translateY(-12px) rotate(2deg); }
-    100% { transform: translateY(0px) rotate(-6deg); }
-}
-.animate-floating { animation: floating 4s ease-in-out infinite; }
+| Token | Tailwind Class | Usage |
+|-------|---------------|-------|
+| Primary | `orange-500` / `orange-600` | Buttons, active states, brand accent |
+| Primary tint | `orange-50` / `orange-100` | Hover backgrounds, badge backgrounds |
+| Success | `emerald-500` / `emerald-600` | Completed states, positive values |
+| Warning | `amber-500` / `amber-600` | Pending states |
+| Error | `rose-500` / `rose-600` | Error states, banned, delete |
+| Surface | `slate-50` → `white` | Page background gradient |
+| Text primary | `slate-900` | Headings, body |
+| Text secondary | `slate-400` / `slate-500` | Metadata, labels, timestamps |
+| Info | `blue-500` / `blue-600` | Info badges, links |
+
+### 1.3. Component Patterns
+
+**Status Badges**: Short labels, no compound phrases.
+```html
+<span class="px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-emerald-100 text-emerald-700">Completed</span>
+```
+
+**Buttons (Primary)**: Uses `.btn-primary` utility from Tailwind.
+```html
+<button class="btn-primary px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider shadow-md cursor-pointer">Action</button>
+```
+
+**Form Inputs**: Consistent styling across all forms.
+```html
+<input class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500">
 ```
 
 ---
 
-## 2. Palette Tokens & Color Hierarchy
+## 2. Layout Structure
 
-| Token Name | Hex / Class | Purpose |
-|------------|-------------|---------|
-| `color-primary` | `#f97316` (`orange-500`) | Primary brand identity, buttons, active highlights |
-| `color-primary-hover` | `#ea580c` (`orange-600`) | Hover state for primary actions |
-| `color-primary-tint` | `#fff7ed` (`orange-50`) | Card hover tints, category icon wrappers |
-| `color-secondary-accent` | `#10b981` (`emerald-500`) | Free price tags, success badges, completion checks |
-| `color-surface` | `slate-100/60` to `slate-50` | Background canvas |
-| `color-card` | `#ffffff` (`white`) | Glassmorphic cards, popovers, dropdowns |
-| `color-text-main` | `#0f172a` (`slate-900`) | Headings, primary text |
-| `color-text-sub` | `#64748b` (`slate-500`) | Subtitles, lesson count, metadata |
+### 2.1. Public/Student Layout (`layouts/app.blade.php`)
+- **Header**: Sticky floating glassmorphic bar (`top-3 max-w-7xl rounded-2xl bg-white/95 backdrop-blur-xl`)
+- **Logo**: Orange gradient square + "CoLearn" text
+- **Navigation**: Categories dropdown, search, language switcher, auth buttons/avatar
+- **Content**: `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`
+- **Footer**: Multi-column footer
 
----
+### 2.2. Admin Layout (`admin/layouts/admin.blade.php`)
+- **Sidebar**: Fixed dark (`bg-slate-900`), 64w, collapsible on mobile
+- **Sidebar nav**: Icon + label, active state = `bg-orange-600 text-white`
+- **Topbar**: Sticky white, page title, breadcrumb link back to main site
+- **Content area**: Full-width with padding
 
-## 3. Hybrid Layout Structure Guidelines
-
-### 3.1. Navigation & Header (Udemy + TITV + fcode)
-- **Brand**: Logo with glowing blur circle backdrop.
-- **Categories Dropdown (Udemy)**: Mega-menu with course counts per category.
-- **Search Bar (Udemy)**: Input with keyboard shortcut hint (`Ctrl+K`).
-- **Learning Paths (28Tech/TITV)**: Links for "Trang chủ", "Lộ trình học", "Khóa học".
-- **Language Switcher**: Compact pill `🇻🇳 VI | 🇬🇧 EN`.
-- **User Avatar (fcode)**: Rounded avatar with role indicator badge (Admin/Teacher/Student).
-
-### 3.2. Course Cards (Udemy + 28Tech Hybrid)
-- **Thumbnail**: Aspect ratio `16:9` with category badge overlay.
-- **Level Tag**: `beginner`, `intermediate`, `advanced` pill badges.
-- **Rating Stars (Udemy)**: 5.0 ★ rating with review counts.
-- **Stats**: Total lessons count (`📖 X bài học`), duration in hours/mins.
-- **Price Tag (Udemy)**: Discount price in bold Orange + original price struck-through.
-- **Instructor Avatar**: Teacher name and avatar.
-
-### 3.3. Learning Paths Section (28Tech Style)
-- 4 Visual Path Cards:
-  1. *Web Fullstack Laravel 13*
-  2. *C++ & Thuật Toán*
-  3. *Cơ Sở Dữ Liệu PostgreSQL*
-  4. *DevOps & Cloud AWS*
+### 2.3. Learning Player (`learn/show.blade.php`)
+- **Distraction-free**: No standard header/footer
+- **Left/center**: Video player or lesson content
+- **Right sidebar**: Curriculum with completion checkboxes, collapsible via ☰
 
 ---
 
-## 4. UI Standards for Future Features
+## 3. Iconography
 
-### 4.1. Course Detail Page (`/courses/{slug}`)
-- **Hero Header**: Dark glassmorphic banner with course title, rating, instructor info, enrolled count, and video preview sticky card on the right.
-- **Curriculum Accordion (Udemy Style)**: Sections list with expandable lesson items, preview indicators, and duration badges.
+- **100% SVG inline icons** — no emoji, no icon fonts
+- Source: Heroicons (outline style, `stroke-width="1.5"` or `"2"`)
+- Size: `w-4 h-4` for inline, `w-5 h-5` for nav/buttons, `w-9 h-9` → `w-11 h-11` for featured icons
 
-### 4.2. Video Player & Learning Interface (`/courses/{slug}/learn`)
-- **Left/Center**: Responsive video player with custom controls and lesson notes.
-- **Right Sidebar (Udemy/TITV Style)**: Interactive lesson list with completion checkboxes (`LessonCompletion`), section headers, and progress bar (`X% completed`).
+---
 
-### 4.3. Teacher Dashboard (`/teacher/courses`)
-- **Stat Cards (`card-fcode`)**: Total courses, total students, total revenue.
-- **Course Table**: Published/Draft status badges, quick edit CTA, section/lesson builder.
+## 4. i18n
 
-### 4.4. Admin Panel (`/admin/dashboard`)
-- **Glassmorphic Cards**: User management, course approval workflow (`pending_review` -> `published`), revenue reports.
+- All UI strings use `__('messages.key')` or `@lang('key')`
+- Two languages: Vietnamese (default) + English
+- Lang files: `lang/vi/messages.php`, `lang/en/messages.php`
+- Code, variables, database columns: always English
+
+---
+
+## 5. Responsive Breakpoints
+
+- Mobile-first approach
+- `sm:` (640px), `md:` (768px), `lg:` (1024px), `xl:` (1280px)
+- Admin sidebar hidden on mobile, shown via hamburger toggle
+- Course cards: 1 col → 2 col → 3/4 col grid
