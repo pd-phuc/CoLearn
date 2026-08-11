@@ -47,6 +47,13 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT_URI'),
     ],
 
+    'sepay' => [
+        'api_key' => env('SEPAY_API_KEY'),
+        'bank_id' => env('SEPAY_BANK_ID', 'NCB'),
+        'account_no' => env('SEPAY_ACCOUNT_NO', '9704198526191432198'),
+        'account_name' => env('SEPAY_ACCOUNT_NAME', 'COLEARN PLATFORM'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
