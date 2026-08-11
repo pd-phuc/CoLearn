@@ -27,7 +27,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('home'))->with('success', __('auth.welcome_back'));
+            $intended = Auth::user()->isAdmin()
+                ? route('admin.dashboard')
+                : route('home');
+
+            return redirect()->intended($intended)->with('success', __('auth.welcome_back'));
         }
 
         return back()->withErrors([
