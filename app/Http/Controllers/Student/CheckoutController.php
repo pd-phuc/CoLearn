@@ -42,7 +42,7 @@ class CheckoutController extends Controller
     public function process(Request $request): View|RedirectResponse
     {
         $request->validate([
-            'payment_method' => ['required', 'string', 'in:wallet,vnpay,stripe'],
+            'payment_method' => ['required', 'string', 'in:wallet,sepay,stripe'],
         ]);
 
         if ($this->cartService->count() === 0) {
@@ -116,7 +116,7 @@ class CheckoutController extends Controller
 
         // VietQR / SePay: create pending order, show QR modal
         // NOTE: coupon is NOT incremented here — only when order is actually paid
-        if ($paymentMethod === 'vnpay') {
+        if ($paymentMethod === 'sepay') {
             $vietQrData = $this->sePayService->generateVietQrData($order);
 
             return view('checkout.index', [

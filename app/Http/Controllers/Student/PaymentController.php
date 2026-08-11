@@ -16,7 +16,7 @@ class PaymentController extends Controller
         protected OrderService $orderService,
     ) {}
 
-    public function vnpayReturn(Request $request): RedirectResponse
+    public function callback(Request $request): RedirectResponse
     {
         $orderNumber = $request->input('vnp_TxnRef') ?: $request->input('order_number');
         $responseCode = $request->input('vnp_ResponseCode');
@@ -32,11 +32,7 @@ class PaymentController extends Controller
             return redirect()->route('cart.index')->with('error', __('messages.order_not_found'));
         }
 
-        // Determine success: VNPay '00' code, or mock/sandbox (local env only)
-        $isVnpaySuccess = $responseCode === '00';
-        $isSandboxSuccess = app()->environment('local')
-            && ($request->has('stripe_success') || $request->has('mock_stripe'));
-        $isSuccess = $isVnpaySuccess || $isSandboxSuccess;
+        $isSuccess = $responseCode === '00';
 
         if ($isSuccess) {
             if ($order->status !== 'paid') {

@@ -33,21 +33,6 @@
                      }
                  } catch (e) { console.error(e); }
              }, 3000);
-         },
-         async simulatePayment() {
-             try {
-                 const res = await fetch('/orders/{{ $order->id }}/simulated-pay', {
-                     method: 'POST',
-                     headers: {
-                         'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
-                         'Accept': 'application/json'
-                     }
-                 });
-                 if (res.ok) {
-                     const data = await res.json();
-                     window.location.href = data.redirect || '{{ $redirectUrl ?? route("wallet.index") }}';
-                 }
-             } catch (e) { console.error(e); }
          }
      }"
      x-transition:enter="transition ease-out duration-300"
@@ -152,17 +137,6 @@
                     <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
                     <span>{{ __('messages.waiting_payment_auto_detect') }}</span>
                 </div>
-
-                {{-- Sandbox Simulate Button --}}
-                @if(app()->environment('local', 'testing'))
-                    <button @click="simulatePayment()" type="button"
-                            class="w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 uppercase tracking-wider">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        {{ __('messages.test_simulate_payment') }}
-                    </button>
-                @endif
             </div>
         </div>
 

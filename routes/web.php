@@ -95,11 +95,10 @@ Route::middleware('auth')->group(function () {
     // Checkout & Payment Processing
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
-    Route::get('/payment/vnpay/return', [PaymentController::class, 'vnpayReturn'])->name('payment.vnpay.return');
+    Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
-    // Real-Time VietQR Order Polling & Simulated Payment Helper
+    // Real-Time VietQR Order Polling
     Route::get('/orders/{order}/status', [PaymentIpnController::class, 'status'])->name('orders.status');
-    Route::post('/orders/{order}/simulated-pay', [PaymentIpnController::class, 'simulatedPay'])->name('orders.simulated-pay');
 
     // Order History & Receipts
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

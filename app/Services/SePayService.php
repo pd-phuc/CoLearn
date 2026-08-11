@@ -10,15 +10,24 @@ class SePayService
 {
     public function __construct(protected OrderService $orderService) {}
 
+    public function isConfigured(): bool
+    {
+        return ! empty(config('services.sepay.bank_id'))
+            && ! empty(config('services.sepay.account_no'));
+    }
+
     public function generateVietQrData(Order $order): array
     {
-        $bankId = config('services.sepay.bank_id', 'NCB');
-        $accountNo = config('services.sepay.account_no', '9704198526191432198');
-        $accountName = config('services.sepay.account_name', 'COLEARN PLATFORM');
+        if (! $this->isConfigured()) {
+            throw new \RuntimeException('SePay payment gateway is not configured. Please set SEPAY_BANK_ID and SEPAY_ACCOUNT_NO in your environment.');
+        }
+
+        $bankId = config('services.sepay.bank_id');
+        $accountNo = config('services.sepay.account_no');
+        $accountName = config('services.sepay.account_name', 'COLEARN');
         $amount = (int) $order->total_amount;
         $memo = $order->order_number;
 
-        // Dynamic VietQR image API for SePay
         $qrUrl = sprintf(
             'https://img.vietqr.io/image/%s-%s-compact.png?amount=%d&addInfo=%s&accountName=%s',
             $bankId,

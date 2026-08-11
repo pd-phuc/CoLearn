@@ -5,7 +5,6 @@
 
     <div>
         <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{{ __('messages.my_orders') }}</h1>
-        <p class="text-sm text-slate-500 font-medium mt-1">{{ __('messages.order_details') }}</p>
     </div>
 
     @if($orders->isEmpty())
@@ -39,7 +38,12 @@
                             <tr class="hover:bg-slate-50/80 transition-colors">
                                 <td class="px-6 py-4 font-black text-slate-900">{{ $order->order_number }}</td>
                                 <td class="px-6 py-4 text-slate-500">{{ $order->created_at->format('d/m/Y H:i') }}</td>
-                                <td class="px-6 py-4 uppercase font-bold text-slate-600">{{ $order->payment_method }}</td>
+                                <td class="px-6 py-4 uppercase font-bold text-slate-600">
+                                    @php
+                                        $methodLabels = ['sepay' => 'SePay', 'vnpay' => 'SePay', 'wallet' => 'Wallet', 'stripe' => 'Stripe'];
+                                    @endphp
+                                    {{ $methodLabels[$order->payment_method] ?? ucfirst($order->payment_method) }}
+                                </td>
                                 <td class="px-6 py-4">
                                     @if($order->status === 'paid')
                                         <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold">

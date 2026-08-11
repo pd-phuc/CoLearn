@@ -4,7 +4,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8"
      x-data="{
          showQrModal: {{ isset($vietQrModal) && $vietQrModal ? 'true' : 'false' }},
-         selectedMethod: 'vnpay',
+         selectedMethod: '{{ $defaultMethod ?? 'wallet' }}',
          copiedMsg: '',
          copyToClipboard(text) {
              navigator.clipboard.writeText(text);
@@ -14,26 +14,19 @@
      }">
 
     {{-- Page Header --}}
-    <div>
-        <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{{ __('messages.checkout_title') }}</h1>
-        <p class="text-xs sm:text-sm text-slate-400 font-bold uppercase tracking-wider mt-1">{{ __('messages.select_payment_method') }}</p>
-    </div>
+    <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{{ __('messages.checkout_title') }}</h1>
 
     <form action="{{ route('checkout.process') }}" method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
         @csrf
 
         {{-- Payment Method Selection --}}
-        <div class="md:col-span-2 space-y-6">
-
-            {{-- Payment Methods Card --}}
+        <div class="md:col-span-2">
             <div class="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs">
                 <div class="flex items-center gap-3 p-6 border-b border-slate-100">
                     <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     </div>
-                    <div>
-                        <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ __('messages.select_payment_method') }}</h3>
-                    </div>
+                    <h3 class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ __('messages.select_payment_method') }}</h3>
                 </div>
 
                 <div class="p-6 space-y-3">
@@ -45,7 +38,6 @@
                     <label @click="selectedMethod = 'wallet'"
                            :class="selectedMethod === 'wallet' ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-500/20' : 'border-slate-200 hover:border-slate-300 bg-white'"
                            class="group relative p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all active:scale-[0.99]">
-                        {{-- Active indicator --}}
                         <div :class="selectedMethod === 'wallet' ? 'scale-100' : 'scale-0'"
                              class="absolute top-3 right-3 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-[9px] text-white transition-transform">
                             <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
@@ -74,19 +66,24 @@
                     </label>
 
                     {{-- SePay / VietQR --}}
-                    <label @click="selectedMethod = 'vnpay'"
-                           :class="selectedMethod === 'vnpay' ? 'border-orange-500 bg-orange-50/50 ring-2 ring-orange-500/20' : 'border-slate-200 hover:border-slate-300 bg-white'"
-                           class="group relative p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all active:scale-[0.99]">
-                        <div :class="selectedMethod === 'vnpay' ? 'scale-100' : 'scale-0'"
+                    @php $sepayConfigured = app(\App\Services\SePayService::class)->isConfigured(); @endphp
+                    <label @click="{{ $sepayConfigured ? "selectedMethod = 'sepay'" : '' }}"
+                           :class="selectedMethod === 'sepay' ? 'border-orange-500 bg-orange-50/50 ring-2 ring-orange-500/20' : 'border-slate-200 {{ $sepayConfigured ? 'hover:border-slate-300' : 'opacity-50 cursor-not-allowed' }} bg-white'"
+                           class="group relative p-4 rounded-2xl border flex items-center justify-between {{ $sepayConfigured ? 'cursor-pointer' : 'cursor-not-allowed' }} transition-all active:scale-[0.99]">
+                        <div :class="selectedMethod === 'sepay' ? 'scale-100' : 'scale-0'"
                              class="absolute top-3 right-3 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[9px] text-white transition-transform">
                             <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <input type="radio" name="payment_method" value="vnpay" x-model="selectedMethod" class="text-orange-600 focus:ring-orange-500">
+                            <input type="radio" name="payment_method" value="sepay" x-model="selectedMethod" class="text-orange-600 focus:ring-orange-500" {{ $sepayConfigured ? '' : 'disabled' }}>
                             <div>
                                 <p class="text-sm font-black text-slate-900">{{ __('messages.vietqr_sepay_payment') }}</p>
-                                <p class="text-xs text-slate-400 font-bold">{{ __('messages.vietqr_instruction_short') }}</p>
+                                @if(! $sepayConfigured)
+                                    <p class="text-xs text-rose-500 font-bold">{{ __('messages.gateway_not_configured') }}</p>
+                                @else
+                                    <p class="text-xs text-slate-400 font-bold">{{ __('messages.vietqr_instruction_short') }}</p>
+                                @endif
                             </div>
                         </div>
                         <div class="px-2.5 py-1 bg-blue-600 text-white font-black text-[9px] rounded-md uppercase tracking-wider">
@@ -95,58 +92,30 @@
                     </label>
 
                     {{-- Stripe --}}
-                    <label @click="selectedMethod = 'stripe'"
-                           :class="selectedMethod === 'stripe' ? 'border-indigo-500 bg-indigo-50/50 ring-2 ring-indigo-500/20' : 'border-slate-200 hover:border-slate-300 bg-white'"
-                           class="group relative p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all active:scale-[0.99]">
+                    @php $stripeConfigured = app(\App\Services\StripeService::class)->isConfigured(); @endphp
+                    <label @click="{{ $stripeConfigured ? "selectedMethod = 'stripe'" : '' }}"
+                           :class="selectedMethod === 'stripe' ? 'border-indigo-500 bg-indigo-50/50 ring-2 ring-indigo-500/20' : 'border-slate-200 {{ $stripeConfigured ? 'hover:border-slate-300' : 'opacity-50 cursor-not-allowed' }} bg-white'"
+                           class="group relative p-4 rounded-2xl border flex items-center justify-between {{ $stripeConfigured ? 'cursor-pointer' : 'cursor-not-allowed' }} transition-all active:scale-[0.99]">
                         <div :class="selectedMethod === 'stripe' ? 'scale-100' : 'scale-0'"
                              class="absolute top-3 right-3 flex h-5 w-5 items-center justify-center rounded-full bg-indigo-500 text-[9px] text-white transition-transform">
                             <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <input type="radio" name="payment_method" value="stripe" x-model="selectedMethod" class="text-indigo-600 focus:ring-indigo-500">
+                            <input type="radio" name="payment_method" value="stripe" x-model="selectedMethod" class="text-indigo-600 focus:ring-indigo-500" {{ $stripeConfigured ? '' : 'disabled' }}>
                             <div>
                                 <p class="text-sm font-black text-slate-900">{{ __('messages.stripe_payment') }}</p>
-                                <p class="text-xs text-slate-400 font-bold">{{ __('messages.stripe_card_types') }}</p>
+                                @if(! $stripeConfigured)
+                                    <p class="text-xs text-rose-500 font-bold">{{ __('messages.gateway_not_configured') }}</p>
+                                @else
+                                    <p class="text-xs text-slate-400 font-bold">{{ __('messages.stripe_card_types') }}</p>
+                                @endif
                             </div>
                         </div>
                         <div class="px-2.5 py-1 bg-indigo-600 text-white font-black text-[9px] rounded-md uppercase tracking-wider">
                             Stripe
                         </div>
                     </label>
-                </div>
-            </div>
-
-            {{-- Payment Guide (3 Steps — mst-shoproblox style) --}}
-            <div class="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-xs">
-                <div class="flex items-center gap-2 p-6 border-b border-slate-100">
-                    <div class="bg-orange-500 h-5 w-1 rounded-full"></div>
-                    <div>
-                        <p class="text-[10px] font-black tracking-widest text-slate-900 uppercase">{{ __('messages.payment_guide_title') }}</p>
-                        <p class="text-[9px] font-bold tracking-widest text-slate-400 uppercase">{{ __('messages.payment_guide_subtitle') }}</p>
-                    </div>
-                </div>
-
-                <div class="p-6 space-y-3">
-                    @php
-                        $checkoutSteps = [
-                            ['title' => __('messages.checkout_step_1_title'), 'desc' => __('messages.checkout_step_1_desc')],
-                            ['title' => __('messages.checkout_step_2_title'), 'desc' => __('messages.checkout_step_2_desc')],
-                            ['title' => __('messages.checkout_step_3_title'), 'desc' => __('messages.checkout_step_3_desc')],
-                        ];
-                    @endphp
-
-                    @foreach($checkoutSteps as $index => $step)
-                        <div class="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-slate-50/50 p-3.5">
-                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-600 text-xs font-black">
-                                {{ $index + 1 }}
-                            </div>
-                            <div>
-                                <p class="text-xs font-black tracking-tight text-slate-900 uppercase">{{ $step['title'] }}</p>
-                                <p class="text-[11px] font-medium text-slate-400 mt-0.5 leading-relaxed">{{ $step['desc'] }}</p>
-                            </div>
-                        </div>
-                    @endforeach
                 </div>
             </div>
         </div>
