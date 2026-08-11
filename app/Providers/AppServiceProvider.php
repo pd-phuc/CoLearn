@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\SettingService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Apply DB-stored settings to Laravel config (mail, OAuth, storage)
+        // Wrapped in try-catch so app can boot even without database
+        try {
+            app(SettingService::class)->applyToConfig();
+        } catch (\Throwable) {
+            // DB not available yet (migration, etc.) — skip
+        }
     }
 }
