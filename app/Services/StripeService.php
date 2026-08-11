@@ -8,17 +8,21 @@ use Stripe\Stripe;
 
 class StripeService
 {
+    public function __construct(protected SettingService $settingService) {}
+
     public function isConfigured(): bool
     {
-        return ! empty(config('services.stripe.secret'));
+        $secret = $this->settingService->get('stripe', 'secret', config('services.stripe.secret'));
+
+        return ! empty($secret);
     }
 
     public function createPaymentUrl(Order $order): string
     {
-        $stripeSecret = config('services.stripe.secret');
+        $stripeSecret = $this->settingService->get('stripe', 'secret', config('services.stripe.secret'));
 
         if (empty($stripeSecret) || ! class_exists('\Stripe\Stripe')) {
-            throw new \RuntimeException('Stripe is not configured. Please set STRIPE_SECRET in your environment.');
+            throw new \RuntimeException('Stripe is not configured. Please set Stripe keys in Admin → Settings.');
         }
 
         Stripe::setApiKey($stripeSecret);

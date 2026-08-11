@@ -49,9 +49,9 @@ return [
 
     'sepay' => [
         'api_key' => env('SEPAY_API_KEY'),
-        'bank_id' => env('SEPAY_BANK_ID', 'NCB'),
-        'account_no' => env('SEPAY_ACCOUNT_NO', '9704198526191432198'),
-        'account_name' => env('SEPAY_ACCOUNT_NAME', 'COLEARN PLATFORM'),
+        'bank_id' => env('SEPAY_BANK_ID'),
+        'account_no' => env('SEPAY_ACCOUNT_NO'),
+        'account_name' => env('SEPAY_ACCOUNT_NAME'),
     ],
 
     'slack' => [
