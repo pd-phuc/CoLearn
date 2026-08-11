@@ -1,16 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-auto max-w-3xl"
-         x-data="{
-             showQrModal: {{ isset($vietQrModal) && $vietQrModal ? 'true' : 'false' }},
-             copiedMsg: '',
-             copyToClipboard(text) {
-                 navigator.clipboard.writeText(text);
-                 this.copiedMsg = '{{ __('messages.copied_to_clipboard') }}';
-                 setTimeout(() => this.copiedMsg = '', 2000);
-             }
-         }">
+    <div class="mx-auto max-w-5xl"
+         x-data="walletPage({{ isset($vietQrModal) && $vietQrModal ? 'true' : 'false' }})">
 
         {{-- Balance Card --}}
         <div class="mb-8 flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -34,8 +26,9 @@
             <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 @foreach([100000, 200000, 500000, 1000000] as $preset)
                     <button type="button"
-                            onclick="selectPreset({{ $preset }}, this)"
-                            class="preset-btn relative cursor-pointer rounded-xl border-2 px-4 py-3 text-center text-sm font-semibold transition-all hover:border-orange-400 active:scale-95 {{ $loop->index === 1 ? 'border-orange-500 bg-orange-50 text-orange-600' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50' }}">
+                            @click="selectPreset({{ $preset }})"
+                            :class="rawValue === {{ $preset }} ? 'border-orange-500 bg-orange-50 text-orange-600' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'"
+                            class="cursor-pointer rounded-xl border-2 px-4 py-3 text-center text-sm font-semibold transition-all hover:border-orange-400 active:scale-95">
                         {{ number_format($preset, 0, ',', '.') }} đ
                     </button>
                 @endforeach
@@ -43,18 +36,19 @@
 
             {{-- Custom Amount --}}
             <div class="mt-4">
-                <label for="topup-amount" class="block text-sm font-medium text-slate-600">{{ __('messages.custom_amount_label') }}</label>
+                <label for="topup-display" class="block text-sm font-medium text-slate-600">{{ __('messages.custom_amount_label') }}</label>
                 <div class="relative mt-1.5">
-                    <input type="number"
-                           name="amount"
-                           id="topup-amount"
-                           value="200000"
-                           min="10000"
-                           max="50000000"
-                           placeholder="200000"
-                           class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pr-14 text-sm font-medium text-slate-900 transition-colors focus:border-orange-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/20"
+                    <input type="text"
+                           id="topup-display"
+                           x-model="display"
+                           @input="onAmountInput($event)"
+                           @focus="$event.target.select()"
+                           inputmode="numeric"
+                           placeholder="200.000"
+                           class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 pr-14 text-lg font-semibold text-orange-600 transition-colors focus:border-orange-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/20"
                            required>
-                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-slate-400">VNĐ</span>
+                    <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-orange-400">VNĐ</span>
+                    <input type="hidden" name="amount" id="topup-amount" x-model="rawValue">
                 </div>
                 <p class="mt-1.5 text-xs text-slate-400">{{ __('messages.amount_min_hint', ['amount' => '10.000đ']) }}</p>
             </div>
@@ -232,18 +226,38 @@
     </div>
 @endsection
 
-@push('scripts')
+@push('head-scripts')
     <script>
-        function selectPreset(amount, button) {
-            document.querySelectorAll('.preset-btn').forEach(btn => {
-                btn.classList.remove('border-orange-500', 'bg-orange-50', 'text-orange-600');
-                btn.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
-            });
-
-            button.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
-            button.classList.add('border-orange-500', 'bg-orange-50', 'text-orange-600');
-
-            document.getElementById('topup-amount').value = amount;
-        }
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('walletPage', (showQr) => ({
+                showQrModal: showQr || false,
+                copiedMsg: '',
+                rawValue: 200000,
+                display: '200.000',
+                copyToClipboard(text) {
+                    navigator.clipboard.writeText(text);
+                    this.copiedMsg = 'Copied!';
+                    setTimeout(() => this.copiedMsg = '', 2000);
+                },
+                formatNum(num) {
+                    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                },
+                onAmountInput(e) {
+                    let digits = e.target.value.replace(/\D/g, '');
+                    if (digits === '') { this.rawValue = ''; this.display = ''; return; }
+                    let num = parseInt(digits, 10);
+                    if (num > 50000000) num = 50000000;
+                    this.rawValue = num;
+                    this.display = this.formatNum(num);
+                    this.$nextTick(() => {
+                        e.target.setSelectionRange(this.display.length, this.display.length);
+                    });
+                },
+                selectPreset(amount) {
+                    this.rawValue = amount;
+                    this.display = this.formatNum(amount);
+                }
+            }));
+        });
     </script>
 @endpush
