@@ -27,7 +27,7 @@ Không phải marketplace — chỉ teacher/admin tạo khóa học, student mua
             ┌──────────┼──────────┐
             ▼          ▼          ▼
         ┌───────┐  ┌───────┐  ┌───────┐
-        │ AWS   │  │Mailgun│  │ VNPay │
+        │ AWS   │  │Mailgun│  │ SePay │
         │  S3   │  │(email)│  │Stripe │
         │(files)│  │       │  │(pay)  │
         └───────┘  └───────┘  └───────┘
@@ -65,8 +65,8 @@ Không phải marketplace — chỉ teacher/admin tạo khóa học, student mua
 ### Third-Party Services
 | Service | Provider | Laravel Integration |
 |---------|----------|-------------------|
-| Payment (VN) | VNPay | VNPay SDK |
-| Payment (Intl) | Stripe | laravel/cashier |
+| Payment (VN) | SePay (VietQR Auto-Bank) | Custom `SePayService` |
+| Payment (Intl) | Stripe | `stripe/stripe-php` |
 | Email | Mailgun | Mail driver (built-in) |
 | Storage | AWS S3 | Flysystem driver (built-in) |
 
@@ -131,7 +131,12 @@ Lesson
 
 Order
  ├── belongsTo User
+ ├── belongsTo Coupon
  └── hasMany OrderItem → belongsTo Course
+
+Transaction
+ ├── belongsTo User
+ └── belongsTo Order (nullable)
 
 Enrollment
  ├── belongsTo User
@@ -142,14 +147,17 @@ Review
  └── belongsTo Course
 
 Coupon
- └── belongsToMany Course
+ └── hasMany Order
+
+Setting
+ └── (key-value store, grouped by service)
 ```
 
 ## User Roles & Permissions
 
 ### Student
 - Browse/search courses
-- Purchase courses (VNPay/Stripe)
+- Purchase courses (Wallet/SePay/Stripe)
 - Access enrolled courses (video, materials)
 - Complete lessons, track progress
 - Write reviews
@@ -235,7 +243,7 @@ colearn/
 5. **SQL injection**: Eloquent ORM parameterized queries
 6. **XSS prevention**: Blade `{{ }}` auto-escaping
 7. **File upload validation**: Mime type + size checks before S3 upload
-8. **Payment webhook verification**: VNPay/Stripe signature validation
+8. **Payment webhook verification**: SePay API key + Stripe signature validation
 
 ## Development Workflow
 
