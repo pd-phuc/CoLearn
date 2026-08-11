@@ -47,7 +47,7 @@ class WalletController extends Controller
             'discount_amount' => 0.00,
             'total_amount' => $amount,
             'status' => 'pending',
-            'payment_method' => 'vnpay',
+            'payment_method' => 'sepay',
         ]);
 
         $vietQrData = $this->sePayService->generateVietQrData($order);

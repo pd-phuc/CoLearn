@@ -57,7 +57,10 @@
 
             <div>
                 <span class="text-xs text-slate-500 font-medium">{{ __('messages.payment_method_label') }}:</span>
-                <p class="text-xs font-extrabold text-slate-900 uppercase mt-1">{{ $order->payment_method }}</p>
+                @php
+                    $methodLabels = ['sepay' => 'SePay', 'vnpay' => 'SePay', 'wallet' => 'Wallet', 'stripe' => 'Stripe'];
+                @endphp
+                <p class="text-xs font-extrabold text-slate-900 uppercase mt-1">{{ $methodLabels[$order->payment_method] ?? ucfirst($order->payment_method) }}</p>
             </div>
 
             @if($order->payment_id)
@@ -101,7 +104,7 @@
                             <span class="text-sm font-black text-slate-900">{{ number_format($item->price, 0, ',', '.') }} VNĐ</span>
                             @if($order->status === 'paid')
                                 <a href="{{ route('learn.show', $item->course->slug) }}" class="btn-primary py-2 px-4 rounded-xl text-xs font-bold shadow-xs">
-                                    <span>Học ngay</span>
+                                    <span>{{ __('messages.start_learning') }}</span>
                                 </a>
                             @endif
                         </div>
