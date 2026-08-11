@@ -7,12 +7,6 @@
             <h1 class="text-xl font-black tracking-tighter text-slate-900 uppercase md:text-2xl">
                 {{ __('messages.topup_wallet_title') }}
             </h1>
-            <p class="mt-1 ml-4 hidden text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase md:block">
-                {{ __('messages.wallet_description') }}
-            </p>
-            <p class="mt-0.5 text-[8px] font-black tracking-widest text-slate-400 uppercase opacity-80 md:hidden">
-                {{ Str::limit(__('messages.wallet_description'), 30) }}
-            </p>
         </div>
 
         <div class="flex items-center gap-3">
@@ -43,11 +37,10 @@
 
             <div class="absolute top-0 right-0 h-32 w-32 rounded-full bg-orange-500/5 blur-3xl"></div>
 
-            <div class="relative z-10 space-y-1">
+            <div class="relative z-10">
                 <h3 class="text-lg font-black tracking-tighter text-slate-900 uppercase">
                     {{ __('messages.topup_wallet_title') }}
                 </h3>
-                <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase md:text-xs">{{ __('messages.topup_guide_subtitle') }}</p>
             </div>
 
             <div class="relative z-10 space-y-5">
@@ -113,11 +106,10 @@
         <div class="relative space-y-6 overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/20 md:space-y-8 md:p-8">
             <div class="absolute top-0 left-0 h-32 w-32 rounded-full bg-emerald-500/5 blur-3xl"></div>
 
-            <div class="relative z-10 space-y-1">
+            <div class="relative z-10">
                 <h3 class="text-lg font-black tracking-tighter text-slate-900 uppercase">
                     {{ __('messages.topup_guide_title') }}
                 </h3>
-                <p class="text-[10px] font-bold tracking-widest text-slate-400 uppercase md:text-xs">{{ __('messages.topup_guide_subtitle') }}</p>
             </div>
 
             <div class="relative z-10 space-y-4">
@@ -170,12 +162,9 @@
                     <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-lg text-orange-600">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                     </div>
-                    <div>
-                        <h3 class="text-sm font-black tracking-tighter text-slate-900 uppercase">
-                            {{ __('messages.topup_history_title') }}
-                        </h3>
-                        <p class="mt-1 text-[9px] font-bold tracking-widest text-slate-400 uppercase">{{ __('messages.wallet_description') }}</p>
-                    </div>
+                    <h3 class="text-sm font-black tracking-tighter text-slate-900 uppercase">
+                        {{ __('messages.topup_history_title') }}
+                    </h3>
                 </div>
             </div>
 
@@ -323,10 +312,7 @@
                     <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-lg text-slate-500">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     </div>
-                    <div>
-                        <h3 class="text-sm font-black tracking-tighter text-slate-900 uppercase">{{ __('messages.balance_history_title') }}</h3>
-                        <p class="mt-1 text-[9px] font-bold tracking-widest text-slate-400 uppercase">{{ __('messages.balance_history_desc') }}</p>
-                    </div>
+                    <h3 class="text-sm font-black tracking-tighter text-slate-900 uppercase">{{ __('messages.balance_history_title') }}</h3>
                 </div>
             </div>
 
