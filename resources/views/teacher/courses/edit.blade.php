@@ -164,7 +164,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div class="sm:col-span-2">
                                     <label class="block text-[11px] font-bold text-slate-600 mb-1">{{ __('teacher.video_url') }}</label>
-                                    <input type="text" name="video_url" placeholder="https://www.youtube.com/watch?v=..." class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 font-medium">
+                                    <input type="text" name="video_url" placeholder="{{ __('teacher.video_url_placeholder') }}" class="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 font-medium">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-bold text-slate-600 mb-1">{{ __('teacher.duration_minutes') }}</label>
