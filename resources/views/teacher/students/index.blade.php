@@ -45,22 +45,13 @@
                 <tbody class="divide-y divide-slate-100 text-xs">
                     @forelse($enrollments as $enr)
                         @php
-                            $totalLessons = $enr->course->sections->flatMap->lessons->count();
-                            $completedLessons = \App\Models\LessonCompletion::where('user_id', $enr->user_id)
-                                ->whereIn('lesson_id', $enr->course->sections->flatMap->lessons->pluck('id'))
-                                ->count();
-                            $progressPct = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+                            $key = $enr->user_id . '-' . $enr->course_id;
+                            $progress = $progressMap[$key] ?? ['total' => 0, 'completed' => 0, 'percent' => 0];
                         @endphp
                         <tr class="hover:bg-slate-50/60 transition-colors">
                             <td class="py-4 px-6">
                                 <div class="flex items-center gap-3">
-                                    @if($enr->user->avatar)
-                                        <img src="{{ $enr->user->avatar }}" alt="" class="w-9 h-9 rounded-full object-cover shrink-0">
-                                    @else
-                                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-bold flex items-center justify-center text-xs shrink-0">
-                                            {{ strtoupper(substr($enr->user->name, 0, 1)) }}
-                                        </div>
-                                    @endif
+                                    <x-user-avatar :user="$enr->user" size="sm" />
                                     <div>
                                         <p class="font-bold text-slate-900">{{ $enr->user->name }}</p>
                                         <p class="text-[11px] text-slate-400 font-medium">{{ $enr->user->email }}</p>
@@ -76,12 +67,12 @@
                             <td class="py-4 px-6 min-w-[200px]">
                                 <div class="flex items-center gap-3">
                                     <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
-                                        <div class="bg-blue-600 h-2 rounded-full transition-all" style="width: {{ $progressPct }}%"></div>
+                                        <div class="bg-blue-600 h-2 rounded-full transition-all" style="width: {{ $progress['percent'] }}%"></div>
                                     </div>
-                                    <span class="text-xs font-black text-slate-700 w-12 text-right">{{ $progressPct }}%</span>
+                                    <span class="text-xs font-black text-slate-700 w-12 text-right">{{ $progress['percent'] }}%</span>
                                 </div>
                                 <span class="text-[10px] text-slate-400 font-semibold mt-0.5 block">
-                                    {{ __('teacher.lessons_completed_of', ['completed' => $completedLessons, 'total' => $totalLessons]) }}
+                                    {{ __('teacher.lessons_completed_of', ['completed' => $progress['completed'], 'total' => $progress['total']]) }}
                                 </span>
                             </td>
                         </tr>
