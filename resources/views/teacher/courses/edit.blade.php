@@ -12,15 +12,7 @@
             </a>
             <div class="flex items-center gap-3">
                 <h1 class="text-2xl font-black text-slate-900 tracking-tight">{{ $course->title }}</h1>
-                @if($course->status === 'published')
-                    <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-bold rounded-lg">{{ __('teacher.status_published') }}</span>
-                @elseif($course->status === 'pending_review')
-                    <span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200/60 text-xs font-bold rounded-lg">{{ __('teacher.status_pending_review') }}</span>
-                @elseif($course->status === 'draft')
-                    <span class="px-2.5 py-1 bg-amber-50 text-amber-700 border border-amber-200/60 text-xs font-bold rounded-lg">{{ __('teacher.status_draft') }}</span>
-                @else
-                    <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg">{{ $course->status }}</span>
-                @endif
+                <x-course-status-badge :status="$course->status" />
             </div>
         </div>
 
