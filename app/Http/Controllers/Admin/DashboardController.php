@@ -8,7 +8,6 @@ use App\Models\Enrollment;
 use App\Models\Order;
 use App\Models\User;
 use Carbon\CarbonPeriod;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -139,7 +138,7 @@ class DashboardController extends Controller
         $start = now()->subDays($days - 1)->startOfDay();
 
         $data = Enrollment::where('created_at', '>=', $start)
-            ->selectRaw("DATE(created_at) as day, COUNT(*) as total")
+            ->selectRaw('DATE(created_at) as day, COUNT(*) as total')
             ->groupBy('day')
             ->orderBy('day')
             ->pluck('total', 'day')

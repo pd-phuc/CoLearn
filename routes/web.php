@@ -25,6 +25,13 @@ use App\Http\Controllers\Student\PaymentIpnController;
 use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\Student\SePayWebhookController;
 use App\Http\Controllers\Student\WalletController;
+use App\Http\Controllers\Teacher\AnalyticsController as TeacherAnalyticsController;
+use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
+use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
+use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
+use App\Http\Controllers\Teacher\ProfileController as TeacherProfileController;
+use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
+use App\Http\Controllers\Teacher\StudentController as TeacherStudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -141,8 +148,35 @@ Route::prefix('admin')
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
 
-        Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
-        Route::post('profile/avatar', [\App\Http\Controllers\Admin\ProfileController::class, 'updateAvatar'])->name('profile.avatar');
-        Route::put('profile/password', [\App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.password');
+        Route::get('profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
+        Route::post('profile/avatar', [App\Http\Controllers\Admin\ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+        Route::put('profile/password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.password');
+    });
+
+// --- Teacher Portal Routes ---
+Route::prefix('teacher')
+    ->middleware(['auth', 'role:teacher|admin'])
+    ->name('teacher.')
+    ->group(function () {
+        Route::get('/', [TeacherDashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('courses', TeacherCourseController::class);
+        Route::post('courses/{course}/submit-review', [TeacherCourseController::class, 'submitReview'])->name('courses.submit-review');
+
+        Route::post('courses/{course}/sections', [TeacherSectionController::class, 'store'])->name('courses.sections.store');
+        Route::put('sections/{section}', [TeacherSectionController::class, 'update'])->name('sections.update');
+        Route::delete('sections/{section}', [TeacherSectionController::class, 'destroy'])->name('sections.destroy');
+
+        Route::post('sections/{section}/lessons', [TeacherLessonController::class, 'store'])->name('sections.lessons.store');
+        Route::put('lessons/{lesson}', [TeacherLessonController::class, 'update'])->name('lessons.update');
+        Route::delete('lessons/{lesson}', [TeacherLessonController::class, 'destroy'])->name('lessons.destroy');
+
+        Route::get('students', [TeacherStudentController::class, 'index'])->name('students.index');
+        Route::get('analytics', [TeacherAnalyticsController::class, 'index'])->name('analytics.index');
+
+        Route::get('profile', [TeacherProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('profile', [TeacherProfileController::class, 'update'])->name('profile.update');
+        Route::post('profile/avatar', [TeacherProfileController::class, 'updateAvatar'])->name('profile.avatar');
+        Route::put('profile/password', [TeacherProfileController::class, 'updatePassword'])->name('profile.password');
     });
