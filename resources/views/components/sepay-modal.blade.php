@@ -83,8 +83,13 @@
             <div class="flex flex-col items-center justify-center space-y-4 bg-slate-50/80 rounded-2xl p-5 border border-slate-100 order-first">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">{{ __('messages.scan_qr_instruction') }}</p>
 
-                <div class="p-3 bg-white border border-slate-200 rounded-2xl shadow-sm group hover:shadow-md transition-shadow">
-                    <img src="{{ $data['qr_url'] }}" alt="SePay QR Code" class="w-44 h-44 sm:w-52 sm:h-52 object-contain rounded-xl group-hover:scale-[1.02] transition-transform">
+                <div class="relative p-4 bg-white border border-slate-200 rounded-2xl shadow-sm group hover:shadow-md transition-shadow flex items-center justify-center">
+                    <img src="{{ $data['qr_url'] }}" alt="SePay QR Code" class="w-48 h-48 sm:w-56 sm:h-56 object-contain rounded-xl group-hover:scale-[1.02] transition-transform">
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="w-9 h-9 rounded-xl bg-white border-2 border-primary-500 shadow-md flex items-center justify-center text-primary-600 font-black text-[10px] tracking-tighter">
+                            SePay
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Countdown --}}

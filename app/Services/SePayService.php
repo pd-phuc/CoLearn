@@ -41,11 +41,13 @@ class SePayService
         $amount = (int) $order->total_amount;
         $memo = $order->order_number;
 
-        // SePay Official QR Endpoint
+        // SePay Official QR Endpoint — use template=qr_only for clean QR code (no third-party banner)
+        $template = $this->settingService->get('sepay', 'template', 'qr_only');
         $qrUrl = sprintf(
-            'https://qr.sepay.vn/img?bank=%s&acc=%s&template=compact&amount=%d&des=%s',
+            'https://qr.sepay.vn/img?bank=%s&acc=%s&template=%s&amount=%d&des=%s',
             urlencode($bankId),
             urlencode($accountNo),
+            urlencode($template),
             $amount,
             urlencode($memo),
         );
