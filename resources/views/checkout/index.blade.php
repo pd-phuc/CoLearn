@@ -86,8 +86,8 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="px-2.5 py-1 bg-blue-600 text-white font-black text-[9px] rounded-md uppercase tracking-wider">
-                            VietQR
+                        <div class="px-2.5 py-1 bg-gradient-to-tr from-primary-600 to-amber-500 text-white font-black text-[9px] rounded-md uppercase tracking-wider">
+                            SePay
                         </div>
                     </label>
 
@@ -172,9 +172,9 @@
         </div>
     </form>
 
-    {{-- VietQR Modal (shared component) --}}
+    {{-- SePay Modal (shared component) --}}
     @if(isset($vietQrModal) && $vietQrModal && isset($vietQrData))
-        <x-vietqr-modal :order="$order" :viet-qr-data="$vietQrData" />
+        <x-sepay-modal :order="$order" :payment-data="$vietQrData" />
     @endif
 
 </div>
