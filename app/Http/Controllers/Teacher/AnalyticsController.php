@@ -45,21 +45,16 @@ class AnalyticsController extends Controller
             $monthlyEnrollments[] = $enr;
         }
 
-        // Detailed course performance list
+        // Detailed course performance list (single query with subquery for revenue)
         $courseStats = Course::where('teacher_id', $teacherId)
             ->withCount(['enrollments'])
-            ->get()
-            ->map(function ($course) {
-                $revenue = OrderItem::where('course_id', $course->id)
-                    ->whereHas('order', function ($q) {
-                        $q->where('status', 'paid');
-                    })
-                    ->sum('price');
-
-                $course->total_revenue = $revenue;
-
-                return $course;
-            });
+            ->addSelect(['total_revenue' => OrderItem::selectRaw('COALESCE(SUM(order_items.price), 0)')
+                ->whereColumn('order_items.course_id', 'courses.id')
+                ->whereHas('order', function ($q) {
+                    $q->where('status', 'paid');
+                }),
+            ])
+            ->get();
 
         return view('teacher.analytics.index', compact(
             'months',
