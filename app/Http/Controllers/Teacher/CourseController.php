@@ -16,6 +16,24 @@ class CourseController extends Controller
 {
     use AuthorizesTeacherCourse;
 
+    /**
+     * Shared validation rules for course store/update.
+     */
+    private function courseValidationRules(): array
+    {
+        return [
+            'title' => ['required', 'string', 'max:255'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'description' => ['nullable', 'string'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'discount_price' => ['nullable', 'numeric', 'min:0', 'lte:price'],
+            'level' => ['required', 'in:all,beginner,intermediate,advanced'],
+            'learning_outcomes' => ['nullable', 'string'],
+            'requirements' => ['nullable', 'string'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+        ];
+    }
+
     public function index(Request $request): View
     {
         $teacherId = $request->user()->id;
@@ -46,17 +64,7 @@ class CourseController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'description' => ['nullable', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'discount_price' => ['nullable', 'numeric', 'min:0', 'lte:price'],
-            'level' => ['required', 'in:all,beginner,intermediate,advanced'],
-            'learning_outcomes' => ['nullable', 'string'],
-            'requirements' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
-        ]);
+        $validated = $request->validate($this->courseValidationRules());
 
         $slug = Str::slug($validated['title']);
         $originalSlug = $slug;
@@ -108,19 +116,15 @@ class CourseController extends Controller
     {
         $this->authorizeTeacher($request, $course);
 
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'description' => ['nullable', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'discount_price' => ['nullable', 'numeric', 'min:0', 'lte:price'],
-            'level' => ['required', 'in:all,beginner,intermediate,advanced'],
-            'learning_outcomes' => ['nullable', 'string'],
-            'requirements' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
-        ]);
+        $validated = $request->validate($this->courseValidationRules());
 
         if ($request->hasFile('thumbnail')) {
+            // Delete old thumbnail from storage
+            if ($course->thumbnail) {
+                $oldPath = str_replace('/storage/', '', $course->thumbnail);
+                Storage::disk('public')->delete($oldPath);
+            }
+
             $thumbnailPath = $request->file('thumbnail')->store('courses/thumbnails', 'public');
             $validated['thumbnail'] = Storage::url($thumbnailPath);
         }

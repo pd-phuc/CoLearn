@@ -44,6 +44,12 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        // Delete old avatar from storage
+        if ($user->avatar) {
+            $oldPath = str_replace('/storage/', '', $user->avatar);
+            Storage::disk('public')->delete($oldPath);
+        }
+
         $path = $request->file('avatar')->store('avatars', 'public');
         $user->avatar = Storage::url($path);
         $user->save();

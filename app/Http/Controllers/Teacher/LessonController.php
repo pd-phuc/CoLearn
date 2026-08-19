@@ -15,19 +15,27 @@ class LessonController extends Controller
 {
     use AuthorizesTeacherCourse;
 
-    public function store(Request $request, Section $section): RedirectResponse
+    /**
+     * Shared validation rules for lesson store/update.
+     */
+    private function lessonValidationRules(): array
     {
-        $this->authorizeTeacher($request, $section->course);
-
-        $validated = $request->validate([
+        return [
             'title' => ['required', 'string', 'max:255'],
             'type' => ['required', 'in:video,text,document'],
             'video_url' => ['nullable', 'string', 'max:1000'],
             'content' => ['nullable', 'string'],
-            'document_file' => ['nullable', 'file', 'max:20480'], // max 20MB
+            'document_file' => ['nullable', 'file', 'max:20480'],
             'duration' => ['nullable', 'integer', 'min:0'],
             'is_free_preview' => ['nullable', 'boolean'],
-        ]);
+        ];
+    }
+
+    public function store(Request $request, Section $section): RedirectResponse
+    {
+        $this->authorizeTeacher($request, $section->course);
+
+        $validated = $request->validate($this->lessonValidationRules());
 
         $slug = Str::slug($validated['title']);
         $originalSlug = $slug;
@@ -64,16 +72,9 @@ class LessonController extends Controller
     {
         $this->authorizeTeacher($request, $lesson->section->course);
 
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:video,text,document'],
-            'video_url' => ['nullable', 'string', 'max:1000'],
-            'content' => ['nullable', 'string'],
-            'document_file' => ['nullable', 'file', 'max:20480'],
-            'duration' => ['nullable', 'integer', 'min:0'],
-            'is_free_preview' => ['nullable', 'boolean'],
+        $validated = $request->validate(array_merge($this->lessonValidationRules(), [
             'sort_order' => ['nullable', 'integer', 'min:0'],
-        ]);
+        ]));
 
         if ($request->hasFile('document_file')) {
             $path = $request->file('document_file')->store('courses/materials', 'public');
