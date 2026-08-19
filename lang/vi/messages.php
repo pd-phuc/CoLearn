@@ -226,9 +226,10 @@ return [
     'view_receipt' => 'Xem hóa đơn',
     'back_to_orders' => 'Quay lại danh sách đơn hàng',
 
-    // SePay Modal
-    'scan_sepay_to_pay' => 'Quét Mã SePay Để Thanh Toán',
-    'scan_vietqr_to_pay' => 'Quét Mã SePay Để Thanh Toán',
+    // QR Payment Modal
+    'scan_qr_to_pay' => 'Quét mã QR để thanh toán',
+    'scan_sepay_to_pay' => 'Quét mã QR để thanh toán',
+    'scan_vietqr_to_pay' => 'Quét mã QR để thanh toán',
     'scan_qr_instruction' => 'Mở ứng dụng Ngân hàng hoặc Ví điện tử (Vietcombank, MB, Techcombank, MoMo,...) và quét mã QR dưới đây',
     'bank_account_no' => 'Số tài khoản',
     'account_name_label' => 'Chủ tài khoản',

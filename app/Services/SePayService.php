@@ -52,10 +52,32 @@ class SePayService
             urlencode($memo),
         );
 
+        $bankNames = [
+            'NCB' => 'Ngân hàng Quốc Dân (NCB)',
+            'MB' => 'Ngân hàng Quân Đội (MBBank)',
+            'MBBank' => 'Ngân hàng Quân Đội (MBBank)',
+            'VCB' => 'Ngân hàng Ngoại Thương (Vietcombank)',
+            'Vietcombank' => 'Ngân hàng Ngoại Thương (Vietcombank)',
+            'TCB' => 'Ngân hàng Kỹ Thương (Techcombank)',
+            'Techcombank' => 'Ngân hàng Kỹ Thương (Techcombank)',
+            'ACB' => 'Ngân hàng Á Châu (ACB)',
+            'VPB' => 'Ngân hàng VPBank',
+            'VPBank' => 'Ngân hàng VPBank',
+            'BIDV' => 'Ngân hàng BIDV',
+            'CTG' => 'Ngân hàng VietinBank',
+            'VietinBank' => 'Ngân hàng VietinBank',
+            'TPB' => 'Ngân hàng TPBank',
+            'TPBank' => 'Ngân hàng TPBank',
+            'VIB' => 'Ngân hàng VIB',
+            'STB' => 'Ngân hàng Sacombank',
+            'Sacombank' => 'Ngân hàng Sacombank',
+        ];
+        $bankDisplayName = $bankNames[$bankId] ?? $bankId;
+
         return [
             'gateway' => 'SePay',
             'bank_id' => $bankId,
-            'bank_name' => "Ngân hàng ({$bankId})",
+            'bank_name' => $bankDisplayName,
             'account_no' => $accountNo,
             'account_name' => $accountName,
             'amount' => $amount,

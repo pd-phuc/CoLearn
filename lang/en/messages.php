@@ -226,9 +226,10 @@ return [
     'view_receipt' => 'View Receipt',
     'back_to_orders' => 'Back to Orders',
 
-    // SePay Modal
-    'scan_sepay_to_pay' => 'Scan SePay QR Code to Pay',
-    'scan_vietqr_to_pay' => 'Scan SePay QR Code to Pay',
+    // QR Payment Modal
+    'scan_qr_to_pay' => 'Scan QR code to pay',
+    'scan_sepay_to_pay' => 'Scan QR code to pay',
+    'scan_vietqr_to_pay' => 'Scan QR code to pay',
     'scan_qr_instruction' => 'Open your Banking App or E-Wallet (Vietcombank, MB, Techcombank, MoMo,...) and scan the QR code below',
     'bank_account_no' => 'Account Number',
     'account_name_label' => 'Account Name',
