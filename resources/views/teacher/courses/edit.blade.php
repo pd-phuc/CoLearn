@@ -26,10 +26,10 @@
             @if($course->status === 'draft')
                 <form action="{{ route('teacher.courses.submit-review', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.submit_for_review_confirm') }}')">
                     @csrf
-                    <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-500/20 transition-all flex items-center gap-2">
+                    <x-button variant="blue" size="md" type="submit" class="gap-2">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         {{ __('teacher.submit_for_review') }}
-                    </button>
+                    </x-button>
                 </form>
             @endif
         </div>
@@ -76,9 +76,9 @@
                 @csrf
                 <input type="text" name="title" required placeholder="{{ __('teacher.section_title') }}"
                        class="px-4 py-2.5 text-xs bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-600 font-medium w-full sm:w-80">
-                <button type="submit" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shrink-0 transition-colors">
+                <x-button variant="blue" size="sm" type="submit">
                     {{ __('teacher.save_section') }}
-                </button>
+                </x-button>
             </form>
         </div>
 
@@ -102,10 +102,10 @@
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
-                            <button type="button" @click="addLessonOpen = !addLessonOpen" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1">
+                            <x-button variant="blue" size="xs" type="button" @click="addLessonOpen = !addLessonOpen" class="gap-1">
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                                 {{ __('teacher.add_lesson') }}
-                            </button>
+                            </x-button>
 
                             <button type="button" @click="editSectionOpen = !editSectionOpen" class="p-1.5 text-slate-400 hover:text-slate-700 transition-colors">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
@@ -127,8 +127,8 @@
                             @csrf
                             @method('PUT')
                             <input type="text" name="title" value="{{ $section->title }}" required class="px-3 py-1.5 text-xs bg-white border border-amber-200 rounded-lg focus:outline-none focus:border-amber-500 font-medium flex-1">
-                            <button type="submit" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold">{{ __('teacher.save') }}</button>
-                            <button type="button" @click="editSectionOpen = false" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-bold">{{ __('teacher.cancel') }}</button>
+                            <x-button variant="primary" size="xs" type="submit" class="bg-amber-600 hover:bg-amber-700">{{ __('teacher.save') }}</x-button>
+                            <x-button variant="secondary" size="xs" type="button" @click="editSectionOpen = false">{{ __('teacher.cancel') }}</x-button>
                         </form>
                     </div>
 
@@ -175,8 +175,8 @@
                                     <span class="text-xs font-bold text-slate-700">{{ __('teacher.is_free_preview') }}</span>
                                 </label>
                                 <div class="flex gap-2">
-                                    <button type="button" @click="addLessonOpen = false" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-bold">{{ __('teacher.cancel') }}</button>
-                                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">{{ __('teacher.save_lesson') }}</button>
+                                    <x-button variant="secondary" size="xs" type="button" @click="addLessonOpen = false">{{ __('teacher.cancel') }}</x-button>
+                                    <x-button variant="blue" size="xs" type="submit">{{ __('teacher.save_lesson') }}</x-button>
                                 </div>
                             </div>
                         </form>
