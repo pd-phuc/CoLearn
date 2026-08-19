@@ -60,7 +60,9 @@
         "docker:init": [
             "docker exec colearn-app php artisan key:generate",
             "docker exec colearn-app php artisan storage:link",
-            "docker exec colearn-app php artisan migrate:fresh --seed"
+            "docker exec colearn-app php artisan migrate:fresh --seed",
+            "docker exec colearn-app npm install",
+            "docker exec colearn-app npm run build"
         ],
         "docker:seed": [
             "docker exec colearn-app php artisan migrate:fresh --seed"
