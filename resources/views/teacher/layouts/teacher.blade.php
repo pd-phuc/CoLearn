@@ -19,7 +19,7 @@
     @stack('head-scripts')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-slate-100/60 via-slate-50 to-white font-sans antialiased text-slate-900 flex flex-col justify-between selection:bg-orange-500 selection:text-white" x-data="{ mobileMenuOpen: false }">
+<body class="min-h-screen bg-gradient-to-b from-slate-100/60 via-slate-50 to-white font-sans antialiased text-slate-900 flex flex-col justify-between selection:bg-primary-500 selection:text-white" x-data="{ mobileMenuOpen: false }">
 
     <div class="w-full">
         {{-- Floating Glassmorphic 2-Tier Teacher Header --}}
