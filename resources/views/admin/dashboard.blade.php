@@ -4,73 +4,21 @@
 
 {{-- KPI Cards Row --}}
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    {{-- Revenue --}}
-    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('admin.revenue') }}</p>
-            <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-                <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            </div>
-        </div>
-        <p class="text-2xl font-black text-slate-900">{{ number_format($stats['revenue']['value'], 0, ',', '.') }} <span class="text-sm font-bold text-slate-400">đ</span></p>
-        @if($stats['revenue']['change'] !== null)
-            <p class="mt-1 text-xs font-bold {{ $stats['revenue']['change'] >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
-                {{ $stats['revenue']['change'] >= 0 ? '↑' : '↓' }} {{ abs($stats['revenue']['change']) }}%
-                <span class="text-slate-400 font-medium">{{ __('admin.vs_last_month') }}</span>
-            </p>
-        @endif
-    </div>
+    <x-stat-card :label="__('admin.revenue')" :value="number_format($stats['revenue']['value'], 0, ',', '.')" suffix="đ" color="emerald" :change="$stats['revenue']['change']" :change-label="__('admin.vs_last_month')">
+        <x-slot:icon><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></x-slot:icon>
+    </x-stat-card>
 
-    {{-- Orders --}}
-    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('admin.orders') }}</p>
-            <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
-            </div>
-        </div>
-        <p class="text-2xl font-black text-slate-900">{{ $stats['orders']['value'] }}</p>
-        @if($stats['orders']['change'] !== null)
-            <p class="mt-1 text-xs font-bold {{ $stats['orders']['change'] >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
-                {{ $stats['orders']['change'] >= 0 ? '↑' : '↓' }} {{ abs($stats['orders']['change']) }}%
-                <span class="text-slate-400 font-medium">{{ __('admin.vs_last_month') }}</span>
-            </p>
-        @endif
-    </div>
+    <x-stat-card :label="__('admin.orders')" :value="$stats['orders']['value']" color="blue" :change="$stats['orders']['change']" :change-label="__('admin.vs_last_month')">
+        <x-slot:icon><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg></x-slot:icon>
+    </x-stat-card>
 
-    {{-- New Students --}}
-    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('admin.new_students') }}</p>
-            <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-                <svg class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-            </div>
-        </div>
-        <p class="text-2xl font-black text-slate-900">{{ $stats['new_users']['value'] }}</p>
-        @if($stats['new_users']['change'] !== null)
-            <p class="mt-1 text-xs font-bold {{ $stats['new_users']['change'] >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
-                {{ $stats['new_users']['change'] >= 0 ? '↑' : '↓' }} {{ abs($stats['new_users']['change']) }}%
-                <span class="text-slate-400 font-medium">{{ __('admin.vs_last_month') }}</span>
-            </p>
-        @endif
-    </div>
+    <x-stat-card :label="__('admin.new_students')" :value="$stats['new_users']['value']" color="amber" :change="$stats['new_users']['change']" :change-label="__('admin.vs_last_month')">
+        <x-slot:icon><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg></x-slot:icon>
+    </x-stat-card>
 
-    {{-- Enrollments --}}
-    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ __('admin.enrollments') }}</p>
-            <div class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center">
-                <svg class="w-4 h-4 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
-            </div>
-        </div>
-        <p class="text-2xl font-black text-slate-900">{{ $stats['enrollments']['value'] }}</p>
-        @if($stats['enrollments']['change'] !== null)
-            <p class="mt-1 text-xs font-bold {{ $stats['enrollments']['change'] >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
-                {{ $stats['enrollments']['change'] >= 0 ? '↑' : '↓' }} {{ abs($stats['enrollments']['change']) }}%
-                <span class="text-slate-400 font-medium">{{ __('admin.vs_last_month') }}</span>
-            </p>
-        @endif
-    </div>
+    <x-stat-card :label="__('admin.enrollments')" :value="$stats['enrollments']['value']" color="violet" :change="$stats['enrollments']['change']" :change-label="__('admin.vs_last_month')">
+        <x-slot:icon><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg></x-slot:icon>
+    </x-stat-card>
 </div>
 
 {{-- Charts Row --}}
