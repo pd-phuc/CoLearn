@@ -6,13 +6,7 @@
     {{-- Header Banner --}}
     <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200/80 flex flex-col sm:flex-row items-center gap-6">
         <div class="relative group">
-            @if($user->avatar)
-                <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full object-cover ring-4 ring-blue-500/20 shadow-md">
-            @else
-                <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-black text-3xl flex items-center justify-center shadow-md">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                </div>
-            @endif
+            <x-user-avatar :user="$user" size="2xl" class="ring-4 ring-blue-500/20 shadow-md" />
         </div>
 
         <div class="text-center sm:text-left flex-1">

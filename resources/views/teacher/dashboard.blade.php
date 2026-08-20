@@ -77,13 +77,7 @@
                 @forelse($recentEnrollments as $enr)
                     <div class="py-3.5 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-3 min-w-0">
-                            @if($enr->user->avatar)
-                                <img src="{{ $enr->user->avatar }}" class="w-10 h-10 rounded-full object-cover shrink-0">
-                            @else
-                                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-bold flex items-center justify-center text-sm shrink-0">
-                                    {{ strtoupper(substr($enr->user->name, 0, 1)) }}
-                                </div>
-                            @endif
+                            <x-user-avatar :user="$enr->user" size="md" />
                             <div class="min-w-0">
                                 <p class="text-sm font-bold text-slate-900 truncate">{{ $enr->user->name }}</p>
                                 <p class="text-xs font-medium text-slate-500 truncate">{{ $enr->course->title }}</p>
