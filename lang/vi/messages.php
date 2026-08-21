@@ -226,15 +226,16 @@ return [
     'view_receipt' => 'Xem hóa đơn',
     'back_to_orders' => 'Quay lại danh sách đơn hàng',
 
-    // VietQR Modal
-    'scan_vietqr_to_pay' => 'Quét Mã VietQR Để Thanh Toán',
+    // SePay Modal
+    'scan_sepay_to_pay' => 'Quét Mã SePay Để Thanh Toán',
+    'scan_vietqr_to_pay' => 'Quét Mã SePay Để Thanh Toán',
     'scan_qr_instruction' => 'Mở ứng dụng Ngân hàng hoặc Ví điện tử (Vietcombank, MB, Techcombank, MoMo,...) và quét mã QR dưới đây',
     'bank_account_no' => 'Số tài khoản',
     'account_name_label' => 'Chủ tài khoản',
     'transfer_memo' => 'Nội dung chuyển khoản',
     'copied_to_clipboard' => 'Đã sao chép vào bộ nhớ tạm!',
     'countdown_timer' => 'Mã QR sẽ hết hạn sau',
-    'waiting_payment_auto_detect' => 'Đang chờ hệ thống tự động nhận diện thanh toán...',
+    'waiting_payment_auto_detect' => 'Đang chờ SePay tự động nhận diện thanh toán...',
     'test_simulate_payment' => 'Giả lập đã thanh toán (Test Mode)',
 
     // Wallet System
@@ -246,8 +247,10 @@ return [
     'wallet_add_funds_title' => 'Nạp tiền',
     'select_topup_preset' => 'Chọn số tiền nạp',
     'custom_amount_label' => 'Hoặc nhập số tiền tùy chọn',
-    'proceed_topup_vietqr' => 'Tiến Hành Nạp Tiền Qua VietQR',
-    'proceed_deposit_vietqr' => 'Nạp tiền qua VietQR',
+    'proceed_topup_vietqr' => 'Tiến Hành Nạp Tiền Qua SePay',
+    'proceed_deposit_vietqr' => 'Nạp tiền qua SePay',
+    'proceed_topup_sepay' => 'Tiến Hành Nạp Tiền Qua SePay',
+    'proceed_deposit_sepay' => 'Nạp tiền qua SePay',
     'topup_history_title' => 'Lịch Sử Nạp Tiền',
     'deposit_history_title' => 'Lịch sử nạp tiền',
     'no_topup_history' => 'Chưa có giao dịch nạp tiền nào.',
@@ -261,11 +264,13 @@ return [
     'topup_badge' => '+ Nạp tiền',
     'buy_one_click' => 'Mua 1-Click',
     'colearn_wallet' => 'Ví CoLearn',
-    'vietqr_sepay_payment' => 'Mã VietQR / SePay (Chuyển Khoản Nhanh)',
-    'vietqr_instruction_short' => 'Quét mã VietQR bằng bất kỳ App Ngân hàng hoặc Ví MoMo',
+    'vietqr_sepay_payment' => 'Cổng Thanh Toán SePay (Chuyển Khoản Tự Động)',
+    'sepay_payment' => 'Cổng Thanh Toán SePay (Chuyển Khoản Tự Động)',
+    'vietqr_instruction_short' => 'Quét mã SePay QR bằng bất kỳ App Ngân hàng hoặc Ví MoMo',
+    'sepay_instruction_short' => 'Quét mã SePay QR bằng bất kỳ App Ngân hàng hoặc Ví MoMo',
     'stripe_card_types' => 'Visa / Mastercard / JCB',
     'bank_name_label' => 'Ngân hàng',
-    'pay_now_qr' => 'Thanh toán',
+    'pay_now_qr' => 'Thanh toán SePay',
 
     // Transaction History
     'balance_history_title' => 'Biến Động Số Dư',
