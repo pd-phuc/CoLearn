@@ -279,21 +279,16 @@
 
             {{-- Pricing Grid --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                        {{ __('teacher.price') }} <span class="text-rose-500">*</span>
-                    </label>
-                    <input type="number" name="price" value="{{ old('price', $course->price) }}" min="0" step="1000" required
-                           class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold">
-                </div>
+                <x-money-input name="price"
+                               :label="__('teacher.price')"
+                               :value="old('price', $course->price)"
+                               :placeholder="'599.000'"
+                               required />
 
-                <div>
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                        {{ __('teacher.discount_price') }}
-                    </label>
-                    <input type="number" name="discount_price" value="{{ old('discount_price', $course->discount_price) }}" min="0" step="1000"
-                           class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold text-blue-600">
-                </div>
+                <x-money-input name="discount_price"
+                               :label="__('teacher.discount_price')"
+                               :value="old('discount_price', $course->discount_price)"
+                               :placeholder="__('teacher.discount_price_placeholder')" />
             </div>
 
             {{-- Thumbnail Upload --}}
