@@ -63,11 +63,14 @@ Nền tảng bán khóa học trực tuyến — mô hình đơn vị đào tạ
 | Task | Command |
 |------|---------|
 | Dev server | `composer dev` |
-| Setup | `composer setup` |
-| Test | `composer test` |
+| Setup (local) | `composer setup` |
+| Docker up | `docker compose up -d` |
+| Docker init (app key, link, seed) | `composer docker:init` |
+| Docker seed | `composer docker:seed` |
+| Docker test | `composer docker:test` |
+| Test (local) | `composer test` |
 | Lint (check) | `composer lint` |
 | Format (fix) | `composer format` |
-| Docker up | `docker compose up -d` |
 | Docker down | `docker compose down` |
 
 ## Code Consistency (CRITICAL)

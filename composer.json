@@ -57,6 +57,17 @@
             "./vendor/bin/pint",
             "npx prettier --write resources/views/**/*.blade.php"
         ],
+        "docker:init": [
+            "docker exec colearn-app php artisan key:generate",
+            "docker exec colearn-app php artisan storage:link",
+            "docker exec colearn-app php artisan migrate:fresh --seed"
+        ],
+        "docker:seed": [
+            "docker exec colearn-app php artisan migrate:fresh --seed"
+        ],
+        "docker:test": [
+            "docker exec colearn-app php artisan test"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
