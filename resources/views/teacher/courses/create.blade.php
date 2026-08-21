@@ -125,9 +125,9 @@
 
         {{-- Submit Button --}}
         <div class="pt-4 border-t border-slate-100 flex justify-end">
-            <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-500/20 transition-all flex items-center gap-2">
+            <x-button variant="blue" size="md" type="submit" class="gap-2">
                 <span>{{ __('teacher.continue_to_curriculum') }} &rarr;</span>
-            </button>
+            </x-button>
         </div>
     </form>
 </div>

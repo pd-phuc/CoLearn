@@ -9,10 +9,10 @@
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">{{ __('teacher.my_courses') }}</h1>
             <p class="text-xs font-medium text-slate-500 mt-1">{{ __('teacher.my_courses_desc') }}</p>
         </div>
-        <a href="{{ route('teacher.courses.create') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-500/20 transition-all">
+        <x-button variant="blue" size="md" href="{{ route('teacher.courses.create') }}" class="gap-2">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
             {{ __('teacher.create_course') }}
-        </a>
+        </x-button>
     </div>
 
     {{-- Search & Filter Bar --}}
@@ -98,16 +98,16 @@
                             </td>
                             <td class="py-4 px-6 text-right whitespace-nowrap">
                                 <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('teacher.courses.edit', $course) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 font-bold text-slate-700 rounded-lg transition-colors">
+                                    <x-button variant="secondary" size="xs" href="{{ route('teacher.courses.edit', $course) }}">
                                         {{ __('teacher.edit_course') }}
-                                    </a>
+                                    </x-button>
 
                                     @if($course->status === 'draft')
                                         <form action="{{ route('teacher.courses.submit-review', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.submit_for_review_confirm') }}')">
                                             @csrf
-                                            <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-2xs">
+                                            <x-button variant="blue" size="xs" type="submit">
                                                 {{ __('teacher.submit_for_review') }}
-                                            </button>
+                                            </x-button>
                                         </form>
 
                                         <form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.delete_draft_confirm') }}')">
