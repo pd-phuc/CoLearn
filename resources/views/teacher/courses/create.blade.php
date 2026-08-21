@@ -7,7 +7,7 @@
     <div class="flex items-center justify-between">
         <div>
             <a href="{{ route('teacher.courses.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 mb-2">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                <x-icon name="arrow-left" size="sm" />
                 {{ __('teacher.back_to_courses') }}
             </a>
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">{{ __('teacher.create_course') }}</h1>

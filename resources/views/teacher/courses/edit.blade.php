@@ -7,7 +7,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs">
         <div>
             <a href="{{ route('teacher.courses.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 mb-2">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                <x-icon name="arrow-left" size="sm" />
                 {{ __('teacher.back_to_courses') }}
             </a>
             <div class="flex items-center gap-3">
@@ -27,7 +27,7 @@
                 <form action="{{ route('teacher.courses.submit-review', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.submit_for_review_confirm') }}')">
                     @csrf
                     <x-button variant="blue" size="md" type="submit" class="gap-2">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <x-icon name="check-circle" size="sm" />
                         {{ __('teacher.submit_for_review') }}
                     </x-button>
                 </form>
@@ -38,7 +38,7 @@
     {{-- Rejection Feedback Notice --}}
     @if($course->rejection_reason && $course->status === 'draft')
         <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-rose-800 flex items-start gap-3">
-            <svg class="w-5 h-5 text-rose-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <x-icon name="warning" size="md" class="text-rose-500 shrink-0 mt-0.5" />
             <div>
                 <p class="text-xs font-black uppercase tracking-wider text-rose-900">{{ __('teacher.rejection_reason_notice') }}</p>
                 <p class="text-xs font-medium text-rose-700 mt-1">{{ $course->rejection_reason }}</p>
@@ -51,7 +51,7 @@
         <button type="button" @click="activeTab = 'curriculum'"
                 :class="activeTab === 'curriculum' ? 'border-blue-600 text-blue-600 bg-white font-black shadow-xs' : 'border-transparent text-slate-500 hover:text-slate-900 font-bold'"
                 class="px-5 py-3 text-xs border-b-2 rounded-t-xl transition-all flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+            <x-icon name="menu" size="sm" />
             {{ __('teacher.curriculum') }} ({{ $course->sections->count() }} {{ __('teacher.chapters') }})
         </button>
 
@@ -91,7 +91,7 @@
                     <div class="p-4 sm:p-5 bg-slate-50/80 border-b border-slate-200/60 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-3 min-w-0 cursor-pointer" @click="expanded = !expanded">
                             <button type="button" class="text-slate-400 hover:text-slate-600 transition-transform" :class="{ 'rotate-180': expanded }">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                <x-icon name="chevron-down" size="sm" />
                             </button>
                             <div class="min-w-0">
                                 <h4 class="text-sm font-black text-slate-900 truncate">
@@ -103,19 +103,19 @@
 
                         <div class="flex items-center gap-2 shrink-0">
                             <x-button variant="blue" size="xs" type="button" @click="addLessonOpen = !addLessonOpen" class="gap-1">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                <x-icon name="plus" size="xs" />
                                 {{ __('teacher.add_lesson') }}
                             </x-button>
 
                             <button type="button" @click="editSectionOpen = !editSectionOpen" class="p-1.5 text-slate-400 hover:text-slate-700 transition-colors">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                <x-icon name="pencil" size="sm" />
                             </button>
 
                             <form action="{{ route('teacher.sections.destroy', $section) }}" method="POST" onsubmit="return confirm('{{ __('teacher.delete_section_confirm') }}')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-1.5 text-slate-400 hover:text-rose-600 transition-colors">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                    <x-icon name="trash" size="sm" />
                                 </button>
                             </form>
                         </div>
