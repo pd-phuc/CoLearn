@@ -7,7 +7,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs">
         <div>
             <a href="{{ route('teacher.courses.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 mb-2">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                <x-icon name="arrow-left" size="sm" />
                 {{ __('teacher.back_to_courses') }}
             </a>
             <div class="flex items-center gap-3">
@@ -26,10 +26,10 @@
             @if($course->status === 'draft')
                 <form action="{{ route('teacher.courses.submit-review', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.submit_for_review_confirm') }}')">
                     @csrf
-                    <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-500/20 transition-all flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <x-button variant="blue" size="md" type="submit" class="gap-2">
+                        <x-icon name="check-circle" size="sm" />
                         {{ __('teacher.submit_for_review') }}
-                    </button>
+                    </x-button>
                 </form>
             @endif
         </div>
@@ -38,7 +38,7 @@
     {{-- Rejection Feedback Notice --}}
     @if($course->rejection_reason && $course->status === 'draft')
         <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-rose-800 flex items-start gap-3">
-            <svg class="w-5 h-5 text-rose-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <x-icon name="warning" size="md" class="text-rose-500 shrink-0 mt-0.5" />
             <div>
                 <p class="text-xs font-black uppercase tracking-wider text-rose-900">{{ __('teacher.rejection_reason_notice') }}</p>
                 <p class="text-xs font-medium text-rose-700 mt-1">{{ $course->rejection_reason }}</p>
@@ -51,7 +51,7 @@
         <button type="button" @click="activeTab = 'curriculum'"
                 :class="activeTab === 'curriculum' ? 'border-blue-600 text-blue-600 bg-white font-black shadow-xs' : 'border-transparent text-slate-500 hover:text-slate-900 font-bold'"
                 class="px-5 py-3 text-xs border-b-2 rounded-t-xl transition-all flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+            <x-icon name="menu" size="sm" />
             {{ __('teacher.curriculum') }} ({{ $course->sections->count() }} {{ __('teacher.chapters') }})
         </button>
 
@@ -76,9 +76,9 @@
                 @csrf
                 <input type="text" name="title" required placeholder="{{ __('teacher.section_title') }}"
                        class="px-4 py-2.5 text-xs bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-600 font-medium w-full sm:w-80">
-                <button type="submit" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shrink-0 transition-colors">
+                <x-button variant="blue" size="sm" type="submit">
                     {{ __('teacher.save_section') }}
-                </button>
+                </x-button>
             </form>
         </div>
 
@@ -91,7 +91,7 @@
                     <div class="p-4 sm:p-5 bg-slate-50/80 border-b border-slate-200/60 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-3 min-w-0 cursor-pointer" @click="expanded = !expanded">
                             <button type="button" class="text-slate-400 hover:text-slate-600 transition-transform" :class="{ 'rotate-180': expanded }">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                <x-icon name="chevron-down" size="sm" />
                             </button>
                             <div class="min-w-0">
                                 <h4 class="text-sm font-black text-slate-900 truncate">
@@ -102,20 +102,20 @@
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
-                            <button type="button" @click="addLessonOpen = !addLessonOpen" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                            <x-button variant="blue" size="xs" type="button" @click="addLessonOpen = !addLessonOpen" class="gap-1">
+                                <x-icon name="plus" size="xs" />
                                 {{ __('teacher.add_lesson') }}
-                            </button>
+                            </x-button>
 
                             <button type="button" @click="editSectionOpen = !editSectionOpen" class="p-1.5 text-slate-400 hover:text-slate-700 transition-colors">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                <x-icon name="pencil" size="sm" />
                             </button>
 
                             <form action="{{ route('teacher.sections.destroy', $section) }}" method="POST" onsubmit="return confirm('{{ __('teacher.delete_section_confirm') }}')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="p-1.5 text-slate-400 hover:text-rose-600 transition-colors">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                    <x-icon name="trash" size="sm" />
                                 </button>
                             </form>
                         </div>
@@ -127,8 +127,8 @@
                             @csrf
                             @method('PUT')
                             <input type="text" name="title" value="{{ $section->title }}" required class="px-3 py-1.5 text-xs bg-white border border-amber-200 rounded-lg focus:outline-none focus:border-amber-500 font-medium flex-1">
-                            <button type="submit" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold">{{ __('teacher.save') }}</button>
-                            <button type="button" @click="editSectionOpen = false" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-bold">{{ __('teacher.cancel') }}</button>
+                            <x-button variant="primary" size="xs" type="submit" class="bg-amber-600 hover:bg-amber-700">{{ __('teacher.save') }}</x-button>
+                            <x-button variant="secondary" size="xs" type="button" @click="editSectionOpen = false">{{ __('teacher.cancel') }}</x-button>
                         </form>
                     </div>
 
@@ -175,8 +175,8 @@
                                     <span class="text-xs font-bold text-slate-700">{{ __('teacher.is_free_preview') }}</span>
                                 </label>
                                 <div class="flex gap-2">
-                                    <button type="button" @click="addLessonOpen = false" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-bold">{{ __('teacher.cancel') }}</button>
-                                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">{{ __('teacher.save_lesson') }}</button>
+                                    <x-button variant="secondary" size="xs" type="button" @click="addLessonOpen = false">{{ __('teacher.cancel') }}</x-button>
+                                    <x-button variant="blue" size="xs" type="submit">{{ __('teacher.save_lesson') }}</x-button>
                                 </div>
                             </div>
                         </form>
@@ -279,21 +279,16 @@
 
             {{-- Pricing Grid --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                        {{ __('teacher.price') }} <span class="text-rose-500">*</span>
-                    </label>
-                    <input type="number" name="price" value="{{ old('price', $course->price) }}" min="0" step="1000" required
-                           class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold">
-                </div>
+                <x-money-input name="price"
+                               :label="__('teacher.price')"
+                               :value="old('price', $course->price)"
+                               :placeholder="'599.000'"
+                               required />
 
-                <div>
-                    <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                        {{ __('teacher.discount_price') }}
-                    </label>
-                    <input type="number" name="discount_price" value="{{ old('discount_price', $course->discount_price) }}" min="0" step="1000"
-                           class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold text-blue-600">
-                </div>
+                <x-money-input name="discount_price"
+                               :label="__('teacher.discount_price')"
+                               :value="old('discount_price', $course->discount_price)"
+                               :placeholder="__('teacher.discount_price_placeholder')" />
             </div>
 
             {{-- Thumbnail Upload --}}

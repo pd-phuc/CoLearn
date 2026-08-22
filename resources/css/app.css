@@ -14,6 +14,42 @@
     --color-emerald-accent: #10b981;
 }
 
+/* Base layer — global defaults (inspired by rode-battle-fe) */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        color: var(--color-slate-900, #0f172a);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-slate-300, #cbd5e1);
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-slate-400, #94a3b8);
+    }
+}
+
 /* Animations from fcode-web-system-challenge-3 */
 @keyframes floating {
     0% {
@@ -51,7 +87,7 @@
     }
 
     .btn-primary {
-        @apply inline-flex items-center justify-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold rounded-xl shadow-sm hover:shadow-lg hover:shadow-orange-500/25 active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+        @apply inline-flex items-center justify-center px-5 py-2.5 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-bold rounded-xl shadow-sm hover:shadow-lg hover:shadow-primary-500/25 active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
     }
 
     .btn-secondary {

@@ -226,15 +226,17 @@ return [
     'view_receipt' => 'View Receipt',
     'back_to_orders' => 'Back to Orders',
 
-    // VietQR Modal
-    'scan_vietqr_to_pay' => 'Scan VietQR Code to Pay',
+    // QR Payment Modal
+    'scan_qr_to_pay' => 'Scan QR code to pay',
+    'scan_sepay_to_pay' => 'Scan QR code to pay',
+    'scan_vietqr_to_pay' => 'Scan QR code to pay',
     'scan_qr_instruction' => 'Open your Banking App or E-Wallet (Vietcombank, MB, Techcombank, MoMo,...) and scan the QR code below',
     'bank_account_no' => 'Account Number',
     'account_name_label' => 'Account Name',
     'transfer_memo' => 'Transfer Memo',
     'copied_to_clipboard' => 'Copied to clipboard!',
     'countdown_timer' => 'QR Code expires in',
-    'waiting_payment_auto_detect' => 'Waiting for automatic payment confirmation...',
+    'waiting_payment_auto_detect' => 'Waiting for SePay automatic payment confirmation...',
     'test_simulate_payment' => 'Simulate Paid (Test Mode)',
 
     // Wallet System
@@ -246,8 +248,10 @@ return [
     'wallet_add_funds_title' => 'Add Funds',
     'select_topup_preset' => 'Select Top-Up Amount',
     'custom_amount_label' => 'Or enter a custom amount',
-    'proceed_topup_vietqr' => 'Proceed Top-Up via VietQR',
-    'proceed_deposit_vietqr' => 'Deposit via VietQR',
+    'proceed_topup_vietqr' => 'Proceed Top-Up via SePay',
+    'proceed_deposit_vietqr' => 'Deposit via SePay',
+    'proceed_topup_sepay' => 'Proceed Top-Up via SePay',
+    'proceed_deposit_sepay' => 'Deposit via SePay',
     'topup_history_title' => 'Top-Up History',
     'deposit_history_title' => 'Deposit History',
     'no_topup_history' => 'No top-up transactions yet.',
@@ -261,11 +265,13 @@ return [
     'topup_badge' => '+ Top up',
     'buy_one_click' => '1-Click Buy',
     'colearn_wallet' => 'CoLearn Wallet',
-    'vietqr_sepay_payment' => 'VietQR / SePay Code (Instant Transfer)',
-    'vietqr_instruction_short' => 'Scan VietQR code with any Banking App or MoMo E-Wallet',
+    'vietqr_sepay_payment' => 'SePay Gateway (Instant Bank QR)',
+    'sepay_payment' => 'SePay Gateway (Instant Bank QR)',
+    'vietqr_instruction_short' => 'Scan SePay QR code with any Banking App or MoMo E-Wallet',
+    'sepay_instruction_short' => 'Scan SePay QR code with any Banking App or MoMo E-Wallet',
     'stripe_card_types' => 'Visa / Mastercard / JCB',
     'bank_name_label' => 'Bank',
-    'pay_now_qr' => 'Pay Now',
+    'pay_now_qr' => 'Pay with SePay',
 
     // Transaction History
     'balance_history_title' => 'Balance History',

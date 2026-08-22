@@ -66,9 +66,9 @@
             </button>
         </form>
 
-        {{-- VietQR Modal --}}
+        {{-- SePay Modal --}}
         @if(isset($vietQrModal) && $vietQrModal && isset($vietQrData))
-            <x-vietqr-modal :order="$order" :viet-qr-data="$vietQrData" :redirect-url="route('wallet.index')" />
+            <x-sepay-modal :order="$order" :payment-data="$vietQrData" :redirect-url="route('wallet.index')" />
         @endif
 
         {{-- Deposit History --}}

@@ -7,7 +7,7 @@
     <div class="flex items-center justify-between">
         <div>
             <a href="{{ route('teacher.courses.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 mb-2">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                <x-icon name="arrow-left" size="sm" />
                 {{ __('teacher.back_to_courses') }}
             </a>
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">{{ __('teacher.create_course') }}</h1>
@@ -61,26 +61,17 @@
 
         {{-- Pricing Grid --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {{-- Price --}}
-            <div>
-                <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                    {{ __('teacher.price') }} <span class="text-rose-500">*</span>
-                </label>
-                <input type="number" name="price" value="{{ old('price', 0) }}" min="0" step="1000" required placeholder="599000"
-                       class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold">
-                <p class="text-[11px] text-slate-400 mt-1 font-medium">{{ __('teacher.price_hint') }}</p>
-                @error('price') <p class="text-xs text-rose-600 font-bold mt-1.5">{{ $message }}</p> @enderror
-            </div>
+            <x-money-input name="price"
+                           :label="__('teacher.price')"
+                           :value="old('price', 0)"
+                           :placeholder="'599.000'"
+                           :hint="__('teacher.price_hint')"
+                           required />
 
-            {{-- Discount Price --}}
-            <div>
-                <label class="block text-xs font-black text-slate-700 uppercase tracking-wider mb-2">
-                    {{ __('teacher.discount_price') }}
-                </label>
-                <input type="number" name="discount_price" value="{{ old('discount_price') }}" min="0" step="1000" placeholder="{{ __('teacher.discount_price_placeholder') }}"
-                       class="w-full px-4 py-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold text-blue-600">
-                @error('discount_price') <p class="text-xs text-rose-600 font-bold mt-1.5">{{ $message }}</p> @enderror
-            </div>
+            <x-money-input name="discount_price"
+                           :label="__('teacher.discount_price')"
+                           :value="old('discount_price')"
+                           :placeholder="__('teacher.discount_price_placeholder')" />
         </div>
 
         {{-- Thumbnail Upload --}}
@@ -125,9 +116,9 @@
 
         {{-- Submit Button --}}
         <div class="pt-4 border-t border-slate-100 flex justify-end">
-            <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-500/20 transition-all flex items-center gap-2">
+            <x-button variant="blue" size="md" type="submit" class="gap-2">
                 <span>{{ __('teacher.continue_to_curriculum') }} &rarr;</span>
-            </button>
+            </x-button>
         </div>
     </form>
 </div>

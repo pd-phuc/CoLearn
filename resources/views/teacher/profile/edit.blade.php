@@ -30,9 +30,9 @@
                 <form action="{{ route('teacher.profile.avatar') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                     @csrf
                     <input type="file" name="avatar" required accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-colors">
+                    <x-button variant="blue" size="sm" type="submit" class="w-full">
                         {{ __('teacher.upload_new_avatar') }}
-                    </button>
+                    </x-button>
                 </form>
             </div>
         </div>
@@ -70,9 +70,9 @@
                 </div>
 
                 <div class="flex justify-end pt-2">
-                    <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm">
+                    <x-button variant="blue" size="sm" type="submit">
                         {{ __('teacher.save_changes') }}
-                    </button>
+                    </x-button>
                 </div>
             </form>
 
@@ -103,9 +103,9 @@
                 </div>
 
                 <div class="flex justify-end pt-2">
-                    <button type="submit" class="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all">
+                    <x-button variant="primary" size="sm" type="submit" class="bg-slate-900 hover:bg-slate-800">
                         {{ __('teacher.update_password') }}
-                    </button>
+                    </x-button>
                 </div>
             </form>
         </div>

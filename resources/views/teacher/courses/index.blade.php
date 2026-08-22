@@ -9,10 +9,10 @@
             <h1 class="text-2xl font-black text-slate-900 tracking-tight">{{ __('teacher.my_courses') }}</h1>
             <p class="text-xs font-medium text-slate-500 mt-1">{{ __('teacher.my_courses_desc') }}</p>
         </div>
-        <a href="{{ route('teacher.courses.create') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black shadow-md shadow-blue-500/20 transition-all">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        <x-button variant="blue" size="md" href="{{ route('teacher.courses.create') }}" class="gap-2">
+            <x-icon name="plus" size="sm" />
             {{ __('teacher.create_course') }}
-        </a>
+        </x-button>
     </div>
 
     {{-- Search & Filter Bar --}}
@@ -20,7 +20,7 @@
         <form method="GET" action="{{ route('teacher.courses.index') }}" class="flex-1 flex flex-col sm:flex-row gap-3">
             <div class="relative flex-1">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('teacher.search_course_placeholder') }}" class="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium">
-                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                <x-icon name="search" size="sm" class="text-slate-400 absolute left-3.5 top-2.5" />
             </div>
 
             <select name="status" onchange="this.form.submit()" class="px-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold text-slate-700">
@@ -98,23 +98,23 @@
                             </td>
                             <td class="py-4 px-6 text-right whitespace-nowrap">
                                 <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('teacher.courses.edit', $course) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 font-bold text-slate-700 rounded-lg transition-colors">
+                                    <x-button variant="secondary" size="xs" href="{{ route('teacher.courses.edit', $course) }}">
                                         {{ __('teacher.edit_course') }}
-                                    </a>
+                                    </x-button>
 
                                     @if($course->status === 'draft')
                                         <form action="{{ route('teacher.courses.submit-review', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.submit_for_review_confirm') }}')">
                                             @csrf
-                                            <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-2xs">
+                                            <x-button variant="blue" size="xs" type="submit">
                                                 {{ __('teacher.submit_for_review') }}
-                                            </button>
+                                            </x-button>
                                         </form>
 
                                         <form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" onsubmit="return confirm('{{ __('teacher.delete_draft_confirm') }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="p-1.5 text-slate-400 hover:text-rose-600 transition-colors">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                <x-icon name="trash" size="sm" />
                                             </button>
                                         </form>
                                     @endif

@@ -14,7 +14,7 @@
         <form method="GET" action="{{ route('teacher.students.index') }}" class="flex-1 flex flex-col sm:flex-row gap-3">
             <div class="relative flex-1">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('teacher.search_student_placeholder') }}" class="w-full pl-10 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium">
-                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                <x-icon name="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
             </div>
 
             <select name="course_id" onchange="this.form.submit()" class="px-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-bold text-slate-700">
@@ -24,9 +24,9 @@
                 @endforeach
             </select>
 
-            <button type="submit" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors">
+            <x-button type="submit" variant="secondary" size="sm">
                 {{ __('teacher.filter') }}
-            </button>
+            </x-button>
         </form>
     </div>
 
