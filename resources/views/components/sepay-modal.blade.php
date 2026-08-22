@@ -57,17 +57,9 @@
 
         {{-- Modal Header --}}
         <div class="flex items-center justify-between border-b border-slate-100 p-5 sm:p-6">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-sm">
-                    SePay
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h3 class="text-sm sm:text-base font-black text-slate-900 uppercase tracking-tight">{{ __('messages.scan_sepay_to_pay') }}</h3>
-                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-black rounded-md border border-emerald-200">AUTO-BANK</span>
-                    </div>
-                    <p class="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">{{ __('messages.order_number') }} {{ $data['order_number'] }}</p>
-                </div>
+            <div>
+                <h3 class="text-base sm:text-lg font-black text-slate-900 tracking-tight">{{ __('messages.scan_qr_to_pay') }}</h3>
+                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">{{ __('messages.order_number') }}: {{ $data['order_number'] }}</p>
             </div>
             <button @click="showQrModal = false" class="text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl p-2 transition-all cursor-pointer">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
