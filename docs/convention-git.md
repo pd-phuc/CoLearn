@@ -172,13 +172,24 @@ Bỏ `--name` thì GitHub tự sinh tên từ title issue — dài và khó đ�
 <prefix>/<mô-tả-ngắn>
 ```
 
-**Không nhét số issue vào tên nhánh.** GitHub đã lưu liên kết, số ở đây là thông tin lặp — mà nhánh thì bị xóa ngay sau khi merge nên cái tên chỉ sống vài ngày.
+Hai quy tắc:
 
-| Ví dụ | Issue |
-|-------|-------|
-| `fix/go-to-learning-link` | #35 |
-| `feat/transaction-filters` | #22 |
-| `refactor/form-requests-checkout` | #30 |
+1. **Không nhét số issue vào tên nhánh.** GitHub đã lưu liên kết, số ở đây là thông tin lặp — mà nhánh thì bị xóa ngay sau khi merge nên cái tên chỉ sống vài ngày.
+2. **Phần mô tả chỉ 2–3 từ.** Tên nhánh là nhãn để phân biệt các nhánh đang mở trên máy, không phải chỗ tóm tắt issue. Muốn biết chi tiết thì mở issue.
+
+| Ví dụ | Issue | Từ |
+|-------|-------|-----|
+| `fix/dead-links` | #35 | 2 |
+| `feat/transaction-filters` | #22 | 2 |
+| `refactor/checkout-requests` | #30 | 2 |
+| `fix/coupon-cap` | #18 | 2 |
+
+Quá dài:
+
+| ❌ | Vì sao |
+|---|--------|
+| `fix/go-to-learning-button-links-to-hash` | Chép nguyên title issue |
+| `refactor/form-requests-for-checkout-flow` | 5 từ, `checkout-requests` là đủ |
 
 ### Truy vết issue trong git history
 

@@ -154,7 +154,7 @@ Công việc được theo dõi qua GitHub Issues tại `pd-phuc/CoLearn`.
 
 - Mỗi thay đổi bắt nguồn từ 1 issue. Không có issue thì tạo trước khi code.
 - Tạo nhánh bằng `gh issue develop <số> --base main --checkout --name <prefix>/<mô-tả>` — GitHub gắn nhánh vào issue, issue tự đóng khi PR merge
-- **Tên nhánh không mang số issue** (GitHub đã lưu liên kết, nhánh lại bị xóa sau merge). Ví dụ: `fix/go-to-learning-link`
+- **Tên nhánh không mang số issue** (GitHub đã lưu liên kết, nhánh lại bị xóa sau merge). Phần mô tả chỉ 2–3 từ. Ví dụ: `fix/dead-links`
 - Truy vết trong git: commit chính mang footer `Refs: #<số>` — liên kết GitHub không tồn tại trong git history
 - PR body vẫn thêm `Closes #<số>` cho tường minh
 - Label: `severity:*` (mức độ) + `area:*` (vùng ảnh hưởng) + loại (`bug` / `security` / `enhancement` / `tech-debt`)
