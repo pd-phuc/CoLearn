@@ -50,7 +50,7 @@ Không phải marketplace — chỉ teacher/admin tạo khóa học, student mua
 |-----------|-----------|-----------|
 | Templates | Blade | Laravel native SSR |
 | CSS | Tailwind CSS 4 | Utility-first, CSS-first config |
-| JS | Alpine.js | Lightweight reactivity for Blade |
+| JS | Alpine.js | Lightweight reactivity for Blade (hiện nạp qua CDN, chưa qua npm/Vite) |
 | Build | Vite | Fast HMR, native ESM |
 
 ### Auth & Security
@@ -66,7 +66,7 @@ Không phải marketplace — chỉ teacher/admin tạo khóa học, student mua
 | Service | Provider | Laravel Integration |
 |---------|----------|-------------------|
 | Payment (VN) | SePay (VietQR Auto-Bank) | Custom `SePayService` |
-| Payment (Intl) | Stripe | `stripe/stripe-php` |
+| Payment (Intl) | Stripe | `stripe/stripe-php` — **chưa cài** trong composer.json |
 | Email | Mailgun | Mail driver (built-in) |
 | Storage | AWS S3 | Flysystem driver (built-in) |
 

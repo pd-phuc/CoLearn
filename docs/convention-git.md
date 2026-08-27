@@ -78,7 +78,11 @@
 1. **Một commit = một thay đổi logic** — không gộp nhiều thay đổi
 2. **Description viết tiếng Anh**, bắt đầu bằng động từ: `add`, `fix`, `update`, `remove`
 3. **Không dấu chấm** ở cuối description
-4. **Breaking changes**: Thêm `!` sau type — `feat!: change auth flow`
+4. **Dòng đầu tối đa 70 ký tự** — tính cả `type`, `scope`, dấu hai chấm và khoảng trắng
+   - Không có giới hạn tối thiểu: `docs: add README` (16 ký tự) là hợp lệ
+   - Cần giải thích thêm thì xuống dòng trống rồi viết body, body không bị giới hạn
+   - Enforce bởi commitlint (`header-max-length: 70`) — commit quá dài sẽ bị chặn
+5. **Breaking changes**: Thêm `!` sau type — `feat!: change auth flow`
 
 ### Ví dụ tốt vs xấu
 
@@ -139,3 +143,93 @@ main ← (protected, chỉ merge qua PR)
 | **Commitlint** | Kiểm tra commit message theo Conventional Commits |
 | **Husky** | Git hooks — chạy lint trước commit |
 | **Lint-staged** | Chỉ lint files đã thay đổi |
+
+---
+
+## 5. Issue-Driven Workflow
+
+> Áp dụng từ 2026-08-27. Công việc theo dõi qua GitHub Issues tại `pd-phuc/CoLearn`.
+
+### Nguyên tắc
+
+Mỗi thay đổi bắt nguồn từ **một issue**. Chưa có issue thì tạo trước khi viết code.
+
+### Đặt tên nhánh kèm số issue
+
+```
+<prefix>/<số-issue>-<mô-tả-ngắn>
+```
+
+| Ví dụ | Issue |
+|-------|-------|
+| `fix/35-go-to-learning-link` | #35 |
+| `feat/22-transaction-filters` | #22 |
+| `refactor/30-form-requests-checkout` | #30 |
+
+Số issue trong tên nhánh giúp truy ngược ngữ cảnh khi đọc lại git log sau nhiều tháng.
+
+### Liên kết PR với issue
+
+Trong phần mô tả PR, thêm dòng:
+
+```
+Closes #35
+```
+
+GitHub sẽ tự đóng issue khi PR được merge. Dùng `Closes` / `Fixes` / `Resolves` đều được.
+
+Nếu PR chỉ xử lý một phần, dùng `Refs #35` để liên kết mà không đóng issue.
+
+### Viết issue
+
+Issue **không** dùng format Conventional Commits — `fix(scope):` chỉ dành cho commit message.
+
+| | |
+|---|---|
+| ❌ | `fix(auth): tính năng ban user không hoạt động` |
+| ✅ | `Banned users can still log in — banned_at is written but never checked` |
+
+**Title**: tiếng Anh, mô tả hành vi quan sát được, code identifier bọc backtick.
+
+**Body** — bug report:
+
+```markdown
+### Summary
+### Steps to reproduce
+### Expected behaviour
+### Actual behaviour
+### Evidence          (file:line làm bằng chứng)
+### Impact
+### Suggested fix
+### Acceptance criteria   (checklist)
+```
+
+**Body** — enhancement / tech-debt:
+
+```markdown
+### Summary
+### Current behaviour
+### Why it matters
+### Proposed solution
+### Acceptance criteria
+```
+
+### Label
+
+Mỗi issue gắn tối thiểu 3 nhóm label:
+
+| Nhóm | Giá trị |
+|------|---------|
+| Loại | `bug` · `security` · `enhancement` · `tech-debt` |
+| Mức độ | `severity:critical` · `severity:high` · `severity:medium` · `severity:low` |
+| Vùng | `area:payment` · `area:auth` · `area:admin` · `area:teacher` · `area:course` · `area:wallet` · `area:cart` |
+
+`severity:critical` dành cho: thất thoát tiền, bypass xác thực/phân quyền, sai lệch dữ liệu.
+
+### Lệnh thường dùng
+
+```bash
+gh issue list --label severity:critical
+gh issue view 35
+gh pr create --fill --base main
+```
