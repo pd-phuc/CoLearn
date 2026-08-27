@@ -1,4 +1,5 @@
 {{-- Backward compatibility wrapper for sepay-modal --}}
+
 @props([
     'order',
     'vietQrData' => null,

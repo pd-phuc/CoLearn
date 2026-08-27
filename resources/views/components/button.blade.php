@@ -8,11 +8,11 @@
 
 @php
     $variants = [
-        'primary'   => 'bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white shadow-sm hover:shadow-lg hover:shadow-primary-500/25',
+        'primary' => 'bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white shadow-sm hover:shadow-lg hover:shadow-primary-500/25',
         'secondary' => 'bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 border border-slate-200/80',
-        'danger'    => 'bg-rose-500 hover:bg-rose-600 active:bg-rose-700 text-white shadow-sm hover:shadow-lg hover:shadow-rose-500/25',
-        'ghost'     => 'bg-transparent hover:bg-slate-100 text-slate-600',
-        'blue'      => 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white shadow-sm hover:shadow-lg hover:shadow-blue-500/25',
+        'danger' => 'bg-rose-500 hover:bg-rose-600 active:bg-rose-700 text-white shadow-sm hover:shadow-lg hover:shadow-rose-500/25',
+        'ghost' => 'bg-transparent hover:bg-slate-100 text-slate-600',
+        'blue' => 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white shadow-sm hover:shadow-lg hover:shadow-blue-500/25',
     ];
 
     $sizes = [
