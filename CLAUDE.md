@@ -4,7 +4,7 @@ This file provides guidance to AI agents when working with code in this reposito
 
 ## Stack
 
-**Laravel 13** (PHP 8.3+) backend with **Vite + Tailwind CSS 4** frontend. Blade templates + Alpine.js for all views. PHPUnit/Pest for testing. **PostgreSQL** database with Eloquent ORM. Laravel Sanctum for auth (SPA cookie-based for web, token-based for future mobile API). Redis for caching/queues (via Docker). Docker for full dev environment.
+**Laravel 13** (PHP 8.3+) backend with **Vite + Tailwind CSS 4** frontend. Blade templates + Alpine.js for all views. PHPUnit for testing (Pest is *not* installed). **PostgreSQL** database with Eloquent ORM. Laravel Sanctum for auth (SPA cookie-based for web, token-based for future mobile API). Redis for caching/queues (via Docker). Docker for full dev environment.
 
 ## Project Mode: blade-ssr
 
@@ -53,25 +53,34 @@ docker compose down      # stop all services
 
 #### Models & Relationships
 
+Bảng dưới phản ánh đúng các model **đang tồn tại** trong `app/Models/`.
+
 | Model | Key Relations | Description |
 |-------|--------------|-------------|
-| User | hasMany Courses (as teacher), belongsToMany Courses (as student via enrollments), hasMany Orders, hasMany Reviews | Unified user with roles |
-| Course | belongsTo User (teacher), belongsTo Category, hasMany Sections, hasMany Enrollments, hasMany Reviews | Khóa học |
+| User | hasMany Courses (as teacher), hasMany Enrollments, hasMany Orders, hasMany Transactions, hasMany LessonCompletions | Unified user with roles. PK = UUID |
+| Course | belongsTo User (teacher), belongsTo Category, hasMany Sections, hasMany Enrollments | Khóa học. PK = ULID |
 | Category | hasMany Courses | Danh mục khóa học |
 | Section | belongsTo Course, hasMany Lessons | Chương/phần |
 | Lesson | belongsTo Section, hasMany LessonCompletions | Bài giảng (video, text, tài liệu) |
-| Order | belongsTo User, belongsToMany Courses (via order_items) | Đơn hàng |
-| Review | belongsTo User, belongsTo Course | Đánh giá |
-| Coupon | belongsToMany Courses | Mã giảm giá |
+| LessonCompletion | belongsTo User, belongsTo Lesson | Đánh dấu đã học xong 1 bài |
 | Enrollment | belongsTo User, belongsTo Course | Ghi danh khóa học |
+| Order | belongsTo User, belongsTo Coupon, hasMany OrderItems, hasManyThrough Courses | Đơn hàng (`order_type`: `course` \| `topup`) |
+| OrderItem | belongsTo Order, belongsTo Course | Dòng trong đơn hàng |
+| Coupon | hasMany Orders | Mã giảm giá |
+| Transaction | belongsTo User, belongsTo Order | Sổ cái ví — mọi biến động số dư |
+| Setting | — | Cấu hình runtime lưu DB (mail, OAuth, SePay, S3) |
 
-*Note: Entity list sẽ mở rộng theo nhu cầu (Quiz, Assignment, Certificate, etc.)*
+**PK convention**: `User` dùng UUID (36 ký tự), tất cả model còn lại dùng ULID (26 ký tự). Khi thêm cột FK trỏ tới user phải dùng `uuid()`, trỏ tới model khác dùng `ulid()`.
+
+*Chưa tồn tại (dự kiến mở rộng): Review, Quiz, Assignment, Certificate.*
 
 #### Status Workflows
 
 - **Course**: `draft` → `pending_review` → `published` → `archived`
-- **Order**: `pending` → `paid` → `refunded`
+  - `reject` đưa về `draft` kèm `rejection_reason`
+- **Order**: `pending` → `paid` → `refunded`, hoặc `pending` → `cancelled`
 - **Enrollment**: `active` → `completed` → `expired`
+- **Transaction**: bất biến — chỉ ghi thêm, không sửa/xóa
 
 ### Request Flow
 
@@ -97,7 +106,7 @@ Two controller groups:
 | Service | Provider | Package/SDK |
 |---------|----------|-------------|
 | Payment (VN) | SePay (VietQR Auto-Bank Webhook) | Custom `SePayService` |
-| Payment (International) | Stripe | `stripe/stripe-php` |
+| Payment (International) | Stripe | `stripe/stripe-php` — ⚠️ **chưa cài** trong `composer.json`; `StripeService` sẽ throw nếu bật |
 | Email | Mailgun | Laravel Mail (built-in driver) |
 | Cloud Storage | AWS S3 | Laravel Flysystem (built-in driver) |
 | OAuth | Google, Facebook | `laravel/socialite` |
@@ -121,7 +130,9 @@ Two controller groups:
 
 ### Asset Pipeline
 
-Vite entry: `resources/css/app.css` (Tailwind) + `resources/js/app.js` (Alpine.js). `@vite` directive in Blade layouts.
+Vite entry: `resources/css/app.css` (Tailwind) + `resources/js/app.js`. `@vite` directive in Blade layouts.
+
+⚠️ Thực tế hiện tại: `resources/js/app.js` đang **rỗng**. Alpine.js được nạp từ CDN trong `resources/views/layouts/app.blade.php` chứ không qua npm/Vite. Khi cần thêm JS, cân nhắc chuyển Alpine về npm trước để có versioning và không phụ thuộc mạng ngoài.
 
 ## Code Quality
 
@@ -136,6 +147,18 @@ Vite entry: `resources/css/app.css` (Tailwind) + `resources/js/app.js` (Alpine.j
 - Branch naming: `<prefix>/<short-description>` (e.g. `feature/user-auth`, `fix/login-redirect`)
 - Commit on the feature branch only, then merge via PR
 - See `docs/convention-git.md` for full branching and commit conventions
+
+### Issue-driven (từ 2026-08-27)
+
+Công việc được theo dõi qua GitHub Issues tại `pd-phuc/CoLearn`.
+
+- Mỗi thay đổi bắt nguồn từ 1 issue. Không có issue thì tạo trước khi code.
+- Tạo nhánh bằng `gh issue develop <số> --base main --checkout --name <prefix>/<mô-tả>` — GitHub gắn nhánh vào issue, issue tự đóng khi PR merge
+- **Tên nhánh không mang số issue** (GitHub đã lưu liên kết, nhánh lại bị xóa sau merge). Ví dụ: `fix/go-to-learning-link`
+- Truy vết trong git: commit chính mang footer `Refs: #<số>` — liên kết GitHub không tồn tại trong git history
+- PR body vẫn thêm `Closes #<số>` cho tường minh
+- Label: `severity:*` (mức độ) + `area:*` (vùng ảnh hưởng) + loại (`bug` / `security` / `enhancement` / `tech-debt`)
+- Issue title viết tiếng Anh, mô tả hành vi quan sát được — **không** dùng format Conventional Commits (`fix(scope):` chỉ dành cho commit message)
 
 ## Key Files
 
@@ -165,6 +188,26 @@ See `.agent/skills/code-consistency/SKILL.md` for full rules.
 - Always use `HasFactory` + create/update the matching factory when adding a new model
 - Custom query logic belongs in scopes (`scopeXxx`) on the model, not raw `DB::` queries
 - Prefer `Model::query()` over `DB::table()`
+
+### Controllers & Validation
+- **Validate bằng Form Request**, không dùng `$request->validate()` inline trong controller
+  - Đặt tại `app/Http/Requests/<Domain>/<Action>Request.php`
+  - Quyền truy cập đặt trong `authorize()`, không rải `abort(403)` trong controller
+  - *Nợ kỹ thuật hiện tại*: 29 chỗ còn validate inline, đang được xử lý dần — code mới phải dùng Form Request
+- Controller mỏng: điều phối request/response, logic nghiệp vụ đẩy xuống `app/Services/`
+- Kiểm tra quyền trên model dùng Policy (`$this->authorize()`), không copy-paste `if ($x->user_id !== auth()->id())`
+
+### Views (Blade)
+- **Không truy vấn DB trong Blade** — dữ liệu do controller hoặc View Composer cung cấp
+  - *Nợ kỹ thuật hiện tại*: `layouts/app.blade.php`, `partials/footer.blade.php`, `welcome.blade.php` còn gọi `Model::where()` trực tiếp
+- Không để `href="#"` cho link đã có route thật
+- Mọi chuỗi hiển thị đi qua `__()`
+
+### Tiền & Ví (CRITICAL)
+- Mọi thay đổi số dư phải nằm trong `DB::transaction()` + `lockForUpdate()` trên row user
+- Ghi `Transaction` cho **mọi** biến động số dư — không có ngoại lệ
+- Ràng buộc nghiệp vụ (đủ số dư, số tiền > 0, hạn thanh toán) phải enforce ở backend, không chỉ hiển thị ở UI
+- Giá trị fallback khi thiếu cấu hình phải **fail-closed** ở nhánh xác thực
 
 ### Language & i18n
 - **Code** (variables, classes, methods, database columns): always English

@@ -28,25 +28,29 @@ Nền tảng bán khóa học trực tuyến — mô hình đơn vị đào tạ
 - **Frontend**: Vite + Tailwind CSS 4, Blade templates, Alpine.js
 - **Auth**: Laravel Sanctum (SPA cookie for web, token for API) + Socialite (Google, Facebook)
 - **RBAC**: spatie/laravel-permission (roles + permissions)
-- **Testing**: PHPUnit / Pest
+- **Testing**: PHPUnit (Pest *không* được cài — đừng viết test theo cú pháp Pest)
 - **Code Style**: Laravel Pint, Prettier (Blade), EditorConfig
 - **Infra**: Docker (PostgreSQL, Redis, Nginx)
 
 ## Domain Models
 
-### Core Entities
-- **User** — Unified user with roles (student, teacher, admin)
+### Core Entities (đang tồn tại trong `app/Models/`)
+- **User** — Unified user with roles (student, teacher, admin). PK = **UUID**
 - **Course** — Khóa học, thuộc về 1 teacher
 - **Category** — Danh mục khóa học
 - **Section** — Chương/phần trong khóa học
 - **Lesson** — Bài giảng (video, text, tài liệu)
-- **Order** — Đơn hàng mua khóa học
+- **LessonCompletion** — Đánh dấu học viên đã hoàn thành 1 bài
 - **Enrollment** — Ghi danh vào khóa học
-- **Review** — Đánh giá khóa học
+- **Order** / **OrderItem** — Đơn hàng (`order_type`: `course` hoặc `topup`)
 - **Coupon** — Mã giảm giá
+- **Transaction** — Sổ cái ví, ghi mọi biến động số dư
+- **Setting** — Cấu hình runtime lưu trong DB (mail, OAuth, SePay, S3)
 
-### Future Entities (expandable)
-- Quiz, Assignment, Certificate, Notification, Wishlist, LearningPath
+Trừ `User` (UUID), tất cả model còn lại dùng **ULID** làm khóa chính.
+
+### Future Entities (chưa tồn tại)
+- Review, Quiz, Assignment, Certificate, Notification, Wishlist, LearningPath
 
 ## Business Rules
 
@@ -102,6 +106,18 @@ Nền tảng bán khóa học trực tuyến — mô hình đơn vị đào tạ
 - Web controllers return Blade views (blade-ssr mode)
 - API controllers return JSON responses (for future mobile app)
 - Admin routes use role-based middleware via spatie/laravel-permission
+- **Validate bằng Form Request** (`app/Http/Requests/`), không `$request->validate()` inline
+- Controller mỏng — logic nghiệp vụ nằm ở `app/Services/`
+- Kiểm tra quyền bằng Policy, không copy-paste `if ($x->user_id !== auth()->id())`
+
+### Views
+- **Không truy vấn DB trong Blade** — dữ liệu do controller / View Composer cấp
+- Không để `href="#"` khi route thật đã tồn tại
+
+### Tiền & Ví (CRITICAL)
+- Đổi số dư ⇒ bắt buộc `DB::transaction()` + `lockForUpdate()` + ghi `Transaction`
+- Ràng buộc nghiệp vụ enforce ở backend, không chỉ ở UI
+- Nhánh xác thực phải **fail-closed** khi thiếu cấu hình
 
 ### File Structure
 ```
@@ -167,5 +183,6 @@ docker/
 6. **Small commits**: One logical change per commit, conventional format
 7. **i18n**: UI strings via `__('key')` / `@lang('key')` — support Tiếng Việt + English. Code in English. Minimal comments (only when non-obvious).
 8. **NEVER commit to `main`**: Always create a feature branch (`feature/`, `fix/`, `refactor/`, etc.) and commit there. See `docs/convention-git.md`
+9. **Issue-driven**: Mọi thay đổi gắn với 1 GitHub Issue. Tạo nhánh bằng `gh issue develop <số> --name <prefix>/<mô-tả>` (tên nhánh KHÔNG mang số issue). Commit chính mang footer `Refs: #<số>`. Xem `docs/convention-git.md` §5
 
 

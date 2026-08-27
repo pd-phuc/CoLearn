@@ -78,7 +78,11 @@
 1. **Một commit = một thay đổi logic** — không gộp nhiều thay đổi
 2. **Description viết tiếng Anh**, bắt đầu bằng động từ: `add`, `fix`, `update`, `remove`
 3. **Không dấu chấm** ở cuối description
-4. **Breaking changes**: Thêm `!` sau type — `feat!: change auth flow`
+4. **Dòng đầu tối đa 70 ký tự** — tính cả `type`, `scope`, dấu hai chấm và khoảng trắng
+   - Không có giới hạn tối thiểu: `docs: add README` (16 ký tự) là hợp lệ
+   - Cần giải thích thêm thì xuống dòng trống rồi viết body, body không bị giới hạn
+   - Enforce bởi commitlint (`header-max-length: 70`) — commit quá dài sẽ bị chặn
+5. **Breaking changes**: Thêm `!` sau type — `feat!: change auth flow`
 
 ### Ví dụ tốt vs xấu
 
@@ -139,3 +143,121 @@ main ← (protected, chỉ merge qua PR)
 | **Commitlint** | Kiểm tra commit message theo Conventional Commits |
 | **Husky** | Git hooks — chạy lint trước commit |
 | **Lint-staged** | Chỉ lint files đã thay đổi |
+
+---
+
+## 5. Issue-Driven Workflow
+
+> Áp dụng từ 2026-08-27. Công việc theo dõi qua GitHub Issues tại `pd-phuc/CoLearn`.
+
+### Nguyên tắc
+
+Mỗi thay đổi bắt nguồn từ **một issue**. Chưa có issue thì tạo trước khi viết code.
+
+### Tạo nhánh từ issue (linked branch)
+
+Luôn tạo nhánh bằng `gh issue develop`, **không** `git checkout -b` thủ công:
+
+```bash
+gh issue develop 35 --base main --checkout --name fix/go-to-learning-link
+```
+
+GitHub lưu quan hệ thật giữa nhánh và issue: mục **Development** trên trang issue hiện nhánh rồi hiện PR, và issue **tự đóng** khi PR merge.
+
+Bỏ `--name` thì GitHub tự sinh tên từ title issue — dài và khó đọc (`35-go-to-learning-button-on-the-course-page-links-to-`). Luôn truyền `--name`.
+
+### Đặt tên nhánh
+
+```
+<prefix>/<mô-tả-ngắn>
+```
+
+**Không nhét số issue vào tên nhánh.** GitHub đã lưu liên kết, số ở đây là thông tin lặp — mà nhánh thì bị xóa ngay sau khi merge nên cái tên chỉ sống vài ngày.
+
+| Ví dụ | Issue |
+|-------|-------|
+| `fix/go-to-learning-link` | #35 |
+| `feat/transaction-filters` | #22 |
+| `refactor/form-requests-checkout` | #30 |
+
+### Truy vết issue trong git history
+
+Liên kết nhánh–issue nằm ở metadata GitHub, **không** nằm trong git. Clone repo đọc offline, hoặc sau này chuyển sang forge khác, là mất.
+
+Vì vậy số issue phải được ghi vào chỗ tồn tại vĩnh viễn — **footer của commit**:
+
+```
+fix(course): link go-to-learning button to the course player
+
+Refs: #35
+```
+
+Quy tắc:
+
+- Commit chính của một issue mang footer `Refs: #<số>`
+- Commit phụ (fixup, format, sửa test) không bắt buộc
+- Footer nằm sau một dòng trống, không tính vào giới hạn 70 ký tự của dòng đầu
+
+### Liên kết PR với issue
+
+Dùng linked branch thì issue tự đóng, nhưng vẫn thêm dòng này vào mô tả PR cho tường minh:
+
+```
+Closes #35
+```
+
+Dùng `Closes` / `Fixes` / `Resolves` đều được. Nếu PR chỉ xử lý một phần, dùng `Refs #35` để liên kết mà không đóng issue.
+
+### Viết issue
+
+Issue **không** dùng format Conventional Commits — `fix(scope):` chỉ dành cho commit message.
+
+| | |
+|---|---|
+| ❌ | `fix(auth): tính năng ban user không hoạt động` |
+| ✅ | `Banned users can still log in — banned_at is written but never checked` |
+
+**Title**: tiếng Anh, mô tả hành vi quan sát được, code identifier bọc backtick.
+
+**Body** — bug report:
+
+```markdown
+### Summary
+### Steps to reproduce
+### Expected behaviour
+### Actual behaviour
+### Evidence          (file:line làm bằng chứng)
+### Impact
+### Suggested fix
+### Acceptance criteria   (checklist)
+```
+
+**Body** — enhancement / tech-debt:
+
+```markdown
+### Summary
+### Current behaviour
+### Why it matters
+### Proposed solution
+### Acceptance criteria
+```
+
+### Label
+
+Mỗi issue gắn tối thiểu 3 nhóm label:
+
+| Nhóm | Giá trị |
+|------|---------|
+| Loại | `bug` · `security` · `enhancement` · `tech-debt` |
+| Mức độ | `severity:critical` · `severity:high` · `severity:medium` · `severity:low` |
+| Vùng | `area:payment` · `area:auth` · `area:admin` · `area:teacher` · `area:course` · `area:wallet` · `area:cart` |
+
+`severity:critical` dành cho: thất thoát tiền, bypass xác thực/phân quyền, sai lệch dữ liệu.
+
+### Lệnh thường dùng
+
+```bash
+gh issue list --label severity:critical
+gh issue view 35
+gh pr create --fill --base main
+```
