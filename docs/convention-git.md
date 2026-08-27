@@ -154,31 +154,59 @@ main ← (protected, chỉ merge qua PR)
 
 Mỗi thay đổi bắt nguồn từ **một issue**. Chưa có issue thì tạo trước khi viết code.
 
-### Đặt tên nhánh kèm số issue
+### Tạo nhánh từ issue (linked branch)
+
+Luôn tạo nhánh bằng `gh issue develop`, **không** `git checkout -b` thủ công:
+
+```bash
+gh issue develop 35 --base main --checkout --name fix/go-to-learning-link
+```
+
+GitHub lưu quan hệ thật giữa nhánh và issue: mục **Development** trên trang issue hiện nhánh rồi hiện PR, và issue **tự đóng** khi PR merge.
+
+Bỏ `--name` thì GitHub tự sinh tên từ title issue — dài và khó đọc (`35-go-to-learning-button-on-the-course-page-links-to-`). Luôn truyền `--name`.
+
+### Đặt tên nhánh
 
 ```
-<prefix>/<số-issue>-<mô-tả-ngắn>
+<prefix>/<mô-tả-ngắn>
 ```
+
+**Không nhét số issue vào tên nhánh.** GitHub đã lưu liên kết, số ở đây là thông tin lặp — mà nhánh thì bị xóa ngay sau khi merge nên cái tên chỉ sống vài ngày.
 
 | Ví dụ | Issue |
 |-------|-------|
-| `fix/35-go-to-learning-link` | #35 |
-| `feat/22-transaction-filters` | #22 |
-| `refactor/30-form-requests-checkout` | #30 |
+| `fix/go-to-learning-link` | #35 |
+| `feat/transaction-filters` | #22 |
+| `refactor/form-requests-checkout` | #30 |
 
-Số issue trong tên nhánh giúp truy ngược ngữ cảnh khi đọc lại git log sau nhiều tháng.
+### Truy vết issue trong git history
+
+Liên kết nhánh–issue nằm ở metadata GitHub, **không** nằm trong git. Clone repo đọc offline, hoặc sau này chuyển sang forge khác, là mất.
+
+Vì vậy số issue phải được ghi vào chỗ tồn tại vĩnh viễn — **footer của commit**:
+
+```
+fix(course): link go-to-learning button to the course player
+
+Refs: #35
+```
+
+Quy tắc:
+
+- Commit chính của một issue mang footer `Refs: #<số>`
+- Commit phụ (fixup, format, sửa test) không bắt buộc
+- Footer nằm sau một dòng trống, không tính vào giới hạn 70 ký tự của dòng đầu
 
 ### Liên kết PR với issue
 
-Trong phần mô tả PR, thêm dòng:
+Dùng linked branch thì issue tự đóng, nhưng vẫn thêm dòng này vào mô tả PR cho tường minh:
 
 ```
 Closes #35
 ```
 
-GitHub sẽ tự đóng issue khi PR được merge. Dùng `Closes` / `Fixes` / `Resolves` đều được.
-
-Nếu PR chỉ xử lý một phần, dùng `Refs #35` để liên kết mà không đóng issue.
+Dùng `Closes` / `Fixes` / `Resolves` đều được. Nếu PR chỉ xử lý một phần, dùng `Refs #35` để liên kết mà không đóng issue.
 
 ### Viết issue
 

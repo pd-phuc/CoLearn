@@ -183,6 +183,6 @@ docker/
 6. **Small commits**: One logical change per commit, conventional format
 7. **i18n**: UI strings via `__('key')` / `@lang('key')` — support Tiếng Việt + English. Code in English. Minimal comments (only when non-obvious).
 8. **NEVER commit to `main`**: Always create a feature branch (`feature/`, `fix/`, `refactor/`, etc.) and commit there. See `docs/convention-git.md`
-9. **Issue-driven**: Mọi thay đổi gắn với 1 GitHub Issue. Branch kèm số issue (`fix/35-go-to-learning-link`), PR body có `Closes #<số>`. Xem `docs/convention-git.md` §5
+9. **Issue-driven**: Mọi thay đổi gắn với 1 GitHub Issue. Tạo nhánh bằng `gh issue develop <số> --name <prefix>/<mô-tả>` (tên nhánh KHÔNG mang số issue). Commit chính mang footer `Refs: #<số>`. Xem `docs/convention-git.md` §5
 
 
