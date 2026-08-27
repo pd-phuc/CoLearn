@@ -412,7 +412,7 @@
 
                                             @if (auth()->user()->isAdmin())
                                                 <a
-                                                    href="#"
+                                                    href="{{ route('admin.dashboard') }}"
                                                     class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-purple-700 hover:bg-purple-50"
                                                 >
                                                     <svg
@@ -434,7 +434,7 @@
 
                                             @if (auth()->user()->isTeacher())
                                                 <a
-                                                    href="#"
+                                                    href="{{ route('teacher.dashboard') }}"
                                                     class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
                                                 >
                                                     <svg
