@@ -69,7 +69,7 @@
     <div class="space-y-3 pt-2">
         @if ($isEnrolled)
             <a
-                href="#"
+                href="{{ route('learn.show', $course->slug) }}"
                 class="w-full btn-primary py-3.5 text-base font-bold bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20 flex items-center justify-center gap-2"
             >
                 <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
