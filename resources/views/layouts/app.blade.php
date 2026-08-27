@@ -485,51 +485,6 @@
                 </div>
             </header>
 
-            <!-- Global Alert Notifications -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 mt-3">
-                @if (session('success'))
-                    <div
-                        x-data="{ show: true }"
-                        x-show="show"
-                        class="bg-emerald-500 text-white rounded-xl py-3 px-5 shadow-lg text-sm font-semibold flex items-center justify-between"
-                    >
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            <span>{{ session('success') }}</span>
-                        </div>
-                        <button @click="show = false" class="text-white/80 hover:text-white font-bold">&times;</button>
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div
-                        x-data="{ show: true }"
-                        x-show="show"
-                        class="bg-rose-500 text-white rounded-xl py-3 px-5 shadow-lg text-sm font-semibold flex items-center justify-between"
-                    >
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                                />
-                            </svg>
-                            <span>{{ session('error') }}</span>
-                        </div>
-                        <button @click="show = false" class="text-white/80 hover:text-white font-bold">&times;</button>
-                    </div>
-                @endif
-            </div>
-
             <!-- Main Content Area -->
             <main class="mx-auto max-w-7xl my-6 px-4 sm:px-6">
                 @yield('content')
@@ -537,6 +492,8 @@
         </div>
 
         @include('partials.footer', ['accentColor' => 'orange'])
+
+        <x-toast />
 
         @stack('scripts')
     </body>

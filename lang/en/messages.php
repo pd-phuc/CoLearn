@@ -325,4 +325,5 @@ return [
     'secure_payment_badge' => 'Secure & Encrypted Payment',
     'gateway_not_configured' => 'Not available — contact admin',
     'start_learning' => 'Start Learning',
+    'dismiss_notification' => 'Dismiss notification',
 ];
