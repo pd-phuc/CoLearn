@@ -325,4 +325,5 @@ return [
     'secure_payment_badge' => 'Thanh Toán An Toàn & Mã Hóa',
     'gateway_not_configured' => 'Chưa cấu hình — liên hệ admin',
     'start_learning' => 'Học ngay',
+    'dismiss_notification' => 'Đóng thông báo',
 ];

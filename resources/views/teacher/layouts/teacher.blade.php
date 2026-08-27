@@ -236,55 +236,13 @@
 
             <!-- Main Content Area -->
             <main class="mx-auto max-w-7xl my-6 px-4 sm:px-6">
-                {{-- Success Notification Banner --}}
-                @if (session('status') || session('success'))
-                    <div
-                        class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl p-4 flex items-center gap-3 shadow-xs"
-                    >
-                        <svg
-                            class="w-5 h-5 text-emerald-500 shrink-0"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                        <span class="text-sm font-bold">{{ session('status') ?? session('success') }}</span>
-                    </div>
-                @endif
-
-                {{-- Error Notification Banner --}}
-                @if (session('error'))
-                    <div
-                        class="mb-6 bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl p-4 flex items-center gap-3 shadow-xs"
-                    >
-                        <svg
-                            class="w-5 h-5 text-rose-500 shrink-0"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                        <span class="text-sm font-bold">{{ session('error') }}</span>
-                    </div>
-                @endif
-
                 @yield('teacher-content')
             </main>
         </div>
 
         @include('partials.footer', ['accentColor' => 'blue'])
+
+        <x-toast />
 
         @stack('scripts')
     </body>

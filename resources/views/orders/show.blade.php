@@ -28,17 +28,6 @@
             </a>
         </div>
 
-        @if (session('success'))
-            <div
-                class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-3"
-            >
-                <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-                <span>{{ session('success') }}</span>
-            </div>
-        @endif
-
         <!-- Receipt Card -->
         <div class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-xs space-y-8">
             <!-- Status & Meta Banner -->

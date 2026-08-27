@@ -513,5 +513,7 @@
                 </div>
             </aside>
         </div>
+
+        <x-toast />
     </body>
 </html>
