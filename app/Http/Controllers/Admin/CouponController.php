@@ -28,6 +28,7 @@ class CouponController extends Controller
             'code' => ['required', 'string', 'max:50', 'unique:coupons,code'],
             'discount_type' => ['required', 'in:percent,fixed'],
             'discount_value' => ['required', 'numeric', 'min:0'],
+            'max_discount_amount' => ['nullable', 'numeric', 'min:0'],
             'min_order_amount' => ['nullable', 'numeric', 'min:0'],
             'max_uses' => ['nullable', 'integer', 'min:1'],
             'starts_at' => ['nullable', 'date'],
@@ -36,8 +37,8 @@ class CouponController extends Controller
         ]);
 
         Coupon::create($request->only([
-            'code', 'discount_type', 'discount_value', 'min_order_amount',
-            'max_uses', 'starts_at', 'expires_at', 'is_active',
+            'code', 'discount_type', 'discount_value', 'max_discount_amount',
+            'min_order_amount', 'max_uses', 'starts_at', 'expires_at', 'is_active',
         ]));
 
         return redirect()->route('admin.coupons.index')->with('success', 'Coupon created.');
@@ -54,6 +55,7 @@ class CouponController extends Controller
             'code' => ['required', 'string', 'max:50', 'unique:coupons,code,'.$coupon->id],
             'discount_type' => ['required', 'in:percent,fixed'],
             'discount_value' => ['required', 'numeric', 'min:0'],
+            'max_discount_amount' => ['nullable', 'numeric', 'min:0'],
             'min_order_amount' => ['nullable', 'numeric', 'min:0'],
             'max_uses' => ['nullable', 'integer', 'min:1'],
             'starts_at' => ['nullable', 'date'],
@@ -62,8 +64,8 @@ class CouponController extends Controller
         ]);
 
         $coupon->update($request->only([
-            'code', 'discount_type', 'discount_value', 'min_order_amount',
-            'max_uses', 'starts_at', 'expires_at', 'is_active',
+            'code', 'discount_type', 'discount_value', 'max_discount_amount',
+            'min_order_amount', 'max_uses', 'starts_at', 'expires_at', 'is_active',
         ]));
 
         return redirect()->route('admin.coupons.index')->with('success', 'Coupon updated.');

@@ -84,6 +84,25 @@
 
                     <div>
                         <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">
+                            Max Discount Amount (VND)
+                        </label>
+                        <input
+                            type="number"
+                            name="max_discount_amount"
+                            value="{{ old('max_discount_amount', $coupon?->max_discount_amount) }}"
+                            min="0"
+                            step="0.01"
+                            placeholder="Leave blank for no cap"
+                            class="w-full px-4 py-2.5 text-sm bg-slate-50/80 border border-slate-200/80 rounded-xl focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all font-medium"
+                        />
+                        <p class="text-xs text-slate-400 mt-1">Only applies to percentage coupons</p>
+                        @error('max_discount_amount')
+                            <p class="text-xs text-rose-600 font-bold mt-1.5">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">
                             Minimum Order Amount (VND)
                         </label>
                         <input
