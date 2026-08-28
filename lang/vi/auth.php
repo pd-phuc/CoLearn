@@ -4,6 +4,7 @@ return [
     'failed' => 'Email hoặc mật khẩu không chính xác.',
     'password' => 'Email hoặc mật khẩu không chính xác.',
     'throttle' => 'Đã thử đăng nhập quá nhiều lần. Vui lòng thử lại sau :seconds giây.',
+    'banned' => 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ hỗ trợ.',
     'login' => 'Đăng nhập',
     'register' => 'Đăng ký',
     'logout' => 'Đăng xuất',

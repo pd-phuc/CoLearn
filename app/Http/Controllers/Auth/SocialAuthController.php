@@ -56,6 +56,12 @@ class SocialAuthController extends Controller
             ]);
         }
 
+        if ($user->isBanned()) {
+            return redirect()->route('login')->withErrors([
+                'email' => __('auth.banned'),
+            ]);
+        }
+
         Auth::login($user, true);
 
         $intended = $user->isAdmin()

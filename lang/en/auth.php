@@ -4,6 +4,7 @@ return [
     'failed' => 'Invalid email or password.',
     'password' => 'Invalid email or password.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'banned' => 'Your account has been suspended. Please contact support.',
     'login' => 'Log In',
     'register' => 'Register',
     'logout' => 'Log Out',

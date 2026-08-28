@@ -25,9 +25,20 @@ class LoginController extends Controller
         $remember = $request->boolean('remember');
 
         if (Auth::attempt($credentials, $remember)) {
+            $user = Auth::user();
+
+            if ($user->isBanned()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => __('auth.banned'),
+                ])->onlyInput('email');
+            }
+
             $request->session()->regenerate();
 
-            $user = Auth::user();
             if ($user->isAdmin()) {
                 $intended = route('admin.dashboard');
             } elseif ($user->isTeacher()) {
