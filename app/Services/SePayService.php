@@ -104,8 +104,23 @@ class SePayService
     {
         $configuredApiKey = $this->settingService->get('sepay', 'api_key', config('services.sepay.api_key'));
 
-        // If no API key is configured in dev/test, allow for local testing
+        // Skipping authentication is a local convenience only. Anywhere else this
+        // must fail closed — an unconfigured key would otherwise let anyone POST a
+        // payload and have an order marked paid.
         if (empty($configuredApiKey)) {
+            if (! app()->environment('local', 'testing')) {
+                Log::critical('SePay Webhook: API key is not configured, rejecting request', [
+                    'ip' => $request->ip(),
+                    'env' => app()->environment(),
+                ]);
+
+                return false;
+            }
+
+            Log::warning('SePay Webhook: API key is not configured, accepting unauthenticated request', [
+                'env' => app()->environment(),
+            ]);
+
             return true;
         }
 
