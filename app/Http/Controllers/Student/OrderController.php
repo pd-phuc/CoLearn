@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -20,9 +21,7 @@ class OrderController extends Controller
 
     public function show(Order $order): View
     {
-        if ($order->user_id !== auth()->id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $order);
 
         $order->load(['items.course.category', 'coupon', 'user']);
 

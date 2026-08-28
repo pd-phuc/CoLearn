@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Services\SePayService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -72,9 +73,7 @@ class WalletController extends Controller
 
     public function showPendingTopup(Order $order): View|RedirectResponse
     {
-        if ($order->user_id !== auth()->id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $order);
 
         if ($order->status === 'paid') {
             return redirect()->route('wallet.index');
