@@ -112,6 +112,11 @@ class User extends Authenticatable
         return $this->hasRole('student');
     }
 
+    public function isBanned(): bool
+    {
+        return $this->banned_at !== null;
+    }
+
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);

@@ -49,11 +49,19 @@ class AuthController extends Controller
 
         if (! Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => [__('auth.failed')],
             ]);
         }
 
         $user = User::where('email', $request->email)->firstOrFail();
+
+        if ($user->isBanned()) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => [__('auth.banned')],
+            ]);
+        }
 
         // Revoke previous tokens (optional — single device login)
         // $user->tokens()->delete();

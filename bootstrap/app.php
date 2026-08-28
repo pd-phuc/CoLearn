@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureAccountIsActive;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             SetLocale::class,
+            EnsureAccountIsActive::class,
+        ]);
+        $middleware->api(append: [
+            EnsureAccountIsActive::class,
         ]);
         $middleware->validateCsrfTokens(except: [
             'payment/sepay/webhook',
