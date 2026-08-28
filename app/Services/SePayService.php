@@ -84,7 +84,7 @@ class SePayService
             'formatted_amount' => number_format($amount, 0, ',', '.').' VNĐ',
             'order_number' => $memo,
             'qr_url' => $qrUrl,
-            'expires_at' => now()->addMinutes(15)->toIso8601String(),
+            'expires_at' => $order->expires_at?->toIso8601String() ?? now()->addMinutes(15)->toIso8601String(),
         ];
     }
 
@@ -200,6 +200,20 @@ class SePayService
             return [
                 'success' => true,
                 'message' => 'Order already processed',
+                'order_id' => $order->id,
+            ];
+        }
+
+        // 4b. Reject expired orders
+        if ($order->isExpired()) {
+            Log::warning("SePay Webhook: Order {$orderNumber} has expired", [
+                'expires_at' => $order->expires_at?->toIso8601String(),
+                'now' => now()->toIso8601String(),
+            ]);
+
+            return [
+                'success' => false,
+                'message' => "Order {$orderNumber} has expired",
                 'order_id' => $order->id,
             ];
         }

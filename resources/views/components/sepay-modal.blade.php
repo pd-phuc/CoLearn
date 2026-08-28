@@ -14,7 +14,13 @@
 <div
     x-show="showQrModal"
     x-data="{
-        timeLeft: 900,
+        timeLeft: Math.max(
+            0,
+            Math.floor(
+                (new Date('{{ $data['expires_at'] }}') - new Date()) / 1000,
+            ),
+        ),
+        expired: false,
         pollInterval: null,
         timerInterval: null,
         formatTime(seconds) {
@@ -23,8 +29,20 @@
             return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0')
         },
         init() {
+            if (this.timeLeft <= 0) {
+                this.expired = true
+                return
+            }
+
             this.timerInterval = setInterval(() => {
-                if (this.timeLeft > 0) this.timeLeft--
+                if (this.timeLeft > 0) {
+                    this.timeLeft--
+                }
+                if (this.timeLeft <= 0) {
+                    this.expired = true
+                    clearInterval(this.timerInterval)
+                    if (this.pollInterval) clearInterval(this.pollInterval)
+                }
             }, 1000)
 
             this.pollInterval = setInterval(async () => {
@@ -90,8 +108,31 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 sm:p-6">
             {{-- Left: QR Code --}}
             <div
-                class="flex flex-col items-center justify-center space-y-4 bg-slate-50/80 rounded-2xl p-5 border border-slate-100 order-first"
+                class="flex flex-col items-center justify-center space-y-4 bg-slate-50/80 rounded-2xl p-5 border border-slate-100 order-first relative"
             >
+                {{-- Expired Overlay --}}
+                <div
+                    x-show="expired"
+                    x-transition
+                    class="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center z-10 p-6 text-center"
+                >
+                    <svg class="w-12 h-12 text-rose-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                    </svg>
+                    <p class="text-sm font-black text-slate-900 mb-1">{{ __('messages.qr_expired') }}</p>
+                    <a
+                        href="{{ route('wallet.index') }}"
+                        class="mt-3 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl transition-colors"
+                    >
+                        {{ __('messages.back') ?? 'Go Back' }}
+                    </a>
+                </div>
+
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
                     {{ __('messages.scan_qr_instruction') }}
                 </p>
@@ -103,6 +144,7 @@
                         src="{{ $data['qr_url'] }}"
                         alt="SePay QR Code"
                         class="w-44 h-44 sm:w-52 sm:h-52 object-contain rounded-xl group-hover:scale-[1.02] transition-transform"
+                        :class="expired && 'opacity-20 blur-sm'"
                     />
                 </div>
 
@@ -112,20 +154,24 @@
                         {{ __('messages.countdown_timer') }}
                     </span>
                     <p
-                        class="text-2xl font-black tracking-tighter text-slate-900 font-mono"
+                        class="text-2xl font-black tracking-tighter font-mono"
+                        :class="expired ? 'text-rose-500' : 'text-slate-900'"
                         x-text="formatTime(timeLeft)"
                     ></p>
                 </div>
 
                 {{-- SePay Auto-Detect Indicator --}}
-                <div class="flex items-center gap-2 text-[10px] font-black tracking-widest text-emerald-600 uppercase">
+                <div
+                    x-show="!expired"
+                    class="flex items-center gap-2 text-[10px] font-black tracking-widest text-emerald-600 uppercase"
+                >
                     <span class="relative flex h-2 w-2">
                         <span
                             class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
                         ></span>
                         <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
                     </span>
-                    SePay Gateway — {{ __('messages.auto_detect_active') }}
+                    SePay Gateway - {{ __('messages.auto_detect_active') }}
                 </div>
             </div>
 
