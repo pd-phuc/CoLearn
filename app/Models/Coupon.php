@@ -15,6 +15,7 @@ class Coupon extends Model
         'code',
         'discount_type',
         'discount_value',
+        'max_discount_amount',
         'min_order_amount',
         'max_uses',
         'used_count',
@@ -27,6 +28,7 @@ class Coupon extends Model
     {
         return [
             'discount_value' => 'decimal:2',
+            'max_discount_amount' => 'decimal:2',
             'min_order_amount' => 'decimal:2',
             'max_uses' => 'integer',
             'used_count' => 'integer',
@@ -73,7 +75,13 @@ class Coupon extends Model
         }
 
         if ($this->discount_type === 'percent') {
-            return round($subtotal * ((float) $this->discount_value / 100), 2);
+            $discount = round($subtotal * ((float) $this->discount_value / 100), 2);
+
+            if ($this->max_discount_amount !== null) {
+                $discount = min($discount, (float) $this->max_discount_amount);
+            }
+
+            return min($discount, $subtotal);
         }
 
         return min($subtotal, (float) $this->discount_value);
