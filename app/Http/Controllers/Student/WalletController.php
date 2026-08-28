@@ -49,6 +49,7 @@ class WalletController extends Controller
             'total_amount' => $amount,
             'status' => 'pending',
             'payment_method' => 'sepay',
+            'expires_at' => now()->addMinutes(15),
         ]);
 
         $vietQrData = $this->sePayService->generateVietQrData($order);
@@ -77,6 +78,11 @@ class WalletController extends Controller
 
         if ($order->status === 'paid') {
             return redirect()->route('wallet.index');
+        }
+
+        if ($order->isExpired()) {
+            return redirect()->route('wallet.index')
+                ->with('error', __('messages.order_expired'));
         }
 
         $user = auth()->user();

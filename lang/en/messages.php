@@ -326,4 +326,6 @@ return [
     'gateway_not_configured' => 'Not available — contact admin',
     'start_learning' => 'Start Learning',
     'dismiss_notification' => 'Dismiss notification',
+    'order_expired' => 'This order has expired. Please create a new one.',
+    'qr_expired' => 'QR code has expired. Please create a new order.',
 ];

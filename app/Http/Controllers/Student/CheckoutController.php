@@ -88,6 +88,7 @@ class CheckoutController extends Controller
             'total_amount' => $total,
             'status' => 'pending',
             'payment_method' => $paymentMethod,
+            'expires_at' => $paymentMethod === 'sepay' ? now()->addMinutes(15) : null,
         ]);
 
         foreach ($items as $item) {

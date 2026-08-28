@@ -326,4 +326,6 @@ return [
     'gateway_not_configured' => 'Chưa cấu hình — liên hệ admin',
     'start_learning' => 'Học ngay',
     'dismiss_notification' => 'Đóng thông báo',
+    'order_expired' => 'Đơn hàng đã hết hạn. Vui lòng tạo đơn mới.',
+    'qr_expired' => 'Mã QR đã hết hạn. Vui lòng tạo đơn mới.',
 ];
