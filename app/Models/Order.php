@@ -25,6 +25,7 @@ class Order extends Model
         'payment_method',
         'payment_id',
         'paid_at',
+        'expires_at',
     ];
 
     protected function casts(): array
@@ -34,7 +35,13 @@ class Order extends Model
             'discount_amount' => 'decimal:2',
             'total_amount' => 'decimal:2',
             'paid_at' => 'datetime',
+            'expires_at' => 'datetime',
         ];
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->expires_at !== null && now()->greaterThan($this->expires_at);
     }
 
     public function user(): BelongsTo
