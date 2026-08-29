@@ -93,6 +93,8 @@ return [
     'submit_for_review_confirm' => 'Submit this course for Admin review and publishing?',
     'course_created_success' => 'Course created successfully! Continue building curriculum below.',
     'course_updated_success' => 'Course information updated successfully!',
+    'course_sent_for_review' => 'Course updated and sent back for admin review.',
+    'warning_edit_published' => 'This course is published. Saving changes will require admin re-approval.',
     'course_submitted_success' => 'Course submitted for review! Admin will review shortly.',
     'course_deleted_success' => 'Course deleted successfully!',
     'rejection_reason_notice' => 'Previous rejection reason from Admin:',

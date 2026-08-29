@@ -134,7 +134,18 @@ class CourseController extends Controller
         $validated['price'] = (int) $validated['price'];
         $validated['discount_price'] = ! empty($validated['discount_price']) ? (int) $validated['discount_price'] : null;
 
+        $wasPublished = $course->status === 'published';
+
         $course->update($validated);
+
+        if ($wasPublished) {
+            $course->update([
+                'status' => 'pending_review',
+                'rejection_reason' => null,
+            ]);
+
+            return back()->with('status', __('teacher.course_sent_for_review'));
+        }
 
         return back()->with('status', __('teacher.course_updated_success'));
     }
