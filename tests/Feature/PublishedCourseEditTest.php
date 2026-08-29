@@ -93,6 +93,9 @@ class PublishedCourseEditTest extends TestCase
 
     public function test_admin_can_reapprove_after_edit(): void
     {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
         $course = $this->createCourse('published');
 
         // Teacher edits published course
@@ -102,14 +105,10 @@ class PublishedCourseEditTest extends TestCase
         $course->refresh();
         $this->assertEquals('pending_review', $course->status);
 
-        // Admin approves (simulate the status change directly
-        // because the reviewed_by column has a pre-existing
-        // varchar(26) constraint that truncates UUIDs)
-        $course->update([
-            'status' => 'published',
-            'reviewed_at' => now(),
-            'rejection_reason' => null,
-        ]);
+        // Admin approves
+        $this->actingAs($admin)
+            ->post(route('admin.courses.approve', $course))
+            ->assertRedirect();
 
         $course->refresh();
         $this->assertEquals('published', $course->status);
