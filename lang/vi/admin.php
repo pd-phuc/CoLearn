@@ -137,4 +137,5 @@ return [
     'save_settings' => 'Lưu Cài Đặt Hệ Thống',
     'settings_saved_success' => 'Cập nhật cài đặt hệ thống thành công!',
     'profile_settings' => 'Cài Đặt Hồ Sơ Cá Nhân',
+    'no_preview_available' => 'Không có bản xem trước',
 ];
