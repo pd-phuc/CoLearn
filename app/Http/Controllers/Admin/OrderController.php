@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\User;
 use App\Services\OrderService;
+use App\Services\WalletService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,10 @@ use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    public function __construct(protected OrderService $orderService) {}
+    public function __construct(
+        protected OrderService $orderService,
+        protected WalletService $walletService,
+    ) {}
 
     public function index(Request $request): View
     {
@@ -50,8 +53,14 @@ class OrderController extends Controller
         }
 
         DB::transaction(function () use ($order) {
-            $user = User::lockForUpdate()->find($order->user_id);
-            $user->deposit((float) $order->total_amount, 'refund', "Refund for order {$order->order_number}", $order->id);
+            $user = $order->user;
+            $this->walletService->deposit(
+                $user,
+                (int) $order->total_amount,
+                'refund',
+                "Refund for order {$order->order_number}",
+                $order->id,
+            );
 
             $order->update(['status' => 'refunded']);
         });

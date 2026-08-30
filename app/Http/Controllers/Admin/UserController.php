@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\WalletService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function __construct(protected WalletService $walletService) {}
+
     public function index(Request $request): View
     {
         $query = User::query();
@@ -78,22 +80,15 @@ class UserController extends Controller
             'reason' => ['required', 'string', 'max:255'],
         ]);
 
-        $amount = (float) $request->input('amount');
+        $amount = (int) $request->input('amount');
         $type = $request->input('type');
         $reason = $request->input('reason');
 
-        DB::transaction(function () use ($user, $amount, $type, $reason) {
-            $user = User::lockForUpdate()->find($user->id);
-
-            if ($type === 'deposit') {
-                $user->deposit($amount, 'admin_deposit', $reason);
-            } else {
-                if ($user->balance < $amount) {
-                    throw new \RuntimeException('Insufficient balance.');
-                }
-                $user->deduct($amount, 'admin_withdraw', $reason);
-            }
-        });
+        if ($type === 'deposit') {
+            $this->walletService->deposit($user, $amount, 'admin_deposit', $reason);
+        } else {
+            $this->walletService->deduct($user, $amount, 'admin_withdraw', $reason);
+        }
 
         return back()->with('success', ucfirst($type)." of {$amount} completed.");
     }
