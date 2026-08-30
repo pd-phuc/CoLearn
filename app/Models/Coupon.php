@@ -68,6 +68,32 @@ class Coupon extends Model
         return true;
     }
 
+    /**
+     * Computed coupon status for UI display.
+     *
+     * @return string One of: active, scheduled, expired, exhausted, disabled
+     */
+    public function getStatusAttribute(): string
+    {
+        if (! $this->is_active) {
+            return 'disabled';
+        }
+
+        if ($this->max_uses !== null && $this->used_count >= $this->max_uses) {
+            return 'exhausted';
+        }
+
+        if ($this->starts_at !== null && now()->lt($this->starts_at)) {
+            return 'scheduled';
+        }
+
+        if ($this->expires_at !== null && now()->gt($this->expires_at)) {
+            return 'expired';
+        }
+
+        return 'active';
+    }
+
     public function calculateDiscount(float $subtotal): float
     {
         if (! $this->isValidFor($subtotal)) {
