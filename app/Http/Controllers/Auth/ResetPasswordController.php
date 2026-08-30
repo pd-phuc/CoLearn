@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class ResetPasswordController extends Controller
@@ -39,6 +40,13 @@ class ResetPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, string $password) {
+                if (Hash::check($password, $user->password)) {
+                    throw new ValidationException(
+                        validator: validator([], []),
+                        response: back()->withErrors(['password' => __('auth.password_must_differ')]),
+                    );
+                }
+
                 $user->forceFill([
                     'password' => Hash::make($password),
                     'remember_token' => Str::random(60),

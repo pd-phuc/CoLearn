@@ -39,4 +39,5 @@ return [
     'forgot_password_sub' => 'Không vấn đề gì. Chỉ cần nhập địa chỉ email đã đăng ký và chúng tôi sẽ gửi liên kết đặt lại mật khẩu cho bạn.',
     'send_reset_link_btn' => 'Gửi email xác thực',
     'back_to_login' => 'Quay lại Đăng nhập',
+    'password_must_differ' => 'Mật khẩu mới phải khác mật khẩu hiện tại.',
 ];
