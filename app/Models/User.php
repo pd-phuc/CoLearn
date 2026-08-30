@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Exceptions\InsufficientBalanceException;
 use App\Notifications\ResetPasswordNotification;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -39,77 +38,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function hasEnoughBalance(float $amount): bool
+    public function hasEnoughBalance(int $amount): bool
     {
-        return (float) $this->balance >= $amount;
-    }
-
-    /**
-     * Deposit money into wallet with Transaction log.
-     * MUST be called inside DB::transaction() with lockForUpdate().
-     *
-     * @throws \InvalidArgumentException if $amount <= 0
-     */
-    public function deposit(float $amount, string $action = 'deposit_bank', ?string $description = null, ?string $orderId = null, ?string $referenceId = null): Transaction
-    {
-        if ($amount <= 0) {
-            throw new \InvalidArgumentException('Deposit amount must be greater than zero.');
-        }
-
-        $balanceBefore = (float) $this->balance;
-        $balanceAfter = $balanceBefore + $amount;
-
-        $this->balance = $balanceAfter;
-        $this->total_deposit = (float) $this->total_deposit + $amount;
-        $this->save();
-
-        return Transaction::create([
-            'user_id' => $this->id,
-            'order_id' => $orderId,
-            'amount' => $amount,
-            'type' => 'in',
-            'action' => $action,
-            'balance_before' => $balanceBefore,
-            'balance_after' => $balanceAfter,
-            'description' => $description,
-            'reference_id' => $referenceId,
-        ]);
-    }
-
-    /**
-     * Deduct money from wallet with Transaction log.
-     * MUST be called inside DB::transaction() with lockForUpdate().
-     *
-     * @throws \InvalidArgumentException if $amount <= 0
-     * @throws InsufficientBalanceException if balance < $amount
-     */
-    public function deduct(float $amount, string $action = 'buy_course', ?string $description = null, ?string $orderId = null, ?string $referenceId = null): Transaction
-    {
-        if ($amount <= 0) {
-            throw new \InvalidArgumentException('Deduct amount must be greater than zero.');
-        }
-
-        if (! $this->hasEnoughBalance($amount)) {
-            throw new InsufficientBalanceException;
-        }
-
-        $balanceBefore = (float) $this->balance;
-        $balanceAfter = $balanceBefore - $amount;
-
-        $this->balance = $balanceAfter;
-        $this->save();
-
-        return Transaction::create([
-            'user_id' => $this->id,
-            'order_id' => $orderId,
-            'amount' => $amount,
-            'type' => 'out',
-            'action' => $action,
-            'balance_before' => $balanceBefore,
-            'balance_after' => $balanceAfter,
-            'description' => $description,
-            'reference_id' => $referenceId,
-        ]);
+        return $this->balance >= $amount;
     }
 
     /**

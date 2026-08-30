@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 
 class OrderService
 {
+    public function __construct(protected WalletService $walletService) {}
+
     /**
      * Process wallet payment: lock user balance, deduct, and fulfill order.
      * This is the ONLY safe way to pay with wallet balance.
@@ -20,57 +22,46 @@ class OrderService
     public function processWalletPayment(Order $order, CartService $cartService): void
     {
         DB::transaction(function () use ($order, $cartService) {
-            // 1. Lock user row to prevent race condition (double-spend)
-            $user = User::where('id', $order->user_id)->lockForUpdate()->first();
-
-            if (! $user) {
-                throw new \RuntimeException('User not found');
-            }
-
-            // 2. Re-verify balance under lock
-            $total = (float) $order->total_amount;
-            if (! $user->hasEnoughBalance($total)) {
-                throw new \RuntimeException(__('messages.insufficient_wallet_balance'));
-            }
-
-            // 3. Lock the order to prevent double-processing
+            // 1. Lock the order to prevent double-processing
             $order = Order::where('id', $order->id)->lockForUpdate()->first();
             if ($order->status === 'paid') {
                 return; // Already processed — idempotent
             }
 
-            // 4. Generate wallet payment ID
+            // 2. Generate wallet payment ID
             $paymentId = 'WALLET_'.strtoupper(Str::random(8));
 
-            // 5. Deduct balance (with Transaction log)
+            // 3. Deduct balance (WalletService handles locking + balance check)
+            $user = User::findOrFail($order->user_id);
             $courseNames = $order->items->map(fn ($item) => $item->course->title)->implode(', ');
-            $user->deduct(
-                $total,
+            $this->walletService->deduct(
+                $user,
+                (int) $order->total_amount,
                 'buy_course',
                 __('messages.tx_desc_buy_course', ['courses' => $courseNames]),
                 $order->id,
                 $paymentId,
             );
 
-            // 6. Mark order as paid
+            // 4. Mark order as paid
             $order->update([
                 'status' => 'paid',
                 'payment_id' => $paymentId,
                 'paid_at' => now(),
             ]);
 
-            // 7. Increment coupon usage (only after successful payment)
+            // 5. Increment coupon usage (only after successful payment)
             if ($order->coupon_id) {
                 $order->coupon?->increment('used_count');
             }
 
-            // 8. Auto-enroll in all courses
+            // 6. Auto-enroll in all courses
             $this->enrollCoursesFromOrder($order);
 
-            // 9. Clear cart
+            // 7. Clear cart
             $cartService->clear();
 
-            Log::info("OrderService: Wallet payment completed for order {$order->order_number}, user {$user->id}, amount {$total}");
+            Log::info("OrderService: Wallet payment completed for order {$order->order_number}, user {$user->id}, amount {$order->total_amount}");
         });
     }
 
@@ -123,27 +114,24 @@ class OrderService
                 return; // Already processed — idempotent
             }
 
-            // Lock user row before modifying balance
-            $user = User::where('id', $order->user_id)->lockForUpdate()->first();
-
-            $amount = (float) $order->total_amount;
-
             $order->update([
                 'status' => 'paid',
                 'payment_id' => $paymentId,
                 'paid_at' => now(),
             ]);
 
-            // Deposit with Transaction log
-            $user->deposit(
-                $amount,
+            // Deposit via WalletService (handles locking + transaction log)
+            $user = User::findOrFail($order->user_id);
+            $this->walletService->deposit(
+                $user,
+                (int) $order->total_amount,
                 'deposit_bank',
                 __('messages.tx_desc_topup', ['order' => $order->order_number]),
                 $order->id,
                 $paymentId,
             );
 
-            Log::info("OrderService: Topup order {$order->order_number} fulfilled, user {$user->id} deposited {$amount}");
+            Log::info("OrderService: Topup order {$order->order_number} fulfilled, user {$user->id} deposited {$order->total_amount}");
         });
     }
 
