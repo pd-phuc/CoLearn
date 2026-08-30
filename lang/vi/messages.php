@@ -196,6 +196,8 @@ return [
     'stripe_payment' => 'Stripe (Thẻ Visa / Mastercard Quốc tế)',
     'pay_now' => 'Thanh Toán Ngay',
     'already_enrolled_notice' => 'Bạn đã tham gia khóa học này rồi!',
+    'enrolled_free_success' => 'Đăng ký thành công! Bắt đầu học ngay.',
+    'course_not_free' => 'Khóa học này không miễn phí.',
     'course_already_in_cart' => 'Khóa học này đã có trong giỏ hàng của bạn.',
     'course_added_to_cart_success' => 'Đã thêm khóa học vào giỏ hàng thành công!',
     'course_removed_from_cart_success' => 'Đã xóa khóa học khỏi giỏ hàng.',

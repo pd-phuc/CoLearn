@@ -196,6 +196,8 @@ return [
     'stripe_payment' => 'Stripe (Credit / Debit Card)',
     'pay_now' => 'Pay Now',
     'already_enrolled_notice' => 'You are already enrolled in this course!',
+    'enrolled_free_success' => 'You have been enrolled successfully! Start learning now.',
+    'course_not_free' => 'This course is not free.',
     'course_already_in_cart' => 'This course is already in your shopping cart.',
     'course_added_to_cart_success' => 'Course added to cart successfully!',
     'course_removed_from_cart_success' => 'Course removed from cart.',

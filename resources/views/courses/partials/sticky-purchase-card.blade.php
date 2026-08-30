@@ -79,15 +79,27 @@
             </a>
         @else
             @auth
-                <form action="{{ route('cart.add', $course) }}" method="POST">
-                    @csrf
-                    <button
-                        type="submit"
-                        class="w-full btn-primary py-3.5 text-base font-bold shadow-lg shadow-orange-500/25"
-                    >
-                        {{ $course->price > 0 ? __('messages.buy_course') : __('messages.enroll_free') }}
-                    </button>
-                </form>
+                @if ($course->price > 0)
+                    <form action="{{ route('cart.add', $course) }}" method="POST">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="w-full btn-primary py-3.5 text-base font-bold shadow-lg shadow-orange-500/25"
+                        >
+                            {{ __('messages.buy_course') }}
+                        </button>
+                    </form>
+                @else
+                    <form action="{{ route('courses.enroll-free', $course) }}" method="POST">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="w-full btn-primary py-3.5 text-base font-bold bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/25"
+                        >
+                            {{ __('messages.enroll_free') }}
+                        </button>
+                    </form>
+                @endif
             @else
                 <a
                     href="{{ route('login') }}"
