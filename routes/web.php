@@ -17,6 +17,7 @@ use App\Http\Controllers\CourseCatalogController;
 use App\Http\Controllers\CourseDetailController;
 use App\Http\Controllers\Student\CartController;
 use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Student\EnrollmentController;
 use App\Http\Controllers\Student\LearningController;
 use App\Http\Controllers\Student\MyCoursesController;
 use App\Http\Controllers\Student\OrderController;
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function () {
     // Checkout & Payment Processing
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/courses/{course}/enroll-free', [EnrollmentController::class, 'enrollFree'])->name('courses.enroll-free');
     Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
     // Real-Time VietQR Order Polling
