@@ -67,10 +67,20 @@
                                     {{ $coupon->used_count }} / {{ $coupon->max_uses ?? 'Unlimited' }}
                                 </td>
                                 <td class="px-6 py-4">
+                                    @php
+                                        $statusColors = [
+                                            'active' => 'bg-emerald-50 text-emerald-700 border border-emerald-200/60',
+                                            'scheduled' => 'bg-blue-50 text-blue-700 border border-blue-200/60',
+                                            'expired' => 'bg-rose-50 text-rose-600 border border-rose-200/60',
+                                            'exhausted' => 'bg-amber-50 text-amber-700 border border-amber-200/60',
+                                            'disabled' => 'bg-slate-100 text-slate-500 border border-slate-200/60',
+                                        ];
+                                    @endphp
+
                                     <span
-                                        class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider {{ $coupon->is_active ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-slate-100 text-slate-500' }}"
+                                        class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider {{ $statusColors[$coupon->status] ?? 'bg-slate-100 text-slate-500' }}"
                                     >
-                                        {{ $coupon->is_active ? 'Active' : 'Inactive' }}
+                                        {{ __('admin.coupon_status_' . $coupon->status) }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-xs font-medium text-slate-500">
