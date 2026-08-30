@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Exceptions\InsufficientBalanceException;
 use App\Notifications\ResetPasswordNotification;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -46,9 +47,15 @@ class User extends Authenticatable
     /**
      * Deposit money into wallet with Transaction log.
      * MUST be called inside DB::transaction() with lockForUpdate().
+     *
+     * @throws \InvalidArgumentException if $amount <= 0
      */
     public function deposit(float $amount, string $action = 'deposit_bank', ?string $description = null, ?string $orderId = null, ?string $referenceId = null): Transaction
     {
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException('Deposit amount must be greater than zero.');
+        }
+
         $balanceBefore = (float) $this->balance;
         $balanceAfter = $balanceBefore + $amount;
 
@@ -72,9 +79,20 @@ class User extends Authenticatable
     /**
      * Deduct money from wallet with Transaction log.
      * MUST be called inside DB::transaction() with lockForUpdate().
+     *
+     * @throws \InvalidArgumentException if $amount <= 0
+     * @throws InsufficientBalanceException if balance < $amount
      */
     public function deduct(float $amount, string $action = 'buy_course', ?string $description = null, ?string $orderId = null, ?string $referenceId = null): Transaction
     {
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException('Deduct amount must be greater than zero.');
+        }
+
+        if (! $this->hasEnoughBalance($amount)) {
+            throw new InsufficientBalanceException;
+        }
+
         $balanceBefore = (float) $this->balance;
         $balanceAfter = $balanceBefore - $amount;
 
