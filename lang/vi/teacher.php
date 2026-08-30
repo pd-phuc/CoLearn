@@ -93,6 +93,8 @@ return [
     'submit_for_review_confirm' => 'Bạn có chắc chắn muốn gửi khóa học này để Admin kiểm duyệt và xuất bản?',
     'course_created_success' => 'Tạo khóa học thành công! Hãy soạn thảo giáo trình bên dưới.',
     'course_updated_success' => 'Cập nhật thông tin khóa học thành công!',
+    'course_sent_for_review' => 'Khóa học đã cập nhật và gửi lại để admin duyệt.',
+    'warning_edit_published' => 'Khóa học này đang được xuất bản. Lưu thay đổi sẽ cần admin duyệt lại.',
     'course_submitted_success' => 'Khóa học đã được gửi duyệt! Admin sẽ kiểm duyệt trong thời gian sớm nhất.',
     'course_deleted_success' => 'Xóa khóa học thành công!',
     'rejection_reason_notice' => 'Lý do bị từ chối trước đó từ Admin:',
