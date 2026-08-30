@@ -132,4 +132,5 @@ return [
     'save_settings' => 'Save Settings Changes',
     'settings_saved_success' => 'Settings updated successfully and applied to system config!',
     'profile_settings' => 'Profile & Account Settings',
+    'no_preview_available' => 'No preview available',
 ];
