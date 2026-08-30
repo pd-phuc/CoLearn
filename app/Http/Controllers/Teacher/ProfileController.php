@@ -64,6 +64,10 @@ class ProfileController extends Controller
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
+        if (Hash::check($validated['password'], $request->user()->password)) {
+            return back()->withErrors(['password' => __('auth.password_must_differ')]);
+        }
+
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);

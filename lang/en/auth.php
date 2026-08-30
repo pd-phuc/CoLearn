@@ -39,4 +39,5 @@ return [
     'forgot_password_sub' => 'No problem. Just enter your registered email address and we will send you a password reset link.',
     'send_reset_link_btn' => 'Send verification email',
     'back_to_login' => 'Back to Login',
+    'password_must_differ' => 'The new password must be different from your current password.',
 ];
