@@ -54,13 +54,13 @@ class UserController extends Controller
 
         $user->update($request->only(['name', 'email']));
 
-        return redirect()->route('admin.users.show', $user)->with('success', 'User updated.');
+        return redirect()->route('admin.users.show', $user)->with('success', __('admin.user_updated'));
     }
 
     public function toggleBan(User $user): RedirectResponse
     {
         if ($user->isAdmin()) {
-            return back()->with('error', 'Cannot ban an admin user.');
+            return back()->with('error', __('admin.cannot_ban_admin'));
         }
 
         $user->update([
@@ -69,7 +69,7 @@ class UserController extends Controller
 
         $action = $user->banned_at ? 'banned' : 'unbanned';
 
-        return back()->with('success', "User {$action}.");
+        return back()->with('success', __('admin.user_'.$action));
     }
 
     public function adjustBalance(Request $request, User $user): RedirectResponse
@@ -90,6 +90,6 @@ class UserController extends Controller
             $this->walletService->deduct($user, $amount, 'admin_withdraw', $reason);
         }
 
-        return back()->with('success', ucfirst($type)." of {$amount} completed.");
+        return back()->with('success', __('admin.balance_adjusted', ['type' => $type, 'amount' => number_format($amount, 0, ',', '.')]));
     }
 }

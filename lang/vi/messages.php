@@ -330,4 +330,5 @@ return [
     'dismiss_notification' => 'Đóng thông báo',
     'order_expired' => 'Đơn hàng đã hết hạn. Vui lòng tạo đơn mới.',
     'qr_expired' => 'Mã QR đã hết hạn. Vui lòng tạo đơn mới.',
+    'unauthorized_course_access' => 'Bạn không có quyền truy cập tài nguyên khoá học này.',
 ];

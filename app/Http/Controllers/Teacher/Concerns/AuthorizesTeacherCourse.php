@@ -13,7 +13,7 @@ trait AuthorizesTeacherCourse
     protected function authorizeTeacher(Request $request, Course $course): void
     {
         if ($course->teacher_id !== $request->user()->id && ! $request->user()->hasRole('admin')) {
-            abort(403, 'Unauthorized access to this course resource.');
+            abort(403, __('messages.unauthorized_course_access'));
         }
     }
 }

@@ -45,11 +45,11 @@ class OrderController extends Controller
     public function refund(Order $order): RedirectResponse
     {
         if ($order->status === 'refunded') {
-            return back()->with('error', 'Order already refunded.');
+            return back()->with('error', __('admin.order_already_refunded'));
         }
 
         if ($order->status !== 'paid') {
-            return back()->with('error', 'Only paid orders can be refunded.');
+            return back()->with('error', __('admin.only_paid_orders_refundable'));
         }
 
         DB::transaction(function () use ($order) {
@@ -65,6 +65,6 @@ class OrderController extends Controller
             $order->update(['status' => 'refunded']);
         });
 
-        return back()->with('success', 'Order refunded. Amount credited to user wallet.');
+        return back()->with('success', __('admin.order_refunded'));
     }
 }
