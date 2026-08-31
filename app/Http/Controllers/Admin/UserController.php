@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdjustBalanceRequest;
 use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Http\RedirectResponse;
@@ -72,13 +73,8 @@ class UserController extends Controller
         return back()->with('success', __('admin.user_'.$action));
     }
 
-    public function adjustBalance(Request $request, User $user): RedirectResponse
+    public function adjustBalance(AdjustBalanceRequest $request, User $user): RedirectResponse
     {
-        $request->validate([
-            'amount' => ['required', 'numeric', 'min:1'],
-            'type' => ['required', 'in:deposit,withdraw'],
-            'reason' => ['required', 'string', 'max:255'],
-        ]);
 
         $amount = (int) $request->input('amount');
         $type = $request->input('type');

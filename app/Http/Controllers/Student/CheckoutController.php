@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Student\CheckoutRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\CartService;
@@ -10,7 +11,6 @@ use App\Services\OrderService;
 use App\Services\SePayService;
 use App\Services\StripeService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -39,11 +39,8 @@ class CheckoutController extends Controller
         return view('checkout.index', compact('items', 'subtotal', 'coupon', 'discount', 'total'));
     }
 
-    public function process(Request $request): View|RedirectResponse
+    public function process(CheckoutRequest $request): View|RedirectResponse
     {
-        $request->validate([
-            'payment_method' => ['required', 'string', 'in:wallet,sepay,stripe'],
-        ]);
 
         if ($this->cartService->count() === 0) {
             return redirect()->route('cart.index')

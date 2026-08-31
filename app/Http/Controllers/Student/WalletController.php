@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Student\TopupRequest;
 use App\Models\Order;
 use App\Services\SePayService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -30,11 +30,8 @@ class WalletController extends Controller
         return view('wallet.index', compact('user', 'topupOrders', 'transactions'));
     }
 
-    public function topup(Request $request): View|RedirectResponse
+    public function topup(TopupRequest $request): View|RedirectResponse
     {
-        $request->validate([
-            'amount' => ['required', 'numeric', 'min:10000', 'max:50000000'],
-        ]);
 
         $user = auth()->user();
         $amount = (float) $request->input('amount');
