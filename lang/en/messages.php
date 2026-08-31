@@ -330,4 +330,5 @@ return [
     'dismiss_notification' => 'Dismiss notification',
     'order_expired' => 'This order has expired. Please create a new one.',
     'qr_expired' => 'QR code has expired. Please create a new order.',
+    'unauthorized_course_access' => 'Unauthorized access to this course resource.',
 ];

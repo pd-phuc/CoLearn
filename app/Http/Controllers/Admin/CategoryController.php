@@ -46,7 +46,7 @@ class CategoryController extends Controller
 
         Category::create($request->only(['name', 'slug', 'description', 'sort_order']));
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category created.');
+        return redirect()->route('admin.categories.index')->with('success', __('admin.category_created'));
     }
 
     public function edit(Category $category): View
@@ -65,17 +65,17 @@ class CategoryController extends Controller
 
         $category->update($request->only(['name', 'slug', 'description', 'sort_order']));
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category updated.');
+        return redirect()->route('admin.categories.index')->with('success', __('admin.category_updated'));
     }
 
     public function destroy(Category $category): RedirectResponse
     {
         if ($category->courses()->exists()) {
-            return back()->with('error', 'Cannot delete category with courses.');
+            return back()->with('error', __('admin.cannot_delete_category_with_courses'));
         }
 
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category deleted.');
+        return redirect()->route('admin.categories.index')->with('success', __('admin.category_deleted'));
     }
 }

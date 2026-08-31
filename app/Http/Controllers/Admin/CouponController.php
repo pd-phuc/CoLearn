@@ -41,7 +41,7 @@ class CouponController extends Controller
             'min_order_amount', 'max_uses', 'starts_at', 'expires_at', 'is_active',
         ]));
 
-        return redirect()->route('admin.coupons.index')->with('success', 'Coupon created.');
+        return redirect()->route('admin.coupons.index')->with('success', __('admin.coupon_created'));
     }
 
     public function edit(Coupon $coupon): View
@@ -68,17 +68,17 @@ class CouponController extends Controller
             'min_order_amount', 'max_uses', 'starts_at', 'expires_at', 'is_active',
         ]));
 
-        return redirect()->route('admin.coupons.index')->with('success', 'Coupon updated.');
+        return redirect()->route('admin.coupons.index')->with('success', __('admin.coupon_updated'));
     }
 
     public function destroy(Coupon $coupon): RedirectResponse
     {
         if ($coupon->orders()->exists()) {
-            return back()->with('error', 'Cannot delete coupon that has been used.');
+            return back()->with('error', __('admin.cannot_delete_used_coupon'));
         }
 
         $coupon->delete();
 
-        return redirect()->route('admin.coupons.index')->with('success', 'Coupon deleted.');
+        return redirect()->route('admin.coupons.index')->with('success', __('admin.coupon_deleted'));
     }
 }

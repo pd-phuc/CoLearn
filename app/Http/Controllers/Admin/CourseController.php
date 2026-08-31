@@ -43,7 +43,7 @@ class CourseController extends Controller
             'rejection_reason' => null,
         ]);
 
-        return back()->with('success', 'Course approved and published.');
+        return back()->with('success', __('admin.course_approved'));
     }
 
     public function reject(Request $request, Course $course): RedirectResponse
@@ -57,6 +57,6 @@ class CourseController extends Controller
             'rejection_reason' => $request->input('rejection_reason'),
         ]);
 
-        return back()->with('success', 'Course rejected.');
+        return back()->with('success', __('admin.course_rejected'));
     }
 }
