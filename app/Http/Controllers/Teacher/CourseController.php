@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Teacher\Concerns\AuthorizesTeacherCourse;
+use App\Http\Requests\Teacher\StoreCourseRequest;
+use App\Http\Requests\Teacher\UpdateCourseRequest;
 use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
@@ -15,24 +17,6 @@ use Illuminate\View\View;
 class CourseController extends Controller
 {
     use AuthorizesTeacherCourse;
-
-    /**
-     * Shared validation rules for course store/update.
-     */
-    private function courseValidationRules(): array
-    {
-        return [
-            'title' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'description' => ['nullable', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'discount_price' => ['nullable', 'numeric', 'min:0', 'lte:price'],
-            'level' => ['required', 'in:all,beginner,intermediate,advanced'],
-            'learning_outcomes' => ['nullable', 'string'],
-            'requirements' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
-        ];
-    }
 
     public function index(Request $request): View
     {
@@ -62,9 +46,9 @@ class CourseController extends Controller
         return view('teacher.courses.create', compact('categories'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCourseRequest $request): RedirectResponse
     {
-        $validated = $request->validate($this->courseValidationRules());
+        $validated = $request->validated();
 
         $slug = Str::slug($validated['title']);
         $originalSlug = $slug;
@@ -112,11 +96,11 @@ class CourseController extends Controller
         return view('teacher.courses.edit', compact('course', 'categories'));
     }
 
-    public function update(Request $request, Course $course): RedirectResponse
+    public function update(UpdateCourseRequest $request, Course $course): RedirectResponse
     {
         $this->authorizeTeacher($request, $course);
 
-        $validated = $request->validate($this->courseValidationRules());
+        $validated = $request->validated();
 
         if ($request->hasFile('thumbnail')) {
             // Delete old thumbnail from storage

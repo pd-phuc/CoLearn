@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdjustBalanceRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use App\Services\WalletService;
 use Illuminate\Http\RedirectResponse;
@@ -45,14 +47,9 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
-        ]);
-
-        $user->update($request->only(['name', 'email']));
+        $user->update($request->validated());
 
         return redirect()->route('admin.users.show', $user)->with('success', __('admin.user_updated'));
     }
@@ -72,13 +69,8 @@ class UserController extends Controller
         return back()->with('success', __('admin.user_'.$action));
     }
 
-    public function adjustBalance(Request $request, User $user): RedirectResponse
+    public function adjustBalance(AdjustBalanceRequest $request, User $user): RedirectResponse
     {
-        $request->validate([
-            'amount' => ['required', 'numeric', 'min:1'],
-            'type' => ['required', 'in:deposit,withdraw'],
-            'reason' => ['required', 'string', 'max:255'],
-        ]);
 
         $amount = (int) $request->input('amount');
         $type = $request->input('type');

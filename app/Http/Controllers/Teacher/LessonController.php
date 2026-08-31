@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Teacher\Concerns\AuthorizesTeacherCourse;
+use App\Http\Requests\Teacher\StoreLessonRequest;
+use App\Http\Requests\Teacher\UpdateLessonRequest;
 use App\Models\Lesson;
 use App\Models\Section;
 use Illuminate\Http\RedirectResponse;
@@ -15,27 +17,11 @@ class LessonController extends Controller
 {
     use AuthorizesTeacherCourse;
 
-    /**
-     * Shared validation rules for lesson store/update.
-     */
-    private function lessonValidationRules(): array
-    {
-        return [
-            'title' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:video,text,document'],
-            'video_url' => ['nullable', 'string', 'max:1000'],
-            'content' => ['nullable', 'string'],
-            'document_file' => ['nullable', 'file', 'max:20480'],
-            'duration' => ['nullable', 'integer', 'min:0'],
-            'is_free_preview' => ['nullable', 'boolean'],
-        ];
-    }
-
-    public function store(Request $request, Section $section): RedirectResponse
+    public function store(StoreLessonRequest $request, Section $section): RedirectResponse
     {
         $this->authorizeTeacher($request, $section->course);
 
-        $validated = $request->validate($this->lessonValidationRules());
+        $validated = $request->validated();
 
         $slug = Str::slug($validated['title']);
         $originalSlug = $slug;
@@ -68,13 +54,11 @@ class LessonController extends Controller
         return back()->with('status', __('teacher.lesson_created'));
     }
 
-    public function update(Request $request, Lesson $lesson): RedirectResponse
+    public function update(UpdateLessonRequest $request, Lesson $lesson): RedirectResponse
     {
         $this->authorizeTeacher($request, $lesson->section->course);
 
-        $validated = $request->validate(array_merge($this->lessonValidationRules(), [
-            'sort_order' => ['nullable', 'integer', 'min:0'],
-        ]));
+        $validated = $request->validated();
 
         if ($request->hasFile('document_file')) {
             $path = $request->file('document_file')->store('courses/materials', 'public');
