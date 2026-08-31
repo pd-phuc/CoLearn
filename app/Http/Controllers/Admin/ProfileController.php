@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateAvatarRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,21 +26,11 @@ class ProfileController extends Controller
     /**
      * Update the admin's personal profile information.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(UpdateProfileRequest $request): RedirectResponse
     {
         $user = Auth::user();
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:20'],
-            'headline' => ['nullable', 'string', 'max:255'],
-            'bio' => ['nullable', 'string', 'max:1000'],
-            'github_url' => ['nullable', 'url', 'max:255'],
-            'linkedin_url' => ['nullable', 'url', 'max:255'],
-            'facebook_url' => ['nullable', 'url', 'max:255'],
-        ]);
-
-        $user->update($validated);
+        $user->update($request->validated());
 
         return redirect()->route('admin.profile.edit')
             ->with('status', __('messages.profile_updated_success'));
@@ -47,13 +39,9 @@ class ProfileController extends Controller
     /**
      * Upload and update admin avatar image.
      */
-    public function updateAvatar(Request $request): RedirectResponse
+    public function updateAvatar(UpdateAvatarRequest $request): RedirectResponse
     {
         $user = Auth::user();
-
-        $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
-        ]);
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');

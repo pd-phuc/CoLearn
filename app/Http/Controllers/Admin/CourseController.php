@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\RejectCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,9 +47,8 @@ class CourseController extends Controller
         return back()->with('success', __('admin.course_approved'));
     }
 
-    public function reject(Request $request, Course $course): RedirectResponse
+    public function reject(RejectCourseRequest $request, Course $course): RedirectResponse
     {
-        $request->validate(['rejection_reason' => ['required', 'string', 'max:1000']]);
 
         $course->update([
             'status' => 'draft',

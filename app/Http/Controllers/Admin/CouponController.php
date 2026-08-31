@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCouponRequest;
+use App\Http\Requests\Admin\UpdateCouponRequest;
 use App\Models\Coupon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CouponController extends Controller
@@ -22,24 +23,9 @@ class CouponController extends Controller
         return view('admin.coupons.form', ['coupon' => null]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCouponRequest $request): RedirectResponse
     {
-        $request->validate([
-            'code' => ['required', 'string', 'max:50', 'unique:coupons,code'],
-            'discount_type' => ['required', 'in:percent,fixed'],
-            'discount_value' => ['required', 'numeric', 'min:0'],
-            'max_discount_amount' => ['nullable', 'numeric', 'min:0'],
-            'min_order_amount' => ['nullable', 'numeric', 'min:0'],
-            'max_uses' => ['nullable', 'integer', 'min:1'],
-            'starts_at' => ['nullable', 'date'],
-            'expires_at' => ['nullable', 'date', 'after:starts_at'],
-            'is_active' => ['boolean'],
-        ]);
-
-        Coupon::create($request->only([
-            'code', 'discount_type', 'discount_value', 'max_discount_amount',
-            'min_order_amount', 'max_uses', 'starts_at', 'expires_at', 'is_active',
-        ]));
+        Coupon::create($request->validated());
 
         return redirect()->route('admin.coupons.index')->with('success', __('admin.coupon_created'));
     }
@@ -49,24 +35,9 @@ class CouponController extends Controller
         return view('admin.coupons.form', compact('coupon'));
     }
 
-    public function update(Request $request, Coupon $coupon): RedirectResponse
+    public function update(UpdateCouponRequest $request, Coupon $coupon): RedirectResponse
     {
-        $request->validate([
-            'code' => ['required', 'string', 'max:50', 'unique:coupons,code,'.$coupon->id],
-            'discount_type' => ['required', 'in:percent,fixed'],
-            'discount_value' => ['required', 'numeric', 'min:0'],
-            'max_discount_amount' => ['nullable', 'numeric', 'min:0'],
-            'min_order_amount' => ['nullable', 'numeric', 'min:0'],
-            'max_uses' => ['nullable', 'integer', 'min:1'],
-            'starts_at' => ['nullable', 'date'],
-            'expires_at' => ['nullable', 'date', 'after:starts_at'],
-            'is_active' => ['boolean'],
-        ]);
-
-        $coupon->update($request->only([
-            'code', 'discount_type', 'discount_value', 'max_discount_amount',
-            'min_order_amount', 'max_uses', 'starts_at', 'expires_at', 'is_active',
-        ]));
+        $coupon->update($request->validated());
 
         return redirect()->route('admin.coupons.index')->with('success', __('admin.coupon_updated'));
     }
