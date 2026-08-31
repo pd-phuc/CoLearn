@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Teacher\UpdatePasswordRequest;
+use App\Http\Requests\Teacher\UpdateTeacherProfileRequest;
+use App\Http\Requests\UpdateAvatarRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -20,27 +21,18 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(UpdateTeacherProfileRequest $request): RedirectResponse
     {
         $user = $request->user();
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'headline' => ['nullable', 'string', 'max:255'],
-            'bio' => ['nullable', 'string', 'max:2000'],
-        ]);
-
-        $user->update($validated);
+        $user->update($request->validated());
 
         return back()->with('status', __('teacher.profile_updated_success'));
     }
 
-    public function updateAvatar(Request $request): RedirectResponse
+    public function updateAvatar(UpdateAvatarRequest $request): RedirectResponse
     {
-        $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
-        ]);
+        $request->validated();
 
         $user = $request->user();
 
@@ -57,12 +49,9 @@ class ProfileController extends Controller
         return back()->with('status', __('teacher.avatar_updated_success'));
     }
 
-    public function updatePassword(Request $request): RedirectResponse
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
+        $validated = $request->validated();
 
         if (Hash::check($validated['password'], $request->user()->password)) {
             return back()->withErrors(['password' => __('auth.password_must_differ')]);
