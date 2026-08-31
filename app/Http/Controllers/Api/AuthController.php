@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ApiLoginRequest;
+use App\Http\Requests\Api\ApiRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,13 +17,9 @@ class AuthController extends Controller
     /**
      * Register a new user and return a Sanctum token.
      */
-    public function register(Request $request): JsonResponse
+    public function register(ApiRegisterRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        $validated = $request->validated();
 
         $user = User::create([
             'name' => $validated['name'],
@@ -40,12 +38,8 @@ class AuthController extends Controller
     /**
      * Login and return a Sanctum token.
      */
-    public function login(Request $request): JsonResponse
+    public function login(ApiLoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
 
         if (! Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([

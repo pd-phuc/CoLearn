@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Student\ApplyCouponRequest;
 use App\Models\Course;
 use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -51,11 +51,8 @@ class CartController extends Controller
             ->with('success', __('messages.course_removed_from_cart_success'));
     }
 
-    public function applyCoupon(Request $request): RedirectResponse
+    public function applyCoupon(ApplyCouponRequest $request): RedirectResponse
     {
-        $request->validate([
-            'code' => ['required', 'string', 'max:50'],
-        ]);
 
         $result = $this->cartService->applyCoupon($request->input('code'));
 
