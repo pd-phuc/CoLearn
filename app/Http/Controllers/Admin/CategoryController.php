@@ -10,9 +10,22 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $categories = Category::withCount('courses')->orderBy('sort_order')->get();
+        $query = Category::withCount('courses');
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'ilike', "%{$search}%")
+                    ->orWhere('slug', 'ilike', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('is_active')) {
+            $query->where('is_active', $request->boolean('is_active'));
+        }
+
+        $categories = $query->orderBy('sort_order')->paginate(20)->withQueryString();
 
         return view('admin.categories.index', compact('categories'));
     }

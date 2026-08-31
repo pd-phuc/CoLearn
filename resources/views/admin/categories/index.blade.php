@@ -2,13 +2,56 @@
 
 @section('admin-content')
     <div class="space-y-6">
+        {{-- Search & Filter Bar --}}
+        <form method="GET" action="{{ route('admin.categories.index') }}" class="flex flex-wrap items-end gap-3">
+            <div class="flex-1 min-w-[200px]">
+                <label class="block text-xs font-bold text-slate-500 mb-1">{{ __('admin.search') }}</label>
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="{{ __('admin.search_category_placeholder') }}"
+                    class="w-full px-3 py-2 text-sm font-semibold border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-400 outline-none"
+                />
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 mb-1">{{ __('admin.status') }}</label>
+                <select
+                    name="is_active"
+                    class="px-3 py-2 text-sm font-semibold border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-400 outline-none"
+                >
+                    <option value="">{{ __('admin.all_statuses') }}</option>
+                    <option value="1" {{ request('is_active') === '1' ? 'selected' : '' }}>
+                        {{ __('admin.active') }}
+                    </option>
+                    <option value="0" {{ request('is_active') === '0' ? 'selected' : '' }}>
+                        {{ __('admin.inactive') }}
+                    </option>
+                </select>
+            </div>
+            <button
+                type="submit"
+                class="px-4 py-2 text-sm font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl transition-colors shadow-sm"
+            >
+                {{ __('admin.apply_filter') }}
+            </button>
+            @if (request('search') || (request('is_active') !== null && request('is_active') !== ''))
+                <a
+                    href="{{ route('admin.categories.index') }}"
+                    class="px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+                >
+                    {{ __('admin.clear_filter') }}
+                </a>
+            @endif
+        </form>
+
         {{-- Header Action Bar --}}
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <span
                     class="px-3 py-1 bg-white border border-slate-200/80 rounded-xl text-xs font-extrabold text-slate-700 shadow-2xs"
                 >
-                    {{ __('admin.total_categories', ['count' => $categories->count()]) }}
+                    {{ __('admin.total_categories', ['count' => $categories->total()]) }}
                 </span>
             </div>
             <a
@@ -142,5 +185,7 @@
                 </table>
             </div>
         </div>
+
+        <div class="mt-4">{{ $categories->links() }}</div>
     </div>
 @endsection

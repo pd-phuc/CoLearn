@@ -147,4 +147,9 @@ return [
     'all_actions' => 'All Actions',
     'apply_filter' => 'Filter',
     'clear_filter' => 'Clear',
+    'search' => 'Search',
+    'status' => 'Status',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'search_category_placeholder' => 'Search by name or slug...',
 ];

@@ -147,4 +147,9 @@ return [
     'all_actions' => 'Tất Cả Hành Động',
     'apply_filter' => 'Lọc',
     'clear_filter' => 'Xoá Bộ Lọc',
+    'search' => 'Tìm Kiếm',
+    'status' => 'Trạng Thái',
+    'active' => 'Hoạt Động',
+    'inactive' => 'Không Hoạt Động',
+    'search_category_placeholder' => 'Tìm theo tên hoặc slug...',
 ];
