@@ -138,4 +138,13 @@ return [
     'settings_saved_success' => 'Settings updated successfully and applied to system config!',
     'profile_settings' => 'Profile & Account Settings',
     'no_preview_available' => 'No preview available',
+    'total_deposits' => 'Total Deposits',
+    'total_withdrawals' => 'Total Withdrawals',
+    'total_transactions' => 'Total Transactions',
+    'filter_type' => 'Type',
+    'filter_action' => 'Action',
+    'all_types' => 'All Types',
+    'all_actions' => 'All Actions',
+    'apply_filter' => 'Filter',
+    'clear_filter' => 'Clear',
 ];

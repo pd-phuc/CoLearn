@@ -23,6 +23,15 @@ class TransactionController extends Controller
 
         $transactions = $query->latest()->paginate(20)->withQueryString();
 
-        return view('admin.transactions.index', compact('transactions'));
+        $totalIn = Transaction::where('type', 'in')->sum('amount');
+        $totalOut = Transaction::where('type', 'out')->sum('amount');
+        $totalCount = Transaction::count();
+
+        return view('admin.transactions.index', compact(
+            'transactions',
+            'totalIn',
+            'totalOut',
+            'totalCount',
+        ));
     }
 }

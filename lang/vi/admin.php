@@ -138,4 +138,13 @@ return [
     'settings_saved_success' => 'Cập nhật cài đặt hệ thống thành công!',
     'profile_settings' => 'Cài Đặt Hồ Sơ Cá Nhân',
     'no_preview_available' => 'Không có bản xem trước',
+    'total_deposits' => 'Tổng Nạp',
+    'total_withdrawals' => 'Tổng Chi',
+    'total_transactions' => 'Tổng Giao Dịch',
+    'filter_type' => 'Loại',
+    'filter_action' => 'Hành Động',
+    'all_types' => 'Tất Cả Loại',
+    'all_actions' => 'Tất Cả Hành Động',
+    'apply_filter' => 'Lọc',
+    'clear_filter' => 'Xoá Bộ Lọc',
 ];
