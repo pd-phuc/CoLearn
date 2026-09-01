@@ -20,7 +20,7 @@ class UpdateProfileRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
             'headline' => ['nullable', 'string', 'max:255'],
-            'bio' => ['nullable', 'string', 'max:1000'],
+            'bio' => ['nullable', 'string', 'max:2000'],
             'github_url' => ['nullable', 'url', 'max:255'],
             'linkedin_url' => ['nullable', 'url', 'max:255'],
             'facebook_url' => ['nullable', 'url', 'max:255'],
