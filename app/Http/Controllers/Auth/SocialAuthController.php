@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
 use Spatie\Permission\Models\Role;
 
@@ -38,7 +40,6 @@ class SocialAuthController extends Controller
             $user = User::create([
                 'name' => $socialUser->getName() ?? $socialUser->getNickname() ?? 'User',
                 'email' => $socialUser->getEmail(),
-                'avatar' => $socialUser->getAvatar(),
                 'provider' => $provider,
                 'provider_id' => $socialUser->getId(),
                 'email_verified_at' => now(),
@@ -48,12 +49,17 @@ class SocialAuthController extends Controller
             if ($studentRole) {
                 $user->assignRole($studentRole);
             }
+
+            $this->downloadAvatar($user, $socialUser->getAvatar());
         } else {
             $user->update([
-                'avatar' => $socialUser->getAvatar() ?? $user->avatar,
                 'provider' => $provider,
                 'provider_id' => $socialUser->getId(),
             ]);
+
+            if (! $user->avatar) {
+                $this->downloadAvatar($user, $socialUser->getAvatar());
+            }
         }
 
         if ($user->isBanned()) {
@@ -69,5 +75,38 @@ class SocialAuthController extends Controller
             : ($user->isTeacher() ? route('teacher.dashboard') : route('home'));
 
         return redirect()->intended($intended)->with('success', __('auth.welcome_back'));
+    }
+
+    /**
+     * Download avatar from OAuth provider and store locally.
+     */
+    private function downloadAvatar(User $user, ?string $url): void
+    {
+        if (! $url) {
+            return;
+        }
+
+        try {
+            $response = Http::timeout(5)->get($url);
+
+            if (! $response->successful()) {
+                return;
+            }
+
+            $contentType = $response->header('Content-Type');
+            $extension = match (true) {
+                str_contains($contentType, 'png') => 'png',
+                str_contains($contentType, 'gif') => 'gif',
+                str_contains($contentType, 'webp') => 'webp',
+                default => 'jpg',
+            };
+
+            $path = "avatars/{$user->id}.{$extension}";
+            Storage::disk('public')->put($path, $response->body());
+
+            $user->update(['avatar' => Storage::url($path)]);
+        } catch (\Exception $e) {
+            // Silently fail — user can upload avatar manually later
+        }
     }
 }

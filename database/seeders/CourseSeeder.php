@@ -20,7 +20,6 @@ class CourseSeeder extends Seeder
             [
                 'id' => '019fe28b-11bc-71a4-a30c-df885963ff82',
                 'name' => 'giáo.làng',
-                'avatar' => '/images/avatars/019fe28b-11bc-71a4-a30c-df885963ff82.png',
             ],
         );
 
