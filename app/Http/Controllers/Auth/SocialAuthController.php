@@ -49,11 +49,16 @@ class SocialAuthController extends Controller
                 $user->assignRole($studentRole);
             }
         } else {
-            $user->update([
-                'avatar' => $socialUser->getAvatar() ?? $user->avatar,
+            $data = [
                 'provider' => $provider,
                 'provider_id' => $socialUser->getId(),
-            ]);
+            ];
+
+            if (! $user->avatar) {
+                $data['avatar'] = $socialUser->getAvatar();
+            }
+
+            $user->update($data);
         }
 
         if ($user->isBanned()) {
