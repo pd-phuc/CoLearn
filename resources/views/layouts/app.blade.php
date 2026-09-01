@@ -266,19 +266,11 @@
                                         @click="open = !open"
                                         class="flex items-center gap-2 p-1 rounded-full hover:bg-slate-100 transition-colors focus:outline-none"
                                     >
-                                        @if (auth()->user()->avatar)
-                                            <img
-                                                src="{{ auth()->user()->avatar }}"
-                                                alt="{{ auth()->user()->name }}"
-                                                class="w-9 h-9 rounded-full object-cover ring-2 ring-orange-500/30"
-                                            />
-                                        @else
-                                            <div
-                                                class="w-9 h-9 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold flex items-center justify-center text-sm shadow-sm"
-                                            >
-                                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                                            </div>
-                                        @endif
+                                        <x-user-avatar
+                                            :user="auth()->user()"
+                                            size="sm"
+                                            class="ring-2 ring-orange-500/30"
+                                        />
                                         <span
                                             class="hidden sm:block text-sm font-bold text-slate-800 max-w-[110px] truncate"
                                         >

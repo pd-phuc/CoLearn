@@ -17,11 +17,22 @@
 @endphp
 
 @if ($user->avatar)
-    <img
-        src="{{ $user->avatar }}"
-        alt="{{ $user->name }}"
-        {{ $attributes->merge(['class' => "{$sizeClasses} rounded-full object-cover shrink-0"]) }}
-    />
+    <div x-data="{ failed: false }" class="shrink-0">
+        <img
+            x-show="!failed"
+            x-on:error="failed = true"
+            src="{{ $user->avatar }}"
+            alt="{{ $user->name }}"
+            {{ $attributes->merge(['class' => "{$sizeClasses} rounded-full object-cover shrink-0"]) }}
+        />
+        <div
+            x-show="failed"
+            x-cloak
+            {{ $attributes->merge(['class' => "{$sizeClasses} rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-bold flex items-center justify-center shrink-0"]) }}
+        >
+            {{ $initial }}
+        </div>
+    </div>
 @else
     <div
         {{ $attributes->merge(['class' => "{$sizeClasses} rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white font-bold flex items-center justify-center shrink-0"]) }}
