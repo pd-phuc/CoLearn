@@ -88,30 +88,52 @@
 
                         <div>
                             <label class="block text-xs font-bold text-slate-700 mb-1">
-                                {{ __('teacher.email') }} *
+                                {{ __('teacher.email') }}
                             </label>
                             <input
                                 type="email"
-                                name="email"
-                                value="{{ old('email', $user->email) }}"
-                                required
-                                class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
+                                value="{{ $user->email }}"
+                                disabled
+                                class="w-full px-4 py-2.5 text-xs bg-slate-100 border border-slate-200 rounded-xl font-medium text-slate-400 cursor-not-allowed"
                             />
-                            @error('email')
-                                <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                            @enderror
+                            <p class="text-[11px] text-slate-400 mt-1">
+                                {{ __('messages.email_protected_notice') }}
+                            </p>
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">{{ __('teacher.headline') }}</label>
-                        <input
-                            type="text"
-                            name="headline"
-                            value="{{ old('headline', $user->headline) }}"
-                            placeholder="{{ __('teacher.headline_placeholder') }}"
-                            class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
-                        />
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">
+                                {{ __('teacher.headline') }}
+                            </label>
+                            <input
+                                type="text"
+                                name="headline"
+                                value="{{ old('headline', $user->headline) }}"
+                                placeholder="{{ __('teacher.headline_placeholder') }}"
+                                class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
+                            />
+                            @error('headline')
+                                <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">
+                                {{ __('messages.phone_label') }}
+                            </label>
+                            <input
+                                type="text"
+                                name="phone"
+                                value="{{ old('phone', $user->phone) }}"
+                                placeholder="{{ __('messages.phone_placeholder') }}"
+                                class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
+                            />
+                            @error('phone')
+                                <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <div>
@@ -123,6 +145,54 @@
                             class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
                         >
 {{ old('bio', $user->bio) }}</textarea>
+                        @error('bio')
+                            <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Social Links --}}
+                    <div class="border-t border-slate-100 pt-4">
+                        <h4 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-3">
+                            {{ __('messages.social_links') }}
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">
+                                    {{ __('messages.github_label') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="github_url"
+                                    value="{{ old('github_url', $user->github_url) }}"
+                                    placeholder="https://github.com/username"
+                                    class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">
+                                    {{ __('messages.linkedin_label') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="linkedin_url"
+                                    value="{{ old('linkedin_url', $user->linkedin_url) }}"
+                                    placeholder="https://linkedin.com/in/username"
+                                    class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">
+                                    {{ __('messages.facebook_label') }}
+                                </label>
+                                <input
+                                    type="url"
+                                    name="facebook_url"
+                                    value="{{ old('facebook_url', $user->facebook_url) }}"
+                                    placeholder="https://facebook.com/username"
+                                    class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex justify-end pt-2">
@@ -132,69 +202,34 @@
                     </div>
                 </form>
 
-                {{-- Password Change Form --}}
-                <form
-                    action="{{ route('teacher.profile.password') }}"
-                    method="POST"
-                    class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs space-y-4"
-                >
+                {{-- Password Reset Section --}}
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs space-y-4">
                     @csrf
-                    @method('PUT')
 
                     <h3 class="text-base font-black text-slate-900 border-b border-slate-100 pb-3">
                         {{ __('teacher.change_password') }}
                     </h3>
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">
-                            {{ __('teacher.current_password') }} *
-                        </label>
-                        <input
-                            type="password"
-                            name="current_password"
-                            required
-                            class="w-full px-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
-                        />
-                        @error('current_password')
-                            <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                        @enderror
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        {{ __('messages.password_notice') }}
+                    </p>
+
+                    <div
+                        class="p-3 bg-slate-100/80 rounded-xl text-xs font-bold text-slate-700 inline-block border border-slate-200"
+                    >
+                        Email:
+                        <span class="text-blue-600 font-extrabold">{{ $user->email }}</span>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">
-                                {{ __('teacher.new_password') }} *
-                            </label>
-                            <input
-                                type="password"
-                                name="password"
-                                required
-                                class="w-full px-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
-                            />
-                            @error('password')
-                                <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    <form action="{{ route('teacher.profile.password') }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">
-                                {{ __('teacher.confirm_new_password') }} *
-                            </label>
-                            <input
-                                type="password"
-                                name="password_confirmation"
-                                required
-                                class="w-full px-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:outline-none font-medium"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end pt-2">
-                        <x-button variant="primary" size="sm" type="submit" class="bg-slate-900 hover:bg-slate-800">
-                            {{ __('teacher.update_password') }}
+                        <x-button variant="blue" size="sm" type="submit" class="w-full sm:w-auto">
+                            {{ __('messages.send_password_reset_link') }}
                         </x-button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
