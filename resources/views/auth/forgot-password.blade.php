@@ -10,7 +10,8 @@
             <!-- Header Logo & Title -->
             <div class="text-center space-y-2">
                 <div
-                    class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500 text-white font-extrabold text-2xl shadow-md shadow-orange-500/20 mb-2"
+                    class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500 text-white font-extrabold text-2xl shadow-md shadow-orange-500/20 mb-2 select-none"
+                    aria-hidden="true"
                 >
                     C
                 </div>
@@ -35,6 +36,7 @@
                         name="email"
                         type="email"
                         value="{{ old('email', request('email')) }}"
+                        autocomplete="email"
                         required
                         autofocus
                         placeholder="{{ __('auth.email_placeholder') }}"

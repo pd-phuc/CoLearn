@@ -8,7 +8,8 @@
             <!-- Header -->
             <div class="text-center space-y-2">
                 <div
-                    class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500 text-white font-extrabold text-2xl shadow-md shadow-orange-500/20 mb-2"
+                    class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500 text-white font-extrabold text-2xl shadow-md shadow-orange-500/20 mb-2 select-none"
+                    aria-hidden="true"
                 >
                     C
                 </div>
@@ -96,6 +97,7 @@
                         name="name"
                         type="text"
                         value="{{ old('name') }}"
+                        autocomplete="name"
                         required
                         autofocus
                         placeholder="{{ __('auth.name_placeholder') }}"
@@ -116,6 +118,7 @@
                         name="email"
                         type="email"
                         value="{{ old('email') }}"
+                        autocomplete="email"
                         required
                         placeholder="{{ __('auth.email_placeholder') }}"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('email') border-rose-500 @enderror"
@@ -134,6 +137,7 @@
                         id="password"
                         name="password"
                         type="password"
+                        autocomplete="new-password"
                         required
                         placeholder="{{ __('auth.password_min_placeholder') }}"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('password') border-rose-500 @enderror"
@@ -155,6 +159,7 @@
                         id="password_confirmation"
                         name="password_confirmation"
                         type="password"
+                        autocomplete="new-password"
                         required
                         placeholder="{{ __('auth.confirm_password_placeholder') }}"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all"
