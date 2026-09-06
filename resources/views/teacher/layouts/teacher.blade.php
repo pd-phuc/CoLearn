@@ -31,7 +31,7 @@
     >
         <div class="w-full">
             {{-- Floating Glassmorphic 2-Tier Teacher Header --}}
-            <header class="sticky top-3 z-50 mx-auto w-full max-w-7xl px-4 sm:px-6">
+            <header class="sticky top-3 z-50 mx-auto w-full max-w-7xl px-4 sm:px-6 select-none">
                 <div
                     class="rounded-2xl border border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-md transition-all px-5 py-3 space-y-3"
                 >
@@ -56,7 +56,8 @@
                             >
                                 <div class="relative">
                                     <div
-                                        class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200"
+                                        class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200 select-none"
+                                        aria-hidden="true"
                                     >
                                         C
                                     </div>
@@ -64,13 +65,13 @@
                                         class="absolute inset-0 rounded-xl bg-blue-500/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity"
                                     ></div>
                                 </div>
-                                <span class="text-xl font-extrabold tracking-tight text-slate-900">
+                                <span class="text-xl font-extrabold tracking-tight text-slate-900 select-none">
                                     Co
                                     <span class="text-blue-600">Learn</span>
                                 </span>
                             </a>
                             <span
-                                class="px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-widest rounded-lg border border-blue-200/60 shadow-2xs"
+                                class="px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-widest rounded-lg border border-blue-200/60 shadow-2xs select-none"
                             >
                                 Teacher
                             </span>

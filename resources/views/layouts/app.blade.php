@@ -30,7 +30,7 @@
     >
         <div class="w-full">
             <!-- Floating Glassmorphic Header (inspired by fcode-web-system-challenge-3) -->
-            <header class="sticky top-3 z-50 mx-auto max-w-7xl px-4 sm:px-6">
+            <header class="sticky top-3 z-50 mx-auto max-w-7xl px-4 sm:px-6 select-none">
                 <div
                     class="rounded-2xl border border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-md transition-all px-4 sm:px-6 py-3"
                 >
@@ -40,7 +40,8 @@
                             <a href="{{ route('home') }}" class="group flex items-center gap-3 transition-all">
                                 <div class="relative">
                                     <div
-                                        class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform duration-200"
+                                        class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform duration-200 select-none"
+                                        aria-hidden="true"
                                     >
                                         C
                                     </div>
@@ -48,7 +49,7 @@
                                         class="absolute inset-0 rounded-xl bg-orange-500/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity"
                                     ></div>
                                 </div>
-                                <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+                                <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 select-none">
                                     Co
                                     <span class="text-orange-500">Learn</span>
                                 </span>
@@ -122,7 +123,7 @@
                                             >
                                                 <span>{{ $category->name }}</span>
                                                 <span
-                                                    class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 group-hover:bg-orange-100"
+                                                    class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 group-hover:bg-orange-100 select-none"
                                                 >
                                                     {{ $category->courses()->count() }}
                                                 </span>
@@ -182,7 +183,7 @@
                                     />
                                 </svg>
                                 <kbd
-                                    class="hidden sm:inline-block absolute right-3 top-2.5 text-[10px] font-bold text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-200 shadow-2xs"
+                                    class="hidden sm:inline-block absolute right-3 top-2.5 text-[10px] font-bold text-slate-400 bg-white px-1.5 py-0.5 rounded border border-slate-200 shadow-2xs select-none"
                                 >
                                     Ctrl K
                                 </kbd>
@@ -193,7 +194,7 @@
                         <div class="flex items-center gap-3">
                             <!-- Language Switcher Pill -->
                             <div
-                                class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold border border-slate-200/60"
+                                class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold border border-slate-200/60 select-none"
                             >
                                 <a
                                     href="{{ route('lang.switch', 'vi') }}"
@@ -231,7 +232,7 @@
                                 </svg>
                                 @if ($cartService->count() > 0)
                                     <span
-                                        class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-extrabold text-white bg-orange-500 rounded-full shadow-sm"
+                                        class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-extrabold text-white bg-orange-500 rounded-full shadow-sm select-none"
                                     >
                                         {{ $cartService->count() }}
                                     </span>
