@@ -3,7 +3,7 @@
 @section('page-description', 'Review course details, syllabus, and publish/reject status')
 
 @section('admin-content')
-    <div class="space-y-6">
+    <div class="space-y-6 select-text">
         <a
             href="{{ route('admin.courses.index') }}"
             class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-orange-600 transition-colors"

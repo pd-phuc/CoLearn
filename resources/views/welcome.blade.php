@@ -17,7 +17,7 @@
             <!-- Hero Left Text -->
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                 <div
-                    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 border border-orange-200 text-xs font-bold uppercase tracking-wider"
+                    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 border border-orange-200 text-xs font-bold uppercase tracking-wider select-none"
                 >
                     <svg
                         class="w-4 h-4 text-orange-500 animate-pulse"

@@ -8,7 +8,7 @@
         <!-- Main Grid: Left Details vs Right Sticky Card -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Left Content Column -->
-            <main class="lg:col-span-8 space-y-10">
+            <main class="lg:col-span-8 space-y-10 select-text">
                 <!-- What You'll Learn Box (card-fcode) -->
                 @if (is_array($course->learning_outcomes) && count($course->learning_outcomes) > 0)
                     <div class="bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xs space-y-4">

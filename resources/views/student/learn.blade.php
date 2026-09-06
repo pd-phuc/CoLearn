@@ -198,7 +198,7 @@
                         @else
                             <!-- Text / Document Lesson Viewer -->
                             <div
-                                class="w-full h-full bg-white p-8 flex flex-col justify-center items-center text-center space-y-4"
+                                class="w-full h-full bg-white p-8 flex flex-col justify-center items-center text-center space-y-4 select-text"
                             >
                                 <div
                                     class="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center"

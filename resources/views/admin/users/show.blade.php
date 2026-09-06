@@ -3,7 +3,7 @@
 @section('page-description', __('admin.user_details_desc'))
 
 @section('admin-content')
-    <div class="space-y-6">
+    <div class="space-y-6 select-text">
         <div class="flex items-center justify-between">
             <a
                 href="{{ route('admin.users.index') }}"
