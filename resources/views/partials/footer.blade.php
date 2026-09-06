@@ -6,18 +6,19 @@
         ->get();
 @endphp
 
-<footer class="bg-slate-950 text-slate-400 border-t border-slate-800/80 mt-20">
+<footer class="bg-slate-950 text-slate-400 border-t border-slate-800/80 mt-20 select-none">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
             <!-- Col 1: Platform Brand Info -->
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
                     <div
-                        class="w-9 h-9 rounded-xl bg-{{ $accentColor }}-500 flex items-center justify-center text-white font-black text-xl shadow-md"
+                        class="w-9 h-9 rounded-xl bg-{{ $accentColor }}-500 flex items-center justify-center text-white font-black text-xl shadow-md select-none"
+                        aria-hidden="true"
                     >
                         C
                     </div>
-                    <span class="text-2xl font-black text-white">
+                    <span class="text-2xl font-black text-white select-none">
                         Co
                         <span class="text-{{ $accentColor }}-500">Learn</span>
                     </span>

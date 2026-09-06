@@ -13,7 +13,7 @@
 @endphp
 
 <span
-    {{ $attributes->merge(['class' => "px-2.5 py-1 {$config['bg']} {$config['text']} border {$config['border']} text-xs font-bold rounded-lg"]) }}
+    {{ $attributes->merge(['class' => "px-2.5 py-1 {$config['bg']} {$config['text']} border {$config['border']} text-xs font-bold rounded-lg select-none"]) }}
 >
     {{ $config['label'] }}
 </span>

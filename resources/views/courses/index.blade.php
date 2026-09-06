@@ -9,11 +9,11 @@
             <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
             <div class="relative z-10 max-w-2xl space-y-3">
                 <span
-                    class="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full text-xs font-extrabold uppercase tracking-wider"
+                    class="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full text-xs font-extrabold uppercase tracking-wider select-none"
                 >
                     {{ __('messages.catalog_library') }}
                 </span>
-                <h1 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+                <h1 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight text-white">
                     {{ __('messages.catalog_title') }}
                 </h1>
                 <p class="text-sm text-slate-300 font-medium">

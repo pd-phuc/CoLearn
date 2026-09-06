@@ -8,7 +8,8 @@
             <!-- Header Logo & Title -->
             <div class="text-center">
                 <div
-                    class="w-14 h-14 bg-gradient-to-tr from-orange-500 to-amber-500 rounded-2xl text-white font-black text-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20 mb-4"
+                    class="w-14 h-14 bg-gradient-to-tr from-orange-500 to-amber-500 rounded-2xl text-white font-black text-2xl flex items-center justify-center mx-auto shadow-lg shadow-orange-500/20 mb-4 select-none"
+                    aria-hidden="true"
                 >
                     C
                 </div>
@@ -31,6 +32,7 @@
                             type="email"
                             name="email"
                             value="{{ old('email', $request->email) }}"
+                            autocomplete="email"
                             required
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all"
                         />
@@ -46,6 +48,7 @@
                         <input
                             type="password"
                             name="password"
+                            autocomplete="new-password"
                             required
                             placeholder="{{ __('auth.password_min_placeholder') }}"
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all"
@@ -62,6 +65,7 @@
                         <input
                             type="password"
                             name="password_confirmation"
+                            autocomplete="new-password"
                             required
                             placeholder="{{ __('auth.confirm_password_placeholder') }}"
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all"

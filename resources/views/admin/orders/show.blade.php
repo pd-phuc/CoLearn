@@ -3,7 +3,7 @@
 @section('page-description', 'View transaction details, payment method, items, and issue refunds')
 
 @section('admin-content')
-    <div class="space-y-6">
+    <div class="space-y-6 select-text">
         <a
             href="{{ route('admin.orders.index') }}"
             class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-orange-600 transition-colors"

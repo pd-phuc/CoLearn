@@ -48,6 +48,33 @@
     ::-webkit-scrollbar-thumb:hover {
         background: var(--color-slate-400, #94a3b8);
     }
+
+    /* Global: disable text selection on all UI chrome by default */
+    body {
+        user-select: none;
+    }
+
+    /* Whitelist: content areas where text selection is useful */
+    input,
+    textarea,
+    select,
+    [contenteditable="true"],
+    pre,
+    code,
+    .select-text,
+    .prose,
+    .prose *,
+    /* Error/validation messages — user may want to copy */
+    .text-rose-500,
+    .text-red-500,
+    /* Table data cells */
+    td,
+    /* Order numbers, transaction IDs, copyable data */
+    [data-copyable],
+    /* Admin detail views */
+    dd {
+        user-select: text;
+    }
 }
 
 /* Animations from fcode-web-system-challenge-3 */
@@ -87,19 +114,19 @@
     }
 
     .btn-primary {
-        @apply inline-flex items-center justify-center px-5 py-2.5 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-bold rounded-xl shadow-sm hover:shadow-lg hover:shadow-primary-500/25 active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+        @apply inline-flex items-center justify-center px-5 py-2.5 bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white font-bold rounded-xl shadow-sm hover:shadow-lg hover:shadow-primary-500/25 active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none;
     }
 
     .btn-secondary {
-        @apply inline-flex items-center justify-center px-5 py-2.5 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 font-bold rounded-xl border border-slate-200/80 transition-all duration-200 cursor-pointer;
+        @apply inline-flex items-center justify-center px-5 py-2.5 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 font-bold rounded-xl border border-slate-200/80 transition-all duration-200 cursor-pointer select-none;
     }
 
     .btn-oauth-icon {
-        @apply flex items-center justify-center w-full py-3 px-4 bg-white border border-slate-200 rounded-xl shadow-xs hover:border-slate-300 hover:bg-slate-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer;
+        @apply flex items-center justify-center w-full py-3 px-4 bg-white border border-slate-200 rounded-xl shadow-xs hover:border-slate-300 hover:bg-slate-50 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer select-none;
     }
 
     .badge-pill {
-        @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold tracking-wide;
+        @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold tracking-wide select-none;
     }
 }
 

@@ -8,7 +8,8 @@
             <!-- Header -->
             <div class="text-center space-y-2">
                 <div
-                    class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500 text-white font-extrabold text-2xl shadow-md shadow-orange-500/20 mb-2"
+                    class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-orange-500 text-white font-extrabold text-2xl shadow-md shadow-orange-500/20 mb-2 select-none"
+                    aria-hidden="true"
                 >
                     C
                 </div>
@@ -104,6 +105,7 @@
                             name="email"
                             type="email"
                             x-model="loginEmail"
+                            autocomplete="email"
                             required
                             autofocus
                             placeholder="{{ __('auth.email_placeholder') }}"
@@ -124,6 +126,7 @@
                         <a
                             :href="'{{ route('password.request') }}' + (loginEmail ? '?email=' + encodeURIComponent(loginEmail) : '')"
                             class="text-xs font-semibold text-orange-600 hover:text-orange-700"
+                            tabindex="-1"
                         >
                             {{ __('auth.forgot_password') }}
                         </a>
@@ -133,6 +136,7 @@
                             id="password"
                             name="password"
                             :type="show ? 'text' : 'password'"
+                            autocomplete="current-password"
                             required
                             placeholder="••••••••"
                             class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:border-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500/10 transition-all @error('password') border-rose-500 @enderror"
@@ -140,7 +144,8 @@
                         <button
                             type="button"
                             @click="show = !show"
-                            class="absolute right-3 top-3.5 text-slate-400 hover:text-slate-600 text-xs font-semibold focus:outline-none"
+                            tabindex="-1"
+                            class="absolute right-3 top-3.5 text-slate-400 hover:text-slate-600 text-xs font-semibold focus:outline-none select-none"
                         >
                             <span x-text="show ? '{{ __('auth.hide') }}' : '{{ __('auth.show') }}'"></span>
                         </button>

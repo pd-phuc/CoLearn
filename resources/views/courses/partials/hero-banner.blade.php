@@ -4,7 +4,7 @@
 >
     <div class="absolute -right-20 -top-20 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl"></div>
 
-    <div class="relative z-10 space-y-4 max-w-3xl">
+    <div class="relative z-10 space-y-4 max-w-3xl select-text">
         <!-- Breadcrumb & Category -->
         <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
             <a href="{{ route('home') }}" class="hover:text-orange-400">{{ __('messages.home') }}</a>
